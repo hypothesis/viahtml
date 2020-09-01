@@ -10,7 +10,7 @@
 // repo: https://github.com/hypothesis/pipeline-library
 @Library("pipeline-library") _
 
-// The the built hypothesis/via3 Docker image.
+// The the built hypothesis/viahtml Docker image.
 def img
 
 node {
@@ -22,7 +22,7 @@ node {
         // Checkout the commit that triggered this pipeline run.
         checkout scm
         // Build the Docker image.
-        img = buildApp(name: "hypothesis/via3")
+        img = buildApp(name: "hypothesis/viahtml")
     }
 
     stage("Tests") {
@@ -42,14 +42,14 @@ node {
 onlyOnMaster {
     milestone()
     stage("qa deploy") {
-        deployApp(image: img, app: "via3", env: "qa")
+        deployApp(image: img, app: "viahtml", env: "qa")
     }
 
     milestone()
     stage("prod deploy") {
         input(message: "Deploy to prod?")
         milestone()
-        deployApp(image: img, app: "via3", env: "prod")
+        deployApp(image: img, app: "viahtml", env: "prod")
     }
 }
 
