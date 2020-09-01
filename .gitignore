@@ -1,0 +1,7 @@
+.coverage*
+.tox
+*.pyc
+*.egg-info/
+supervisord.log
+supervisord.pid
+static/pywb
