@@ -1,0 +1,7 @@
+-r requirements.txt
+-e .
+
+ipython
+ipdb
+docker-compose
+supervisor
