@@ -1,1 +1,5 @@
 pytest
+webtest
+httpretty
+responses
+h-matchers
