@@ -1,18 +1,14 @@
-"""The application providing a WSGI entry-point."""
-
+"""The WSGI app."""
 
 import logging
 import os
 
-from gevent.monkey import patch_all
-
-patch_all()  # This needs to happen before we load other classes
-
-# pylint: disable=wrong-import-position
+from pkg_resources import resource_filename
 from pywb.apps.frontendapp import FrontEndApp
 
-from viahtml.hooks import Hooks
-from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks
+# I've no idea how we aren't hitting coverage on these lines
+from viahtml.hooks import Hooks  # pragma: no cover
+from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks  # pragma: no cover
 
 
 class Application:
@@ -23,7 +19,7 @@ class Application:
         """Create a WSGI application for proxying HTML."""
 
         # Move into the correct directory as template paths are relative
-        os.chdir("viahtml")
+        os.chdir(resource_filename("viahtml", "."))
         config_file = os.environ["PYWB_CONFIG_FILE"] = "pywb_config.yaml"
 
         if not os.path.exists(config_file):
@@ -67,8 +63,3 @@ class Application:
     @classmethod
     def _split_multiline(cls, value):
         return [part for part in [p.strip() for p in value.split(",")] if part]
-
-
-# Our job here is to leave this `application` attribute laying around as it's
-# what uWSGI expects to find.
-application = Application.create()  # pylint: disable=invalid-name
