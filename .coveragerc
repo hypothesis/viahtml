@@ -4,11 +4,11 @@ parallel = True
 source =
     viahtml
     tests/unit
+    tests/functional
 
 
 [report]
 show_missing = True
 precision = 2
-# Ouch... 3.3%. Fix this
-fail_under = 3.3
+fail_under = 100.00
 skip_covered = True
