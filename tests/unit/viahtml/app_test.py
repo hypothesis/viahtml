@@ -5,25 +5,19 @@ from unittest.mock import patch
 import pytest
 from h_matchers import Any
 from pytest import param
-from pywb.apps.frontendapp import FrontEndApp
 from pywb.apps.rewriterapp import RewriterApp
 
 
 class TestApplicationCreate:
-    def test_it_returns_an_app(self):
-        app = Application.create()
-
-        assert isinstance(app, FrontEndApp)
-
     @patch("viahtml.app.apply_pre_app_hooks", autospec=True)
     def test_it_applies_pre_app_hooks(self, apply_pre_app_hooks, Hooks):
-        Application.create()
+        Application()
 
         apply_pre_app_hooks.assert_called_once_with(Hooks.return_value)
 
     @patch("viahtml.app.apply_post_app_hooks", autospec=True)
     def test_it_applies_post_app_hooks(self, apply_post_app_hooks, Hooks):
-        Application.create()
+        Application()
 
         apply_post_app_hooks.assert_called_once_with(
             Any.instance_of(RewriterApp), Hooks.return_value
@@ -47,12 +41,12 @@ class TestApplicationCreate:
     ):
         os.environ[variable] = value
 
-        Application.create()
+        Application()
 
         Hooks.assert_called_once_with(Any.dict.containing(expected))
 
     def test_it_sets_the_config_file_for_pywb(self, os):
-        Application.create()
+        Application()
 
         assert os.environ["PYWB_CONFIG_FILE"] == "pywb_config.yaml"
 
@@ -60,7 +54,7 @@ class TestApplicationCreate:
         os.path.exists.return_value = False
 
         with pytest.raises(EnvironmentError):
-            Application.create()
+            Application()
 
     @pytest.mark.parametrize(
         "debug_enabled",
@@ -72,7 +66,7 @@ class TestApplicationCreate:
     def test_it_configures_logging(self, debug_enabled, os, logging):
         os.environ["VIA_DEBUG"] = debug_enabled
 
-        Application.create()
+        Application()
 
         logging.basicConfig.assert_called_once_with(
             format=Any.string(),
