@@ -1,12 +1,13 @@
-"""Configuration points which can be added to change `pywb` behavior."""
+"""The majority of configuration options."""
 from h_vialib import Configuration
+
+from viahtml.hooks._headers import Headers
 
 
 class Hooks:
     """A collection of configuration points for `pywb`."""
 
-    # Disable the Content-Security-Policy which blocks our embed
-    csp_header = None
+    headers = Headers()
 
     def __init__(self, config):
         self.config = config

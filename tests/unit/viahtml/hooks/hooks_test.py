@@ -46,5 +46,5 @@ class TestHooks:
 
     @pytest.fixture
     def Configuration(self):
-        with patch("viahtml.hooks.Configuration", autospec=True) as Configuration:
+        with patch("viahtml.hooks.hooks.Configuration", autospec=True) as Configuration:
             yield Configuration
