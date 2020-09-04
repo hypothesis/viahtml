@@ -60,9 +60,6 @@ class _PatchedRewriterApp(RewriterApp):
         # Update the Jinja environment to have the vars we want
         rewriter.jinja_env.jinja_env.globals.update(hooks.template_vars)
 
-        # Set the Content-Security-Policy header
-        rewriter.csp_header = hooks.csp_header
-
     def get_upstream_url(self, wb_url, kwargs, params):
         params["url"] = self.hooks.get_upstream_url(doc_url=params["url"])
 

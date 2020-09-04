@@ -32,7 +32,12 @@ class Application:
     def __call__(self, environ, start_response):
         """Handle WSGI requests."""
 
-        return self.app(environ, start_response)
+        def proxy_start_response(status, headers):
+            headers = self.hooks.headers.modify_outbound(headers)
+            return start_response(status, headers)
+
+        environ = self.hooks.headers.modify_inbound(environ)
+        return self.app(environ, proxy_start_response)
 
     @classmethod
     def _set_config_file(cls):
