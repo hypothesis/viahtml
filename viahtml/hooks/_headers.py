@@ -1,8 +1,12 @@
 """Specific configuration for headers."""
+from werkzeug.datastructures import ResponseCacheControl
+from werkzeug.http import parse_cache_control_header
 
 
 class Headers:
     """Methods for manipulating the headers we accept and emit."""
+
+    CLOUDFLARE_MIN_CACHE_TIME = 30 * 60
 
     BLOCKED = {
         # h CSRF token header
@@ -85,7 +89,32 @@ class Headers:
         headers = []
 
         for header, value in header_items:
-            if header.lower() not in self._bad_outbound_lower:
+            header_lower = header.lower()
+            if header_lower not in self._bad_outbound_lower:
                 headers.append((header, value))
+            elif header_lower == "x-archive-orig-cache-control":
+                headers.append(("Cache-Control", self.translate_cache_control(value)))
 
         return headers
+
+    def translate_cache_control(self, value):
+        """Convert a cache-control header to respect Cloudlflare limits.
+
+        Where a caching header is marked as public and with a "max-age" below
+        the Cloudflare minimum, convert it to "public" caching. This prevents
+        Cloudflare from caching things too long but still allows browsers to
+        cache.
+
+        :param value: A cache control header value
+        :return: A modified cache control value
+        """
+        parsed = parse_cache_control_header(value, cls=ResponseCacheControl)
+
+        if not parsed.public or parsed.max_age is None:
+            return value
+
+        if parsed.max_age < self.CLOUDFLARE_MIN_CACHE_TIME:
+            parsed.public = False
+            parsed.private = True
+
+        return parsed.to_header()

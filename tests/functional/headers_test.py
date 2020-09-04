@@ -15,3 +15,8 @@ class TestHeaders:
         self, proxied_content, header_name
     ):
         assert header_name not in proxied_content.headers
+
+    def test_cache_control_translation(self, proxied_content):
+        # This is set in the content served, we're looking for public to become
+        # private as the time is lower than the Cloudflare minimum
+        assert proxied_content.headers["Cache-Control"] == "max-age=60, private"

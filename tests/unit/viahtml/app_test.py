@@ -1,6 +1,7 @@
 # pylint: disable=wrong-import-order
 from viahtml.app import Application  # isort:skip
 
+# pylint: disable=wrong-import-order
 from unittest.mock import create_autospec, patch, sentinel
 
 import pytest
