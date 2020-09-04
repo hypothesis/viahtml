@@ -1,4 +1,4 @@
-from pywb.apps.frontendapp import FrontEndApp
+from viahtml.app import Application
 
 
 def test_it_exports_application():
@@ -6,4 +6,4 @@ def test_it_exports_application():
     # happens instantly
     from viahtml.wsgi import application  # pylint: disable=import-outside-toplevel
 
-    assert isinstance(application, FrontEndApp)
+    assert isinstance(application, Application)

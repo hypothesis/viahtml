@@ -14,10 +14,28 @@ from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks
 class Application:
     """A collection of tools to create and configure `pywb`."""
 
-    @classmethod
-    def create(cls):
-        """Create a WSGI application for proxying HTML."""
+    def __init__(self):
+        self._set_config_file()
 
+        config = self._config_from_env()
+        self._setup_logging(config["debug"])
+        self.hooks = Hooks(config)
+
+        # Setup hook points and apply those which must be done pre-application
+        apply_pre_app_hooks(self.hooks)
+
+        self.app = FrontEndApp()
+
+        # Setup hook points after the app is loaded
+        apply_post_app_hooks(self.app.rewriterapp, self.hooks)
+
+    def __call__(self, environ, start_response):
+        """Handle WSGI requests."""
+
+        return self.app(environ, start_response)
+
+    @classmethod
+    def _set_config_file(cls):
         # Move into the correct directory as template paths are relative
         os.chdir(resource_filename("viahtml", "."))
         config_file = os.environ["PYWB_CONFIG_FILE"] = "pywb_config.yaml"
@@ -25,30 +43,6 @@ class Application:
         if not os.path.exists(config_file):
             config_file = os.path.abspath(config_file)
             raise EnvironmentError(f"Cannot find expected config {config_file}")
-
-        config = cls._config_from_env()
-        cls._setup_logging(config["debug"])
-
-        # Setup hook points and apply those which must be done pre-application
-        hooks = Hooks(config)
-        apply_pre_app_hooks(hooks)
-
-        app = FrontEndApp()
-
-        # Setup hook points after the app is loaded
-        apply_post_app_hooks(app.rewriterapp, hooks)
-
-        return app
-
-    @classmethod
-    def _setup_logging(cls, debug=False):
-        if debug:
-            print("Enabling debug level logging")
-
-        logging.basicConfig(
-            format="%(asctime)s: [%(levelname)s]: %(message)s",
-            level=logging.DEBUG if debug else logging.INFO,
-        )
 
     @classmethod
     def _config_from_env(cls):
@@ -59,6 +53,16 @@ class Application:
             "h_embed_url": os.environ["VIA_H_EMBED_URL"],
             "debug": os.environ.get("VIA_DEBUG", False),
         }
+
+    @classmethod
+    def _setup_logging(cls, debug=False):
+        if debug:
+            print("Enabling debug level logging")
+
+        logging.basicConfig(
+            format="%(asctime)s: [%(levelname)s]: %(message)s",
+            level=logging.DEBUG if debug else logging.INFO,
+        )
 
     @classmethod
     def _split_multiline(cls, value):

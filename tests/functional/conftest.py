@@ -9,7 +9,7 @@ from viahtml.app import Application
 
 @pytest.fixture(scope="session")
 def app(with_environ):
-    app = Application.create()
+    app = Application()
     app.debug = True
 
     return webtest.TestApp(app)
