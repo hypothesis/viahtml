@@ -47,7 +47,11 @@ def upstream_website():
      </html>
      """
 
-    with serve_content(minimal_valid_html, port=8080):
+    with serve_content(
+        minimal_valid_html,
+        port=8080,
+        extra_headers={"Cache-Control": "public, max-age=60"},
+    ):
         yield
 
 
