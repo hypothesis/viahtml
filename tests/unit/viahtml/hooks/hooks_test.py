@@ -10,6 +10,7 @@ class TestHooks:
     def test_template_vars(self, hooks):
         assert hooks.template_vars == {
             "client_params": Any.function(),
+            "external_link_mode": Any.function(),
             "ignore_prefixes": hooks.ignore_prefixes,
         }
 
@@ -22,6 +23,24 @@ class TestHooks:
 
             assert params == "client"
             get_config.assert_called_once_with(sentinel.http_env)
+
+    @pytest.mark.parametrize(
+        "link_mode,expected",
+        (
+            ("new-tab", "new-tab"),
+            ("same-tab", "same-tab"),
+            (None, "same-tab"),
+            ("random", "random"),
+        ),
+    )
+    def test_external_link_mode_in_template_vars(self, hooks, link_mode, expected):
+        http_env = {}
+        if link_mode is not None:
+            http_env["QUERY_STRING"] = f"via.external_link_mode={link_mode}"
+
+        external_link_mode = hooks.template_vars["external_link_mode"]
+
+        assert external_link_mode(http_env) == expected
 
     def test_ignore_prefixes(self, hooks):
         assert hooks.ignore_prefixes == sentinel.prefixes
