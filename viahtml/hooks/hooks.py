@@ -16,7 +16,16 @@ class Hooks:
     def template_vars(self):
         """Get variables to make available in the global Jinja2 environment."""
 
-        template_vars = {"client_params": lambda http_env: self.get_config(http_env)[1]}
+        def external_link_mode(http_env):
+            via_config, _ = self.get_config(http_env)
+            return via_config.get("external_link_mode", "same-tab").lower()
+
+        template_vars = {
+            # It would be much nicer to calculate this once somehow
+            "client_params": lambda http_env: self.get_config(http_env)[1],
+            "external_link_mode": external_link_mode,
+        }
+
         template_vars.update(self.config)
 
         # This is already in the config, but run through the property just in

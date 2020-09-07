@@ -33,3 +33,19 @@ class TestProxy:
         policy = proxied_content.headers.get("Content-Security-Policy", "*MISSING*")
 
         assert policy == "*MISSING*"
+
+    @pytest.mark.parametrize(
+        "link_mode,expected",
+        (
+            ("new-tab", "new-tab"),
+            (None, "same-tab"),
+        ),
+    )
+    def test_we_set_external_link_mode(self, app, link_mode, expected):
+        url = "/proxy/http://localhost:8080/"
+        if link_mode is not None:
+            url += f"?via.external_link_mode={link_mode}"
+
+        proxied_content = app.get(url)
+
+        assert f'setupExternalLinkHandler("{expected}");' in proxied_content
