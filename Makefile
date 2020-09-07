@@ -65,7 +65,7 @@ build: python
 .PHONY: docker
 docker: build
 	@git archive --format=tar HEAD > build.tar
-	@tar --update -f build.tar via/static
+	@tar --update -f build.tar static
 	@gzip -c build.tar | docker build -t hypothesis/viahtml:$(DOCKER_TAG) -
 	@rm build.tar
 
