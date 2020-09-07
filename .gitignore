@@ -5,3 +5,4 @@
 supervisord.log
 supervisord.pid
 static/pywb
+build.tar
