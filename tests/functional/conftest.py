@@ -7,7 +7,7 @@ from tests.simple_server import serve_content
 from viahtml.app import Application
 
 
-@pytest.fixture(scope="session")  # pragma: no cover
+@pytest.fixture(scope="session")
 def app(with_environ):
     app = Application.create()
     app.debug = True
@@ -15,7 +15,7 @@ def app(with_environ):
     return webtest.TestApp(app)
 
 
-@pytest.fixture(scope="session")  # pragma: no cover
+@pytest.fixture(scope="session")
 def with_environ():
     # WSGI uses repeated elements to express this, which means we can't use
     # the standard configparser.ConfigParser to read them. So they are
@@ -29,7 +29,7 @@ def with_environ():
     )
 
 
-@pytest.fixture(autouse=True, scope="session")  # pragma: no cover
+@pytest.fixture(autouse=True, scope="session")
 def upstream_website():
     minimal_valid_html = """
      <!DOCTYPE html>
@@ -51,7 +51,7 @@ def upstream_website():
         yield
 
 
-@pytest.fixture(scope="session")  # pragma: no cover
+@pytest.fixture(scope="session")
 def proxied_content(app):
     return app.get(
         "/proxy/http://localhost:8080/?via.client.openSidebar=yup", expect_errors=True
