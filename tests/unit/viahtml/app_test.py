@@ -13,7 +13,7 @@ from viahtml.app import Application
 # For reasons I find absolutely mysterious, everytime we create our app
 # coverage can no longer be detected on lines following it. We absolutely get
 # there but for some reason it doesn't show in the report?
-class TestApplicationCreate:  # pragma: no cover
+class TestApplicationCreate:
     def test_it_returns_an_app(self):
         app = Application.create()
 

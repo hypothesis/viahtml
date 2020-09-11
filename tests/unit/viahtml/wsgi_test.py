@@ -6,4 +6,4 @@ def test_it_exports_application():
     # happens instantly
     from viahtml.wsgi import application  # pylint: disable=import-outside-toplevel
 
-    assert isinstance(application, FrontEndApp)  # pragma: no cover
+    assert isinstance(application, FrontEndApp)

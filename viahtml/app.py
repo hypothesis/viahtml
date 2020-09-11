@@ -7,8 +7,8 @@ from pkg_resources import resource_filename
 from pywb.apps.frontendapp import FrontEndApp
 
 # I've no idea how we aren't hitting coverage on these lines
-from viahtml.hooks import Hooks  # pragma: no cover
-from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks  # pragma: no cover
+from viahtml.hooks import Hooks
+from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks
 
 
 class Application:

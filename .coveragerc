@@ -1,6 +1,7 @@
 [run]
 branch = True
 parallel = True
+concurrency = gevent
 source =
     viahtml
     tests/unit
