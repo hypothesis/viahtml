@@ -1,4 +1,5 @@
-import os
+# pylint: disable=wrong-import-order
+from viahtml.app import Application  # isort:skip
 from unittest.mock import patch
 
 import pytest
@@ -7,12 +8,7 @@ from pytest import param
 from pywb.apps.frontendapp import FrontEndApp
 from pywb.apps.rewriterapp import RewriterApp
 
-from viahtml.app import Application
 
-
-# For reasons I find absolutely mysterious, everytime we create our app
-# coverage can no longer be detected on lines following it. We absolutely get
-# there but for some reason it doesn't show in the report?
 class TestApplicationCreate:
     def test_it_returns_an_app(self):
         app = Application.create()
@@ -45,8 +41,9 @@ class TestApplicationCreate:
             ("VIA_H_EMBED_URL", "value", {"h_embed_url": "value"}),
         ),
     )
+    # pylint: disable=too-many-arguments
     def test_it_reads_options_from_environment_variables(
-        self, variable, value, expected, Hooks
+        self, variable, value, expected, Hooks, os
     ):
         os.environ[variable] = value
 
@@ -54,14 +51,13 @@ class TestApplicationCreate:
 
         Hooks.assert_called_once_with(Any.dict.containing(expected))
 
-    def test_it_sets_the_config_file_for_pywb(self):
+    def test_it_sets_the_config_file_for_pywb(self, os):
         Application.create()
 
         assert os.environ["PYWB_CONFIG_FILE"] == "pywb_config.yaml"
 
-    @patch("os.path.exists", autospec=True)
-    def test_it_detects_missing_config_file(self, exists):
-        exists.return_value = False
+    def test_it_detects_missing_config_file(self, os):
+        os.path.exists.return_value = False
 
         with pytest.raises(EnvironmentError):
             Application.create()
@@ -73,16 +69,20 @@ class TestApplicationCreate:
             param("", id="no debug"),
         ),
     )
-    def test_it_configures_logging(self, debug_enabled):
+    def test_it_configures_logging(self, debug_enabled, os, logging):
         os.environ["VIA_DEBUG"] = debug_enabled
 
-        with patch("viahtml.app.logging", autospec=True) as logging:
-            Application.create()
+        Application.create()
 
-            logging.basicConfig.assert_called_once_with(
-                format=Any.string(),
-                level=logging.DEBUG if debug_enabled else logging.INFO,
-            )
+        logging.basicConfig.assert_called_once_with(
+            format=Any.string(),
+            level=logging.DEBUG if debug_enabled else logging.INFO,
+        )
+
+    @pytest.fixture
+    def logging(self):
+        with patch("viahtml.app.logging", autospec=True) as logging:
+            yield logging
 
     @pytest.fixture
     def Hooks(self):
