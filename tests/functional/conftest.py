@@ -51,7 +51,7 @@ def upstream_website():
         yield
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def proxied_content(app):
     return app.get(
         "/proxy/http://localhost:8080/?via.client.openSidebar=yup", expect_errors=True

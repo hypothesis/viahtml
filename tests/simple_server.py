@@ -31,8 +31,6 @@ def serve_content(content, content_type="text/html", port=8080):
     :param content_type: Mime type to return for content
     :param port: Port to serve content on
     """
-    # A relatively simple WSGI application. It's going to print out the
-    # environment dictionary after being updated by setup_testing_defaults
 
     def simple_app(_environ, start_response):
         start_response("200 OK", [("Content-type", f"{content_type}; charset=utf-8")])
