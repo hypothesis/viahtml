@@ -1,14 +1,13 @@
 """The WSGI app."""
-
 import logging
 import os
 
 from pkg_resources import resource_filename
 from pywb.apps.frontendapp import FrontEndApp
 
-# I've no idea how we aren't hitting coverage on these lines
 from viahtml.hooks import Hooks
 from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks
+from viahtml.views.status import StatusView
 
 
 class Application:
@@ -21,6 +20,8 @@ class Application:
         self._setup_logging(config["debug"])
         self.hooks = Hooks(config)
 
+        self.views = (StatusView(),)
+
         # Setup hook points and apply those which must be done pre-application
         apply_pre_app_hooks(self.hooks)
 
@@ -32,6 +33,12 @@ class Application:
     def __call__(self, environ, start_response):
         """Handle WSGI requests."""
 
+        for view in self.views:
+            response = view(environ, start_response)
+            if response:
+                return response
+
+        # Looks like it's a normal request to proxy...
         def proxy_start_response(status, headers):
             headers = self.hooks.headers.modify_outbound(headers)
             return start_response(status, headers)
