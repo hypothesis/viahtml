@@ -19,7 +19,7 @@ def patch(request):
     return functools.partial(_autopatcher, request)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture
 def os():
     with mock.patch("viahtml.app.os", autospec=True) as os:
         os.environ = {
