@@ -1,7 +1,5 @@
 import pytest
 
-from tests.simple_server import serve_content
-
 
 class TestProxy:
     # Test our the core proxying behavior and our additions to it

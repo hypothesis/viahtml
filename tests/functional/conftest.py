@@ -23,7 +23,14 @@ def with_environ():
     os.environ.update(
         {
             "VIA_H_EMBED_URL": "http://localhost:3001/hypothesis",
-            "VIA_IGNORE_PREFIXES": "http://localhost:5000/,http://localhost:3001/,https://localhost:5000/,https://localhost:3001/",
+            "VIA_IGNORE_PREFIXES": ",".join(
+                [
+                    "http://localhost:5000/",
+                    "http://localhost:3001/",
+                    "https://localhost:5000/",
+                    "https://localhost:3001/",
+                ]
+            ),
             "VIA_DEBUG": "1",
         }
     )

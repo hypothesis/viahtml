@@ -1,13 +1,11 @@
-# pylint: disable=wrong-import-order
-from viahtml.app import Application  # isort:skip
-
-# pylint: disable=wrong-import-order
-from unittest.mock import create_autospec, patch, sentinel
+from unittest.mock import create_autospec, patch
 
 import pytest
 from h_matchers import Any
 from pytest import param
 from pywb.apps.rewriterapp import RewriterApp
+
+from viahtml.app import Application
 
 
 class TestApplicationCreate:
@@ -91,21 +89,21 @@ class TestApplication:
 
     def test_it_wraps_pywb(self, app, start_response):
         print(app.hooks)
-        result = app(sentinel.environ, start_response)
+        result = app({}, start_response)
 
         assert result == start_response.return_value
 
         start_response.assert_called_with(self.STATUS, Any())
 
-    def test_it_modifies_inbound_headers(self, app, start_response):
-        app(sentinel.environ, start_response)
+    def test_it_modifies_inbound_headers(self, app, start_response, environ):
+        app(environ, start_response)
 
         modify_inbound = app.hooks.headers.modify_inbound
-        modify_inbound.assert_called_once_with(sentinel.environ)
+        modify_inbound.assert_called_once_with(environ)
         app.app.assert_called_once_with(modify_inbound.return_value, Any.function())
 
-    def test_it_modifies_outbound_headers(self, app, start_response):
-        result = app(sentinel.environ, start_response)
+    def test_it_modifies_outbound_headers(self, app, start_response, environ):
+        result = app(environ, start_response)
 
         assert result == start_response.return_value
         modified_outbound = app.hooks.headers.modify_outbound
@@ -115,6 +113,12 @@ class TestApplication:
     @pytest.fixture
     def start_response(self):
         return create_autospec(lambda status, headers: None)  # pragma: no cover
+
+    @pytest.fixture
+    def environ(self):
+        # Worst fixture ever, but we don't really rely on the contents of the
+        # WSGI environ for these tests. But it needs to have a 'get' method
+        return {"environ": 1}
 
     @pytest.fixture
     def app(self):
@@ -140,6 +144,9 @@ class TestApplication:
     @pytest.fixture(autouse=True)
     def apply_post_app_hooks(self, patch):
         return patch("viahtml.app.apply_post_app_hooks")
+
+
+pytestmark = pytest.mark.usefixtures("os")
 
 
 @pytest.fixture(autouse=True)
