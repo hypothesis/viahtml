@@ -110,9 +110,30 @@ class TestApplication:
         modified_outbound.assert_called_once_with(self.HEADERS)
         start_response.assert_called_with(Any(), modified_outbound.return_value)
 
+    def test_it_applies_views(self, view, app, start_response, environ):
+        view.return_value = ["Hello"]
+
+        result = app(environ, start_response)
+
+        view.assert_called_once_with(environ, start_response)
+        assert result == view.return_value
+
+    def test_it_does_not_apply_views_if_they_have_no_return_value(
+        self, view, app, start_response, environ
+    ):
+        view.return_value = None
+
+        result = app(environ, start_response)
+
+        assert result == start_response.return_value
+
     @pytest.fixture
-    def start_response(self):
-        return create_autospec(lambda status, headers: None)  # pragma: no cover
+    def view(self, app):
+        view = create_autospec(lambda environ, start_response: None)  # pragma: no cover
+        view.return_value = None
+        app.views = [view]
+
+        return view
 
     @pytest.fixture
     def environ(self):

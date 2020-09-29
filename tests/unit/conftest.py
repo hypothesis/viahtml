@@ -1,5 +1,6 @@
 import functools
 from unittest import mock
+from unittest.mock import create_autospec
 
 import pytest
 
@@ -32,3 +33,8 @@ def os():
             "VIA_DEBUG": "1",
         }
         yield os
+
+
+@pytest.fixture
+def start_response():
+    return create_autospec(lambda status, headers: None)  # pragma: no cover
