@@ -63,11 +63,8 @@ build: python
 	@tox -qe build
 
 .PHONY: docker
-docker: build
-	@git archive --format=tar HEAD > build.tar
-	@tar --update -f build.tar static
-	@gzip -c build.tar | docker build -t hypothesis/viahtml:$(DOCKER_TAG) -
-	@rm build.tar
+docker:
+	@git archive --format=tar HEAD | docker build -t hypothesis/viahtml:$(DOCKER_TAG) -
 
 .PHONY: clean
 clean:
