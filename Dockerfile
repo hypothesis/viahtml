@@ -24,6 +24,10 @@ COPY ./conf/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/nginx/viahtml /etc/nginx/viahtml
 COPY . .
 
+# Minic the `make build` behavior in tox to build the static assets
+RUN python bin/build_static.py
+RUN python -m whitenoise.compress --no-brotli static
+
 USER hypothesis
 
 CMD /usr/bin/supervisord -c /var/lib/hypothesis/conf/supervisord.conf
