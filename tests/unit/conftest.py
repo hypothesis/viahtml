@@ -31,6 +31,7 @@ def os():
                 "https://localhost:5000/,https://localhost:3001/"
             ),
             "VIA_DEBUG": "1",
+            "VIA_BLOCKLIST_FILE": "../conf/blocklist-dev.txt",
         }
         yield os
 

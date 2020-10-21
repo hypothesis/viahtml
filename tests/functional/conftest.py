@@ -32,6 +32,7 @@ def with_environ():
                 ]
             ),
             "VIA_DEBUG": "1",
+            "VIA_BLOCKLIST_FILE": "../conf/blocklist-dev.txt",
         }
     )
 

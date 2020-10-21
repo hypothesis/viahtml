@@ -7,6 +7,7 @@ from pywb.apps.frontendapp import FrontEndApp
 
 from viahtml.hooks import Hooks
 from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks
+from viahtml.views.blocklist import BlocklistView
 from viahtml.views.status import StatusView
 
 
@@ -20,7 +21,7 @@ class Application:
         self._setup_logging(config["debug"])
         self.hooks = Hooks(config)
 
-        self.views = (StatusView(),)
+        self.views = (StatusView(), BlocklistView(config["blocklist"]))
 
         # Setup hook points and apply those which must be done pre-application
         apply_pre_app_hooks(self.hooks)
@@ -64,6 +65,7 @@ class Application:
             "ignore_prefixes": cls._split_multiline(os.environ["VIA_IGNORE_PREFIXES"]),
             "h_embed_url": os.environ["VIA_H_EMBED_URL"],
             "debug": os.environ.get("VIA_DEBUG", False),
+            "blocklist": os.environ["VIA_BLOCKLIST_FILE"],
         }
 
     @classmethod
