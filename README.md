@@ -47,8 +47,25 @@ it.
 Run `make help` to see all the commands that are available for running the tests,
 linting, code formatting, etc.
 
-Via HTML's architecture
------------------------
+Configuration
+-------------
+
+Environment variables:
+
+| Name | Effect | Example |
+|------|--------|---------|
+| `VIA_BLOCKLIST_URL`   | Where to download the blocklist online | `https://some-aws-s3.bucket/file.txt` |
+| `VIA_BLOCKLIST_PATH`  | Where to store the blocklist locally   | `/var/lib/hypothesis/blocklist.txt` |
+| `VIA_DEBUG`           | Enable debugging logging in dev        | `1` |
+| `VIA_H_EMBED_URL`     | Client URL                             | `https://cdn.hypothes.is/hypothesis` |
+| `VIA_IGNORE_PREFIXES` | Prefixes not to proxy                  | `https://hypothes.is/,https://qa.hypothes.is/` |
+
+For details of changing the blocklist see:
+
+ * https://stackoverflow.com/c/hypothesis/questions/102/250
+
+Architecture
+------------
 
 Via HTML is composed of three compoments:
 
