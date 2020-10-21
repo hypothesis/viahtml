@@ -2,8 +2,6 @@
 help:
 	@echo "make help              Show this help message"
 	@echo "make dev               Run the app in the development server"
-	@echo "make supervisor        Launch a supervisorctl shell for managing the processes "
-	@echo '                       that `make dev` starts, type `help` for docs'
 	@echo 'make services          Run the services that `make dev` requires'
 	@echo 'make build             Prepare the build files'
 	@echo "make lint              Run the code linter(s) and print any warnings"
@@ -22,10 +20,6 @@ help:
 .PHONY: dev
 dev: python
 	@tox -qe dev
-
-.PHONY: supervisor
-supervisor: python
-	@tox -qe dev --run-command 'supervisorctl -c conf/supervisord-dev.conf $(command)'
 
 .PHONY: services
 services:
