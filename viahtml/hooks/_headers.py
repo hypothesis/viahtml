@@ -31,16 +31,6 @@ class Headers:
         # Disable the Content-Security-Policy which blocks our embed
         "Content-Security-Policy",
         # Various headers added by `pywb` relating to archival
-        "X-Archive-Orig-Age",
-        "X-Archive-Orig-Cache-Control",
-        "X-Archive-Orig-Date",
-        "X-Archive-Orig-Etag",
-        "X-Archive-Orig-Expires",
-        "X-Archive-Orig-Last-Modified",
-        "X-Archive-Orig-Server",
-        "X-Archive-Orig-Vary",
-        "X-Cache",
-        "X-Archive-Orig-Content-Length",
         "Memento-Datetime",
         "Link",
     } | BLOCKED
@@ -90,10 +80,16 @@ class Headers:
 
         for header, value in header_items:
             header_lower = header.lower()
-            if header_lower not in self._bad_outbound_lower:
-                headers.append((header, value))
-            elif header_lower == "x-archive-orig-cache-control":
+            if header_lower == "x-archive-orig-cache-control":
                 headers.append(("Cache-Control", self.translate_cache_control(value)))
+
+            if (
+                # Skip any of the many, many headers `pywb` emits
+                not header_lower.startswith("x-archive-")
+                # Or anything we've blocked explicitly
+                and header_lower not in self._bad_outbound_lower
+            ):
+                headers.append((header, value))
 
         return headers
 
