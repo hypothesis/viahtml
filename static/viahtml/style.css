@@ -1,0 +1,127 @@
+/**
+* Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+* http://cssreset.com
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* page style */
+body {
+  background-color: #ececec;
+  margin: 0 auto;
+  color: #333333;
+  max-width: 960px;
+  font-family: 'Source Sans Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-align: center;
+}
+
+header {
+  padding: 100px 0 0 0;
+}
+
+header, article {
+  text-align: left;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+p, ol {
+  font-size: 20px;
+  line-height: 27px;
+  padding-bottom: 30px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+strong {
+  font-weight: 700;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 27px;
+}
+
+p a, li a {
+  border-bottom: 1px solid #DCDCDC;
+  text-decoration: none;
+  color: #333333;
+}
+
+ol {
+  list-style-type: decimal;
+  padding-left: 17px;
+}
+
+ol li {
+  font-size: 20px;
+  line-height: 27px;
+  padding-bottom: 30px;
+}
+
+a:hover {
+  color: #333333;
+}
+
+footer {
+  padding: 90px 0;
+}
+
+#footer-logo {
+  display:inline-block;
+  width: 24px;
+  height:28px;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAA4CAQAAAARWLNhAAABgUlEQVR42u2Yz0rDQBDGhwpKe6wUSXspepE+gGfv+gCtPaTv4EMIHrx7K0iepILXmQ2btAQECYmXnoSWStUYxNLdNmoKsyCab2677P6WbybZPwAwapCDESbMEZEzasDH9GP2yT+DxikiXX1iLsgBA+ZoRoHR6dMoAJsDQBHOC0ABKAB/APCCUzwX+3I7Kfm78kic4Q3NWAFkw4rcA7xlA9AAMhSWacAEcI8hU34zv1HfAr4WXhsGuCdMADwlF6c0o3txEewogD0WgDikZ+UIcrnsSbbojaNMr7QzzoNWYU8cZXqnAV6TEjfgUe8Ly8wAnJgGzP8PgELqeJZnUYdCAwAKZXXRLqs6ggfQ1mqvzQ7wLHWUZ7EDhnV11LDODhBd7Q/W5a+iKKgt2oOafin7adPP+x3EZPvNdKezMS6uUL8PYPoibvwpwfhjiPHnnDyifub6+sCluIJyDSDjCvBJtlYOABPZAl6JngoQPeDXMhOM7mdmgtf9tUzwu69nYlP33wEjM9swn4BymAAAAABJRU5ErkJggg==);
+  background-size: 24px 28px;
+  font-size:0;
+}
+
+@media (max-width: 800px) {
+  body {padding: 2em 1em;}
+  header {padding: 50px 0; font-size: 36px; line-height: 42px;}
+  h1 {font-size: 48px; line-height: 48px;}
+  p, ol li {font-size: 18px; line-height: 24px;}
+}

@@ -1,4 +1,5 @@
 h_vialib
 uwsgi
 pywb
+jinja2
 whitenoise
