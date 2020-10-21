@@ -21,7 +21,7 @@ class TestHeaders:
         assert "HTTP_OTHER_HEADER" in http_env
 
     @pytest.mark.parametrize(
-        "header_name", Headers.BLOCKED_OUTBOUND - {"X-Archive-Orig-Cache-Control"}
+        "header_name", Headers.BLOCKED_OUTBOUND | {"X-Archive-Anything-At-All"}
     )
     def test_modify_outbound_removes_blocked_items(
         self, headers, header_name, string_case
