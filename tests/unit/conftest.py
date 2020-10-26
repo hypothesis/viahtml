@@ -4,6 +4,8 @@ from unittest.mock import create_autospec
 
 import pytest
 
+from tests.conftest import environment_variables
+
 
 def _autopatcher(request, target, **kwargs):
     """Patch and cleanup automatically. Wraps :py:func:`mock.patch`."""
@@ -23,16 +25,7 @@ def patch(request):
 @pytest.fixture
 def os():
     with mock.patch("viahtml.app.os", autospec=True) as os:
-        os.environ = {
-            "VIA_H_EMBED_URL": "http://localhost:3001/hypothesis",
-            "VIA_IGNORE_PREFIXES": (
-                # This is one string
-                "http://localhost:5000/,http://localhost:3001/,"
-                "https://localhost:5000/,https://localhost:3001/"
-            ),
-            "VIA_DEBUG": "1",
-            "VIA_BLOCKLIST_FILE": "../conf/blocklist-dev.txt",
-        }
+        os.environ = environment_variables()
         yield os
 
 
