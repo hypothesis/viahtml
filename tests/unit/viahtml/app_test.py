@@ -111,11 +111,12 @@ class TestApplication:
         start_response.assert_called_with(Any(), modified_outbound.return_value)
 
     def test_it_applies_views(self, view, app, start_response, environ):
+        environ["PATH_INFO"] = "/path"
         view.return_value = ["Hello"]
 
         result = app(environ, start_response)
 
-        view.assert_called_once_with(environ, start_response)
+        view.assert_called_once_with("/path", environ, start_response)
         assert result == view.return_value
 
     def test_it_does_not_apply_views_if_they_have_no_return_value(
@@ -129,7 +130,9 @@ class TestApplication:
 
     @pytest.fixture
     def view(self, app):
-        view = create_autospec(lambda environ, start_response: None)  # pragma: no cover
+        view = create_autospec(
+            lambda path, environ, start_response: None
+        )  # pragma: no cover
         view.return_value = None
         app.views = [view]
 

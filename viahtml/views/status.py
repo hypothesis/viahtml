@@ -2,22 +2,19 @@
 
 import json
 
-from werkzeug.wsgi import get_path_info
-
 
 class StatusView:
     """Status end-point."""
 
-    def __call__(self, environ, start_response):
+    def __call__(self, path, environ, start_response):
         """Provide a status response if required.
 
+        :param path: The url path of the request
         :param environ: WSGI environ dict
         :param start_response: WSGI `start_response()` function
         :return: An iterator of content if required or None
         """
-        path = get_path_info(environ).rstrip("/")
-
-        if path != "/_status":
+        if path.rstrip("/") != "/_status":
             # We don't want to handle this call
             return None
 

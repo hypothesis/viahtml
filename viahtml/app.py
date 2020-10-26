@@ -4,6 +4,7 @@ import os
 
 from pkg_resources import resource_filename
 from pywb.apps.frontendapp import FrontEndApp
+from werkzeug.wsgi import get_path_info
 
 from viahtml.hooks import Hooks
 from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks
@@ -35,7 +36,8 @@ class Application:
         """Handle WSGI requests."""
 
         for view in self.views:
-            response = view(environ, start_response)
+            path = get_path_info(environ)
+            response = view(path, environ, start_response)
             if response:
                 return response
 
