@@ -9,6 +9,7 @@ from werkzeug.wsgi import get_path_info
 from viahtml.hooks import Hooks
 from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks
 from viahtml.views.blocklist import BlocklistView
+from viahtml.views.routing import RoutingView
 from viahtml.views.status import StatusView
 
 
@@ -22,7 +23,11 @@ class Application:
         self._setup_logging(config["debug"])
         self.hooks = Hooks(config)
 
-        self.views = (StatusView(), BlocklistView(config["blocklist"]))
+        self.views = (
+            StatusView(),
+            BlocklistView(config["blocklist"]),
+            RoutingView(config["routing_host"]),
+        )
 
         # Setup hook points and apply those which must be done pre-application
         apply_pre_app_hooks(self.hooks)
@@ -68,6 +73,7 @@ class Application:
             "h_embed_url": os.environ["VIA_H_EMBED_URL"],
             "debug": os.environ.get("VIA_DEBUG", False),
             "blocklist": os.environ["VIA_BLOCKLIST_PATH"],
+            "routing_host": os.environ["VIA_ROUTING_HOST"],
         }
 
     @classmethod

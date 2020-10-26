@@ -8,7 +8,6 @@ class TestPwybConfig:
     @pytest.mark.parametrize(
         "path",
         (
-            param("/", id="index"),
             param("/proxy/", id="collection"),
             param("/proxy/?search=&date-range-from=&date-range-to=", id="search"),
         ),
