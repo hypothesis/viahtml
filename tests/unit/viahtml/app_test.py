@@ -110,9 +110,11 @@ class TestApplication:
         modified_outbound.assert_called_once_with(self.HEADERS)
         start_response.assert_called_with(Any(), modified_outbound.return_value)
 
-    def test_it_applies_views(self, view, app, start_response, environ):
+    @pytest.mark.parametrize("return_value", (["Hello"], []))
+    # pylint: disable=too-many-arguments
+    def test_it_applies_views(self, view, app, start_response, environ, return_value):
         environ["PATH_INFO"] = "/path"
-        view.return_value = ["Hello"]
+        view.return_value = return_value
 
         result = app(environ, start_response)
 

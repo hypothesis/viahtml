@@ -38,7 +38,7 @@ class Application:
         for view in self.views:
             path = get_path_info(environ)
             response = view(path, environ, start_response)
-            if response:
+            if response is not None:
                 return response
 
         # Looks like it's a normal request to proxy...
