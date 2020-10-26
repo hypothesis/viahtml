@@ -3,6 +3,7 @@ import os
 import pytest
 import webtest
 
+from tests.conftest import environment_variables
 from tests.simple_server import serve_content
 from viahtml.app import Application
 
@@ -20,21 +21,7 @@ def with_environ():
     # WSGI uses repeated elements to express this, which means we can't use
     # the standard configparser.ConfigParser to read them. So they are
     # duplicated here:
-    os.environ.update(
-        {
-            "VIA_H_EMBED_URL": "http://localhost:3001/hypothesis",
-            "VIA_IGNORE_PREFIXES": ",".join(
-                [
-                    "http://localhost:5000/",
-                    "http://localhost:3001/",
-                    "https://localhost:5000/",
-                    "https://localhost:3001/",
-                ]
-            ),
-            "VIA_DEBUG": "1",
-            "VIA_BLOCKLIST_FILE": "../conf/blocklist-dev.txt",
-        }
-    )
+    os.environ.update(environment_variables())
 
 
 @pytest.fixture(autouse=True, scope="session")
