@@ -4,6 +4,6 @@
 *.egg-info/
 supervisord.log
 supervisord.pid
-static/pywb
+static/static/pywb
 build.tar
 *.gz
