@@ -54,7 +54,6 @@ class Blocklist:
         self._refresh()
 
         domain = self._domain(url)
-        self.LOG.debug("DOMAIN? %s: %s", domain, self.domains)
         return self.domains.get(domain, False)
 
     @classmethod
