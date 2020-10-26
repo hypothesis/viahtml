@@ -110,12 +110,15 @@ class TestApplication:
         modified_outbound.assert_called_once_with(self.HEADERS)
         start_response.assert_called_with(Any(), modified_outbound.return_value)
 
-    def test_it_applies_views(self, view, app, start_response, environ):
-        view.return_value = ["Hello"]
+    @pytest.mark.parametrize("return_value", (["Hello"], []))
+    # pylint: disable=too-many-arguments
+    def test_it_applies_views(self, view, app, start_response, environ, return_value):
+        environ["PATH_INFO"] = "/path"
+        view.return_value = return_value
 
         result = app(environ, start_response)
 
-        view.assert_called_once_with(environ, start_response)
+        view.assert_called_once_with("/path", environ, start_response)
         assert result == view.return_value
 
     def test_it_does_not_apply_views_if_they_have_no_return_value(
@@ -129,7 +132,9 @@ class TestApplication:
 
     @pytest.fixture
     def view(self, app):
-        view = create_autospec(lambda environ, start_response: None)  # pragma: no cover
+        view = create_autospec(
+            lambda path, environ, start_response: None
+        )  # pragma: no cover
         view.return_value = None
         app.views = [view]
 

@@ -16,12 +16,12 @@ class TestStatusView:
         ),
     )
     def test_it_responds_to_the_status_url(self, path, responds, start_response):
-        response = StatusView()({"PATH_INFO": path}, start_response)
+        response = StatusView()(path, {}, start_response)
 
         assert bool(response) == responds
 
     def test_it_returns_the_expected_response(self, start_response):
-        response = StatusView()({"PATH_INFO": "/_status"}, start_response)
+        response = StatusView()("/_status", {}, start_response)
 
         start_response.assert_called_once_with(
             "200 OK",

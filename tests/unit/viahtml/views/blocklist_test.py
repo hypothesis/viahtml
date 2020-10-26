@@ -22,11 +22,11 @@ class TestBlocklistView:
         ),
     )
     def test_it_extracts_the_url_correctly(self, path, expected):
-        proxied_url = BlocklistView.get_proxied_url({"PATH_INFO": path})
+        proxied_url = BlocklistView.get_proxied_url(path)
         assert proxied_url == expected
 
     def test_if_there_is_no_url_it_does_nothing(self, view, start_response):
-        result = view({"PATH_INFO": ""}, start_response)
+        result = view("", {}, start_response)
 
         assert result is None
         view.blocklist.assert_not_called()
@@ -34,7 +34,7 @@ class TestBlocklistView:
     def test_if_the_url_is_not_blocked_it_does_nothing(self, view, start_response):
         view.blocklist.is_blocked.return_value = None
 
-        result = view({"PATH_INFO": "/proxy/http://example.com"}, start_response)
+        result = view("/proxy/http://example.com", {}, start_response)
 
         assert result is None
         view.blocklist.is_blocked.assert_called_once_with("http://example.com")
@@ -50,7 +50,7 @@ class TestBlocklistView:
     def test_blocking(self, view, block_reason, start_response, expected_heading):
         view.blocklist.is_blocked.return_value = block_reason
 
-        result = view({"PATH_INFO": "/proxy/http://example.com"}, start_response)
+        result = view("/proxy/http://example.com", {}, start_response)
 
         start_response.assert_called_once_with(
             "403 Forbidden", [("Content-Type", "text/html; charset=utf-8")]

@@ -5,7 +5,6 @@ import re
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pkg_resources import resource_filename
-from werkzeug.wsgi import get_path_info
 
 from viahtml.blocklist import Blocklist
 
@@ -26,9 +25,8 @@ class BlocklistView:
         self.blocklist = Blocklist(file_name)
 
     @classmethod
-    def get_proxied_url(cls, environ):
+    def get_proxied_url(cls, path):
         """Get the proxied URL from a WSGI environment variable."""
-        path = get_path_info(environ)
 
         match = cls.PROXY_PATTERN.match(path)
         if match:
@@ -36,14 +34,15 @@ class BlocklistView:
 
         return None
 
-    def __call__(self, environ, start_response):
+    def __call__(self, path, environ, start_response):
         """Provide a block page response if required.
 
+        :param path: The url path of the request
         :param environ: WSGI environ dict
         :param start_response: WSGI `start_response()` function
         :return: An iterator of content if required or None
         """
-        url = self.get_proxied_url(environ)
+        url = self.get_proxied_url(path)
         if not url:
             return None
 
