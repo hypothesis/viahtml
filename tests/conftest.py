@@ -10,5 +10,5 @@ def environment_variables():
             ]
         ),
         "VIA_DEBUG": "1",
-        "VIA_BLOCKLIST_FILE": "../conf/blocklist-dev.txt",
+        "VIA_BLOCKLIST_PATH": "../conf/blocklist-dev.txt",
     }

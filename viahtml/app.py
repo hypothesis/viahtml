@@ -67,7 +67,7 @@ class Application:
             "ignore_prefixes": cls._split_multiline(os.environ["VIA_IGNORE_PREFIXES"]),
             "h_embed_url": os.environ["VIA_H_EMBED_URL"],
             "debug": os.environ.get("VIA_DEBUG", False),
-            "blocklist": os.environ["VIA_BLOCKLIST_FILE"],
+            "blocklist": os.environ["VIA_BLOCKLIST_PATH"],
         }
 
     @classmethod
