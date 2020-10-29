@@ -3,3 +3,4 @@ uwsgi
 pywb
 jinja2
 whitenoise
+newrelic

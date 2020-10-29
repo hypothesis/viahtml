@@ -17,8 +17,9 @@ gevent==1.4.0             # via pywb
 greenlet==0.4.16          # via gevent
 h-vialib==1.0.0           # via -r requirements.in
 idna==2.10                # via requests, tldextract
-jinja2==2.11.2            # via pywb
+jinja2==2.11.2            # via -r requirements.in, pywb
 markupsafe==1.1.1         # via jinja2
+newrelic==5.22.1.152      # via -r requirements.in
 portalocker==2.0.0        # via pywb
 py3amf==0.8.10            # via pywb
 pycparser==2.20           # via cffi
