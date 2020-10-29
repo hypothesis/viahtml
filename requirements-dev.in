@@ -5,4 +5,3 @@ ipython
 ipdb
 docker-compose
 supervisor
-newrelic
