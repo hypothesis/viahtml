@@ -30,8 +30,8 @@ class UWSGINewRelicStatsGenerator:
         "exceptions": "Worker/Request/Failed",
         "harakiri_count": "Worker/Killed",
         "running_time": "Worker/UpTime[ms]",
-        "rss": "Worker/Memory/Resident[kB]",
-        "vsz": "Worker/Memory/Virtual[kB]",
+        "rss": "Worker/Memory/Resident[kiloBytes]",
+        "vsz": "Worker/Memory/Virtual[kiloBytes]",
     }
     # Don't include zeros in these numbers as they reflect the worker being
     # inactive and artificially bring down the average
@@ -41,8 +41,8 @@ class UWSGINewRelicStatsGenerator:
         "avg_rt": 1 / 1000,
         "running_time": 1 / 1000,
         # From bytes to kilobytes
-        "rss": 1 / 1024,
-        "vsz": 1 / 1024,
+        "rss": 1 / 1000,
+        "vsz": 1 / 1000,
     }
 
     SOCKET_STATS = {
