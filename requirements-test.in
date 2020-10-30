@@ -2,4 +2,4 @@ pytest
 webtest
 httpretty
 responses
-h-matchers
+h-matchers>=1.2.10
