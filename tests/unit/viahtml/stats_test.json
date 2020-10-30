@@ -1,0 +1,259 @@
+{
+    "version": "2.0.19.1",
+    "listen_queue": 12,
+    "listen_queue_errors": 13,
+    "signal_queue": 14,
+    "load": 16,
+    "pid": 7692,
+    "uid": 1000,
+    "gid": 1000,
+    "cwd": "/blah/viahtml/viahtml",
+    "locks": [
+        {
+            "user 0": 0
+        },
+        {
+            "signal": 0
+        },
+        {
+            "filemon": 0
+        },
+        {
+            "timer": 0
+        },
+        {
+            "rbtimer": 0
+        },
+        {
+            "cron": 0
+        },
+        {
+            "rpc": 0
+        },
+        {
+            "snmp": 0
+        }
+    ],
+    "sockets": [
+        {
+            "name": "0.0.0.0:3032",
+            "proto": "uwsgi",
+            "queue": 17,
+            "max_queue": 100,
+            "shared": 18,
+            "can_offload": 0
+        }
+    ],
+    "workers": [
+        {
+            "id": 1,
+            "pid": 0,
+            "accepting": 1,
+            "requests": 12,
+            "delta_requests": 0,
+            "exceptions": 5,
+            "harakiri_count": 1,
+            "signals": 0,
+            "signal_queue": 19,
+            "status": "cheap",
+            "rss": 3195,
+            "vsz": 0,
+            "running_time": 0,
+            "last_spawn": 1604059705,
+            "respawn_count": 1,
+            "tx": 0,
+            "avg_rt": 0,
+            "apps": [
+                {
+                    "id": 0,
+                    "modifier1": 0,
+                    "mountpoint": "/",
+                    "startup_time": 1,
+                    "requests": 0,
+                    "exceptions": 0,
+                    "chdir": ""
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "pid": 0,
+            "accepting": 1,
+            "requests": 0,
+            "delta_requests": 0,
+            "exceptions": 0,
+            "harakiri_count": 0,
+            "signals": 0,
+            "signal_queue": 0,
+            "status": "cheap",
+            "rss": 3195,
+            "vsz": 0,
+            "running_time": 0,
+            "last_spawn": 1604059705,
+            "respawn_count": 1,
+            "tx": 0,
+            "avg_rt": 0,
+            "apps": [
+                {
+                    "id": 0,
+                    "modifier1": 0,
+                    "mountpoint": "/",
+                    "startup_time": 1,
+                    "requests": 0,
+                    "exceptions": 0,
+                    "chdir": ""
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "pid": 0,
+            "accepting": 1,
+            "requests": 0,
+            "delta_requests": 0,
+            "exceptions": 0,
+            "harakiri_count": 2,
+            "signals": 0,
+            "signal_queue": 0,
+            "status": "cheap",
+            "rss": 3195,
+            "vsz": 0,
+            "running_time": 0,
+            "last_spawn": 1604059705,
+            "respawn_count": 1,
+            "tx": 0,
+            "avg_rt": 345,
+            "apps": [
+                {
+                    "id": 0,
+                    "modifier1": 0,
+                    "mountpoint": "/",
+                    "startup_time": 1,
+                    "requests": 0,
+                    "exceptions": 0,
+                    "chdir": ""
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "pid": 0,
+            "accepting": 1,
+            "requests": 2,
+            "delta_requests": 2,
+            "exceptions": 0,
+            "harakiri_count": 0,
+            "signals": 0,
+            "signal_queue": 0,
+            "status": "cheap",
+            "rss": 45858816,
+            "vsz": 766259200,
+            "running_time": 354560,
+            "last_spawn": 1604059705,
+            "respawn_count": 1,
+            "tx": 6920,
+            "avg_rt": 176700,
+            "apps": [
+                {
+                    "id": 0,
+                    "modifier1": 0,
+                    "mountpoint": "/",
+                    "startup_time": 1,
+                    "requests": 2,
+                    "exceptions": 0,
+                    "chdir": ""
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "pid": 7822,
+            "accepting": 1,
+            "requests": 0,
+            "delta_requests": 0,
+            "exceptions": 2,
+            "harakiri_count": 4,
+            "signals": 0,
+            "signal_queue": 0,
+            "status": "cheap",
+            "rss": 3195,
+            "vsz": 0,
+            "running_time": 0,
+            "last_spawn": 1604059705,
+            "respawn_count": 1,
+            "tx": 0,
+            "avg_rt": 0,
+            "apps": [
+                {
+                    "id": 0,
+                    "modifier1": 0,
+                    "mountpoint": "/",
+                    "startup_time": 1,
+                    "requests": 0,
+                    "exceptions": 0,
+                    "chdir": ""
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "pid": 7825,
+            "accepting": 0,
+            "requests": 0,
+            "delta_requests": 0,
+            "exceptions": 0,
+            "harakiri_count": 0,
+            "signals": 0,
+            "signal_queue": 0,
+            "status": "cheap",
+            "rss": 3195,
+            "vsz": 0,
+            "running_time": 0,
+            "last_spawn": 1604059705,
+            "respawn_count": 1,
+            "tx": 0,
+            "avg_rt": 0,
+            "apps": [
+                {
+                    "id": 0,
+                    "modifier1": 0,
+                    "mountpoint": "/",
+                    "startup_time": 1,
+                    "requests": 0,
+                    "exceptions": 0,
+                    "chdir": ""
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "pid": 7826,
+            "accepting": 0,
+            "requests": 0,
+            "delta_requests": 0,
+            "exceptions": 0,
+            "harakiri_count": 0,
+            "signals": 0,
+            "signal_queue": 0,
+            "status": "idle",
+            "rss": 3195,
+            "vsz": 0,
+            "running_time": 323984,
+            "last_spawn": 1604059705,
+            "respawn_count": 1,
+            "tx": 0,
+            "avg_rt": 2345,
+            "apps": [
+                {
+                    "id": 0,
+                    "modifier1": 0,
+                    "mountpoint": "/",
+                    "startup_time": 1,
+                    "requests": 0,
+                    "exceptions": 0,
+                    "chdir": ""
+                }
+            ]
+        }
+    ]
+}
