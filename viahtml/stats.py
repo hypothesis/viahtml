@@ -1,6 +1,6 @@
 """uWSGI -> New Relic metrics collection logic."""
 
-from collections import defaultdict
+from collections import Counter, defaultdict
 from logging import getLogger
 
 import requests
@@ -19,16 +19,16 @@ class UWSGINewRelicStatsGenerator:
     # uWSGI stats end-point to some suitable metrics names for New Relic
     ROOT_STATS = {
         "load": "System/Load",
-        "listen_queue": "ListenQueue/Size",
-        "listen_queue_errors": "ListenQueue/Errors",
-        "signal_queue": "SignalQueue/Size",
+        "listen_queue": "Queue/Listen/Size",
+        "listen_queue_errors": "Queue/Listen/Errors",
+        "signal_queue": "Queue/Signal/Size",
     }
 
     WORKER_STATS = {
         "avg_rt": "Worker/AverageResponseTime[ms]",
         "requests": "Worker/Request/Total",
         "exceptions": "Worker/Request/Failed",
-        "harakiri_count": "Worker/Killed",
+        "harakiri_count": "Worker/Count/Killed",
         "running_time": "Worker/UpTime[ms]",
         "rss": "Worker/Memory/Resident[kiloBytes]",
         "vsz": "Worker/Memory/Virtual[kiloBytes]",
@@ -46,8 +46,8 @@ class UWSGINewRelicStatsGenerator:
     }
 
     SOCKET_STATS = {
-        "queue": "Socket/Queue/Size",
-        "max_queue": "Socket/Queue/Max",
+        "queue": "Queue/Socket/Size",
+        "max_queue": "Queue/Socket/Max",
     }
 
     def __init__(self, stats_endpoint):
@@ -92,6 +92,13 @@ class UWSGINewRelicStatsGenerator:
     def _get_worker_stats(self, raw_stats):
         workers = raw_stats["workers"]
         accepting_workers = [worker for worker in workers if worker["accepting"]]
+
+        status = Counter()
+        for worker in workers:
+            status[f"Worker/Count/{worker['status'].title()}"] += 1
+
+        for metric, value in status.items():
+            yield metric, value
 
         yield "Worker/Count/Accepting", len(accepting_workers)
         yield "Worker/Count/Max", len(workers)
