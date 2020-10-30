@@ -12,20 +12,19 @@ STATS_ENDPOINT = "http://example.com"
 
 class TestUWSGINewRelicStatsGenerator:
     def test_it_calls_the_end_point_and_returns_stats(self, stats, requests):
-        results = list(stats())
+        results = stats()
 
+        assert results == Any.generator.containing([("Custom/Alive/Metrics", 1)])
         requests.get.assert_called_once_with(url=STATS_ENDPOINT, timeout=1)
-
-        assert results == Any.list.containing([("Custom/Alive/Metrics", 1)])
 
     def test_it_returns_basic_stats_when_the_request_fails(self, stats, requests):
         requests.get.side_effect = RequestException
 
-        results = list(stats())
+        results = stats()
 
         assert (
             results
-            == Any.list.containing(
+            == Any.generator.containing(
                 [("Custom/Alive/Metrics", 1), ("Custom/Alive/App", 0)]
             ).only()
         )
