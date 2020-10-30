@@ -46,8 +46,6 @@ class TestUWSGINewRelicStatsGenerator:
 
         results = list(stats())
 
-        print(results)
-
         # To maintain these tests when things change print out results, examine
         # them and then set them to expected if they look good
         expected = [
@@ -86,13 +84,13 @@ class TestUWSGINewRelicStatsGenerator:
                 {"total": 7, "count": 5, "min": 0, "max": 4, "sum_of_squares": 21},
             ),
             (
-                "Custom/Worker/Memory/Resident[kB]",
+                "Custom/Worker/Memory/Resident[kiloBytes]",
                 {
-                    "total": 44796.48,
+                    "total": 45871.57,
                     "count": 5,
-                    "min": 3.12,
-                    "max": 44784.0,
-                    "sum_of_squares": 2005606694,
+                    "min": 3.19,
+                    "max": 45858.81,
+                    "sum_of_squares": 2103030495,
                 },
             ),
             (
@@ -116,13 +114,13 @@ class TestUWSGINewRelicStatsGenerator:
                 },
             ),
             (
-                "Custom/Worker/Memory/Virtual[kB]",
+                "Custom/Worker/Memory/Virtual[kiloBytes]",
                 {
-                    "total": 748300.0,
+                    "total": 766259.2,
                     "count": 1,
-                    "min": 748300.0,
-                    "max": 748300.0,
-                    "sum_of_squares": 559952890000,
+                    "min": 766259.2,
+                    "max": 766259.2,
+                    "sum_of_squares": 587153161584,
                 },
             ),
         ]
