@@ -14,6 +14,7 @@ help:
 	@echo "make upgrade-package   Upgrade the version of a package in requirements.txt."
 	@echo '                       Usage: `make upgrade-package name=some-package`.'
 	@echo "make docker            Make the app's Docker image"
+	@echo "make run-docker        Run the app's Docker image locally."
 	@echo "make clean             Delete development artefacts (cached files, "
 	@echo "                       dependencies, etc)"
 
@@ -59,6 +60,24 @@ build: python
 .PHONY: docker
 docker:
 	@git archive --format=tar HEAD | docker build -t hypothesis/viahtml:$(DOCKER_TAG) -
+
+
+.PHONY: run-docker
+run-docker:
+	@docker run \
+	    -it --rm \
+	    -e "NEW_RELIC_LICENSE_KEY=$(NEW_RELIC_LICENSE_KEY)" \
+	    -e "NEW_RELIC_ENVIRONMENT=dev" \
+	    -e "NEW_RELIC_APP_NAME=viahtml (dev)" \
+	    -e "VIA_H_EMBED_URL=https://cdn.hypothes.is/hypothesis@qa" \
+	    -e "VIA_IGNORE_PREFIXES=https://qa.hypothes.is/,https://cdn.hypothes.is/" \
+	    -e "VIA_BLOCKLIST_URL=https://hypothesis-via.s3-us-west-1.amazonaws.com/via-blocklist.txt" \
+	    -e "VIA_BLOCKLIST_PATH=/var/lib/hypothesis/blocklist.txt" \
+	    -e "VIA_ROUTING_HOST=http://localhost:9083" \
+	    -e "VIA_DEBUG=1"  \
+	    -p 9085:9085 \
+	    --name viahtml hypothesis/viahtml:$(DOCKER_TAG)
+
 
 .PHONY: clean
 clean:
