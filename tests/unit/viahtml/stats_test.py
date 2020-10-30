@@ -52,15 +52,15 @@ class TestUWSGINewRelicStatsGenerator:
             ("Custom/Alive/Metrics", 1),
             ("Custom/Alive/App", 1),
             ("Custom/System/Load", 16),
-            ("Custom/ListenQueue/Size", 12),
-            ("Custom/ListenQueue/Errors", 13),
-            ("Custom/SignalQueue/Size", 14),
+            ("Custom/Queue/Listen/Size", 12),
+            ("Custom/Queue/Listen/Errors", 13),
+            ("Custom/Queue/Signal/Size", 14),
             (
-                "Custom/Socket/Queue/Size",
+                "Custom/Queue/Socket/Size",
                 {"total": 17, "count": 1, "min": 17, "max": 17, "sum_of_squares": 289},
             ),
             (
-                "Custom/Socket/Queue/Max",
+                "Custom/Queue/Socket/Max",
                 {
                     "total": 100,
                     "count": 1,
@@ -69,6 +69,8 @@ class TestUWSGINewRelicStatsGenerator:
                     "sum_of_squares": 10000,
                 },
             ),
+            ("Custom/Worker/Count/Cheap", 6),
+            ("Custom/Worker/Count/Idle", 1),
             ("Custom/Worker/Count/Accepting", 5),
             ("Custom/Worker/Count/Max", 7),
             (
@@ -80,7 +82,7 @@ class TestUWSGINewRelicStatsGenerator:
                 {"total": 7, "count": 5, "min": 0, "max": 5, "sum_of_squares": 29},
             ),
             (
-                "Custom/Worker/Killed",
+                "Custom/Worker/Count/Killed",
                 {"total": 7, "count": 5, "min": 0, "max": 4, "sum_of_squares": 21},
             ),
             (
