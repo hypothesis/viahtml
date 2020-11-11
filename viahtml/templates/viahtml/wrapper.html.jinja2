@@ -14,7 +14,7 @@
         ga('send', 'pageview');
     </script>
   </head>
-  <body>
+  <body {% block body_attrs %}{% endblock %}>
     {% block content %}
     {% endblock %}
     <footer>

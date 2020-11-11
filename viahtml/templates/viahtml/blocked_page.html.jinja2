@@ -4,44 +4,89 @@
     Content not available
 {% endblock %}
 
+{% macro how_to_access() %}
+    <p>
+        <strong>To view the annotations on this page:</strong>
+    </p>
+
+    <ol>
+        <li>
+            Follow the <a href="https://web.hypothes.is/" target="_blank">instructions
+            on our homepage</a> to install our browser extension.
+        </li>
+        <li>
+            Visit the page directly at
+            <a href="{{ url_to_annotate | e }}" target="_blank">{{ url_to_annotate }}</a>
+            and click on the extension icon to see the annotations.
+        </li>
+    </ol>
+{% endmacro %}
+
+{% macro bad_site_ahead() %}
+    <div class='icon danger'></div>
+
+    <p>
+        <strong>Attackers</strong> on the site may trick you into doing
+        something <strong>dangerous</strong> like installing software
+        or revealing your personal information (for example, passwords,
+        phone numbers or credit cards).
+    </p>
+
+    {# Do what we can to prevent the user from selecting the text #}
+    <p
+        style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;"
+        unselectable="on"
+        onselectstart="return false;"
+        onmousedown="return false;"
+    >
+        Original URL: {{ url_to_annotate }}
+    </p>
+{% endmacro %}
+
+{% block body_attrs %}
+    {% if reason.value == "malicious" %}
+         class="danger"
+    {% endif %}
+{% endblock %}
+
 {% block content %}
-    {% if reason.value == 'publisher-blocked' %}
+    {% if reason.value == "malicious" %}
+        {% set text = {
+            "heading": "Deceptive site ahead",
+            "details": "This site is not available through Hypothesis as it has
+                been blocked for hosting potentially <strong>harmful</strong> content."
+        } %}
+
+    {% elif reason.value == "publisher-blocked" %}
         {% set text = {
             "heading": "Content not available",
-            "details": "Unfortunately, the publisher of this page has requested that we disallow access
-        to it through this Hypothesis service. That means we can't show you the page
-        you were looking for right away…"
+            "details": "Unfortunately, the publisher of this page has requested
+                that we disallow access to it through this Hypothesis service.
+                That means we can't show you the page you were looking for
+                right away…"
         } %}
+
     {% else %}
         {% set text = {
             "heading": "Content cannot be annotated",
-            "details": "Unfortunately, the contents of this page cannot be annotated through this Hypothesis service."
+            "details": "Unfortunately, the contents of this page cannot be
+                annotated through this Hypothesis service."
         } %}
     {% endif %}
 
     <!-- Block reason: {{ reason }} -->
-
     <header>
       <h1>{{ text.heading }}</h1>
     </header>
 
     <article>
         <p>{{ text.details }}</p>
-
-        <p>
-            <strong>To view the annotations on this page:</strong>
-        </p>
-
-        <ol>
-            <li>
-                Follow the <a href="https://web.hypothes.is/" target="_blank">instructions
-                on our homepage</a> to install our browser extension.
-            </li>
-            <li>
-                Visit the page directly at
-                <a href="{{ url_to_annotate | e }}" target="_blank">{{ url_to_annotate }}</a>
-                and click on the extension icon to see the annotations.
-            </li>
-        </ol>
     </article>
+
+    {% if reason.value == "malicious" %}
+        {{ bad_site_ahead()}}
+    {% else %}
+        {{ how_to_access() }}
+    {% endif %}
+
 {% endblock %}
