@@ -36,6 +36,7 @@ class TestBlocklist:
         "line,reason",
         (
             ("example.com publisher-blocked", Blocklist.Reason.PUBLISHER_BLOCKED),
+            ("example.com malicious", Blocklist.Reason.MALICIOUS),
             ("   example.com    media-mixed   ", Blocklist.Reason.MEDIA_MIXED),
             (
                 "example.com media-image   # trailing comment",
