@@ -21,6 +21,7 @@ class Blocklist:
     class Reason(Enum):
         """List of reasons a blocklist can be blocked."""
 
+        MALICIOUS = "malicious"  # Actively hostile content of some kind
         PUBLISHER_BLOCKED = "publisher-blocked"  # Content owner has asked us to block
         MEDIA_VIDEO = "media-video"  # Sites which are mostly video content
         MEDIA_AUDIO = "media-audio"  # Sites which are mostly audio content
