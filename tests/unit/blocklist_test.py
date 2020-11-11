@@ -62,6 +62,28 @@ class TestBlocklist:
         assert blocklist.domains == ({"example.com": reason} if reason else {})
 
     @pytest.mark.parametrize(
+        "line,reason",
+        (
+            ("*.example.com publisher-blocked", Blocklist.Reason.PUBLISHER_BLOCKED),
+            ("*.example.com rubbish", Blocklist.Reason.OTHER),
+            ("*.example.com", None),
+        ),
+    )
+    def test_file_loading_wildcards(self, tmp_path, line, reason):
+        filename = tmp_path / "blocklist.txt"
+        filename.write_text(line)
+
+        blocklist = Blocklist(filename)
+
+        if not reason:
+            assert blocklist.patterns == {}
+        else:
+            assert len(blocklist.patterns) == 1
+            ((domain, found_reason),) = blocklist.patterns.items()
+            assert found_reason == reason
+            assert domain.pattern == r"^.*\.example\.com$"
+
+    @pytest.mark.parametrize(
         "url,expected_blocked",
         (
             ("https://www.example.com", True),
@@ -73,11 +95,16 @@ class TestBlocklist:
             # Sub-domains don't count
             ("http://example.com", False),
             ("http://example.org", False),
+            # Wildcard matching
+            ("anything.example.net", True),
+            ("anything.nested.example.net", True),
+            ("thisisfineexample.net", False),
         ),
     )
     def test_url_matching(self, url, expected_blocked):
         blocklist = Blocklist("missing.txt")
-        blocklist.domains = {"www.example.com": Blocklist.Reason.OTHER}
+        blocklist.add_domain("www.example.com", Blocklist.Reason.OTHER)
+        blocklist.add_domain("*.example.net", Blocklist.Reason.OTHER)
 
         assert bool(blocklist.is_blocked(url)) == expected_blocked
 
