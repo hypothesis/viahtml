@@ -47,15 +47,45 @@ class Blocklist:
         self._filename = filename
         self._last_modified = None
         self.domains = {}
+        self.patterns = {}
 
         self._refresh()
 
     def is_blocked(self, url):
-        """Get the blocked reason for a URL, or None if it's not blocked."""
+        """Get the blocked reason for a URL, or False if it's not blocked."""
         self._refresh()
 
         domain = self._domain(url)
-        return self.domains.get(domain, False)
+        blocked = self.domains.get(domain)
+        if blocked:
+            return blocked
+
+        for pattern, reason in self.patterns.items():
+            if pattern.match(domain):
+                return reason
+
+        return False
+
+    def clear(self):
+        """Remove all domains from the blocklist."""
+        self.domains, self.patterns = {}, {}
+
+    def add_domain(self, domain, reason):
+        """Add a domain (or domain pattern) to the blocklist."""
+
+        reason = Blocklist.Reason.parse(reason)
+        if reason in self.PERMITTED:
+            # This is listed as blocked, but this service can actually
+            # serve this type without incident
+            return
+
+        if "*" in domain:
+            # Convert a string with '*' wildcards into a regex
+            pattern = "^" + re.escape(domain).replace("\\*", ".*") + "$"
+            pattern = re.compile(pattern, re.IGNORECASE)
+            self.patterns[pattern] = reason
+        else:
+            self.domains[domain] = reason
 
     @classmethod
     def _domain(cls, url):
@@ -69,7 +99,10 @@ class Blocklist:
     def _refresh(self):
         if self._file_changed:
             self.LOG.debug("Reloading blocklist file")
-            self.domains = self._parse(self._filename)
+
+            self.clear()
+            for domain, reason in self._parse(self._filename):
+                self.add_domain(domain, reason)
 
     @property
     def _file_changed(self):
@@ -88,8 +121,6 @@ class Blocklist:
 
     @classmethod
     def _parse(cls, filename):
-        blocked_domains = {}
-
         with open(filename) as handle:
             for line in handle:
                 line = line.strip()
@@ -105,12 +136,4 @@ class Blocklist:
                     cls.LOG.warning("Cannot parse blocklist file line: '%s'")
                     continue
 
-                reason = Blocklist.Reason.parse(reason)
-                if reason in cls.PERMITTED:
-                    # This is listed as blocked, but this service can actually
-                    # serve this type without incident
-                    continue
-
-                blocked_domains[domain] = reason
-
-        return blocked_domains
+                yield domain, reason
