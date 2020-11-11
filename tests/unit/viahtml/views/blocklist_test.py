@@ -42,6 +42,7 @@ class TestBlocklistView:
     @pytest.mark.parametrize(
         "block_reason,expected_heading",
         (
+            (Blocklist_.Reason.MALICIOUS, "Deceptive site ahead"),
             (Blocklist_.Reason.MEDIA_VIDEO, "Content cannot be annotated"),
             (Blocklist_.Reason.HIGH_IO, "Content cannot be annotated"),
             (Blocklist_.Reason.PUBLISHER_BLOCKED, "Content not available"),

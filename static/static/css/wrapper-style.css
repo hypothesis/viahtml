@@ -125,3 +125,20 @@ footer {
   h1 {font-size: 48px; line-height: 48px;}
   p, ol li {font-size: 18px; line-height: 24px;}
 }
+
+/* Add exceptions for malicious view */
+
+.icon.danger {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  margin-right:10px;
+  background: url('../img/warning.svg');
+  background-size: 48px 48px;
+}
+
+body.danger {
+  color:white;
+  background-color: #aa0000;
+}
+
