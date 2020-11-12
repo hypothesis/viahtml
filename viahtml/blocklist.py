@@ -1,5 +1,6 @@
 """The abstract blocklist object."""
 
+import fnmatch
 import os
 import re
 from enum import Enum
@@ -81,8 +82,7 @@ class Blocklist:
 
         if "*" in domain:
             # Convert a string with '*' wildcards into a regex
-            pattern = "^" + re.escape(domain).replace("\\*", ".*") + "$"
-            pattern = re.compile(pattern, re.IGNORECASE)
+            pattern = re.compile(fnmatch.translate(domain), re.IGNORECASE)
             self.patterns[pattern] = reason
         else:
             self.domains[domain] = reason

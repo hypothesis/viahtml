@@ -81,7 +81,8 @@ class TestBlocklist:
             assert len(blocklist.patterns) == 1
             ((domain, found_reason),) = blocklist.patterns.items()
             assert found_reason == reason
-            assert domain.pattern == r"^.*\.example\.com$"
+            # This regex happens to be what `fnmatch.translate` spits out
+            assert domain.pattern == r"(?s:.*\.example\.com)\Z"
 
     @pytest.mark.parametrize(
         "url,expected_blocked",
