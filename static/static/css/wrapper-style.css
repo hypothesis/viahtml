@@ -116,6 +116,7 @@ footer {
   height:28px;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAA4CAQAAAARWLNhAAABgUlEQVR42u2Yz0rDQBDGhwpKe6wUSXspepE+gGfv+gCtPaTv4EMIHrx7K0iepILXmQ2btAQECYmXnoSWStUYxNLdNmoKsyCab2677P6WbybZPwAwapCDESbMEZEzasDH9GP2yT+DxikiXX1iLsgBA+ZoRoHR6dMoAJsDQBHOC0ABKAB/APCCUzwX+3I7Kfm78kic4Q3NWAFkw4rcA7xlA9AAMhSWacAEcI8hU34zv1HfAr4WXhsGuCdMADwlF6c0o3txEewogD0WgDikZ+UIcrnsSbbojaNMr7QzzoNWYU8cZXqnAV6TEjfgUe8Ly8wAnJgGzP8PgELqeJZnUYdCAwAKZXXRLqs6ggfQ1mqvzQ7wLHWUZ7EDhnV11LDODhBd7Q/W5a+iKKgt2oOafin7adPP+x3EZPvNdKezMS6uUL8PYPoibvwpwfhjiPHnnDyifub6+sCluIJyDSDjCvBJtlYOABPZAl6JngoQPeDXMhOM7mdmgtf9tUzwu69nYlP33wEjM9swn4BymAAAAABJRU5ErkJggg==);
   background-size: 24px 28px;
+
   font-size:0;
 }
 
@@ -129,12 +130,13 @@ footer {
 /* Add exceptions for malicious view */
 
 .icon.danger {
-  display: inline-block;
-  width: 48px;
-  height: 48px;
-  margin-right:10px;
+  display: block;
+  height: 64px;
+  margin-bottom:10px;
   background: url('../img/warning.svg');
-  background-size: 48px 48px;
+  background-size: 64px 64px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 body.danger {

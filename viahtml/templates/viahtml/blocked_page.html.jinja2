@@ -23,8 +23,6 @@
 {% endmacro %}
 
 {% macro bad_site_ahead() %}
-    <div class='icon danger'></div>
-
     <p>
         <strong>Attackers</strong> on the site may trick you into doing
         something <strong>dangerous</strong> like installing software
@@ -52,9 +50,9 @@
 {% block content %}
     {% if reason.value == "malicious" %}
         {% set text = {
-            "heading": "Deceptive site ahead",
-            "details": "This site is not available through Hypothesis as it has
-                been blocked for hosting potentially <strong>harmful</strong> content."
+            "heading": "    <div class='icon danger'></div>Deceptive site ahead",
+            "details": "This site is not available through Hypothesis because
+             it might be hosting <strong>harmful</strong> content."
         } %}
 
     {% elif reason.value == "publisher-blocked" %}
@@ -81,12 +79,12 @@
 
     <article>
         <p>{{ text.details }}</p>
-    </article>
 
-    {% if reason.value == "malicious" %}
-        {{ bad_site_ahead()}}
-    {% else %}
-        {{ how_to_access() }}
-    {% endif %}
+        {% if reason.value == "malicious" %}
+            {{ bad_site_ahead()}}
+        {% else %}
+            {{ how_to_access() }}
+        {% endif %}
+    </article>
 
 {% endblock %}
