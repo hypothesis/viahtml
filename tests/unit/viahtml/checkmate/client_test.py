@@ -1,5 +1,6 @@
 import pytest
-from requests.exceptions import ConnectionError, HTTPError, InvalidURL, Timeout
+from requests.exceptions import ConnectionError as ConnectionError_
+from requests.exceptions import HTTPError, InvalidURL, Timeout
 
 from viahtml.checkmate import CheckmateClient
 from viahtml.checkmate.exceptions import CheckmateException
@@ -31,7 +32,7 @@ class TestCheckmateClient:
     @pytest.mark.parametrize(
         "exception,expected",
         (
-            (ConnectionError, CheckmateException),
+            (ConnectionError_, CheckmateException),
             (Timeout, CheckmateException),
             (InvalidURL, InvalidURL),
         ),

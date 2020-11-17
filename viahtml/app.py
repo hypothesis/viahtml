@@ -25,7 +25,7 @@ class Application:
 
         self.views = (
             StatusView(),
-            BlocklistView(config["blocklist"]),
+            BlocklistView(config["checkmate_host"]),
             RoutingView(config["routing_host"]),
         )
 
@@ -72,8 +72,8 @@ class Application:
             "ignore_prefixes": cls._split_multiline(os.environ["VIA_IGNORE_PREFIXES"]),
             "h_embed_url": os.environ["VIA_H_EMBED_URL"],
             "debug": os.environ.get("VIA_DEBUG", False),
-            "blocklist": os.environ["VIA_BLOCKLIST_PATH"],
             "routing_host": os.environ["VIA_ROUTING_HOST"],
+            "checkmate_host": os.environ["CHECKMATE_URL"],
         }
 
     @classmethod

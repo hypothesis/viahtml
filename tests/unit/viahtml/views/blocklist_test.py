@@ -3,16 +3,17 @@ from unittest.mock import create_autospec, sentinel
 import pytest
 from h_matchers import Any
 
-from viahtml.blocklist import Blocklist as Blocklist_
+from viahtml.checkmate.exceptions import CheckmateException
+from viahtml.checkmate.response import BlockResponse
 from viahtml.views.blocklist import BlocklistView
 
 
 class TestBlocklistView:
-    def test_construction(self, Blocklist):
-        view = BlocklistView(sentinel.file_name)
+    def test_construction(self, CheckmateClient):
+        view = BlocklistView(sentinel.checkmate_host)
 
-        Blocklist.assert_called_once_with(sentinel.file_name)
-        assert view.blocklist == Blocklist.return_value
+        CheckmateClient.assert_called_once_with(sentinel.checkmate_host)
+        assert view.checkmate == CheckmateClient.return_value
 
     @pytest.mark.parametrize(
         "path,expected",
@@ -29,27 +30,37 @@ class TestBlocklistView:
         result = view("", {}, start_response)
 
         assert result is None
-        view.blocklist.assert_not_called()
+        view.checkmate.check_url.assert_not_called()
 
     def test_if_the_url_is_not_blocked_it_does_nothing(self, view, start_response):
-        view.blocklist.is_blocked.return_value = None
+        view.checkmate.check_url.return_value = None
 
         result = view("/proxy/http://example.com", {}, start_response)
 
         assert result is None
-        view.blocklist.is_blocked.assert_called_once_with("http://example.com")
+        view.checkmate.check_url.assert_called_once_with("http://example.com")
+
+    def test_if_a_call_to_checkmate_fails_it_does_nothing(self, view, start_response):
+        view.checkmate.check_url.side_effect = CheckmateException
+
+        result = view("/proxy/http://example.com", {}, start_response)
+
+        assert result is None
 
     @pytest.mark.parametrize(
         "block_reason,expected_heading",
         (
-            (Blocklist_.Reason.MALICIOUS, "Deceptive site ahead"),
-            (Blocklist_.Reason.MEDIA_VIDEO, "Content cannot be annotated"),
-            (Blocklist_.Reason.HIGH_IO, "Content cannot be annotated"),
-            (Blocklist_.Reason.PUBLISHER_BLOCKED, "Content not available"),
+            ("malicious", "Deceptive site ahead"),
+            ("publisher-blocked", "Content not available"),
+            ("anything-else-at-all", "Content cannot be annotated"),
         ),
     )
-    def test_blocking(self, view, block_reason, start_response, expected_heading):
-        view.blocklist.is_blocked.return_value = block_reason
+    # pylint: disable=too-many-arguments
+    def test_blocking(
+        self, view, block_reason, start_response, expected_heading, block_response
+    ):
+        view.checkmate.check_url.return_value = block_response
+        block_response.reason_codes = [block_reason]
 
         result = view("/proxy/http://example.com", {}, start_response)
 
@@ -61,6 +72,10 @@ class TestBlocklistView:
         assert expected_heading in result[0].decode("utf-8")
 
     @pytest.fixture
+    def block_response(self):
+        return create_autospec(BlockResponse, spec_set=True, instance=True)
+
+    @pytest.fixture
     def start_response(self):
         def start_response(message, headers):  # pragma: no cover
             ...
@@ -69,9 +84,9 @@ class TestBlocklistView:
 
     @pytest.fixture
     def view(self):
-        return BlocklistView(sentinel.file_name)
+        return BlocklistView(sentinel.checkmate_host)
 
 
 @pytest.fixture(autouse=True)
-def Blocklist(patch):
-    return patch("viahtml.views.blocklist.Blocklist")
+def CheckmateClient(patch):
+    return patch("viahtml.views.blocklist.CheckmateClient")

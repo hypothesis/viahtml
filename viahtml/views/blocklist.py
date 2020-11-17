@@ -2,11 +2,15 @@
 
 import os
 import re
+from logging import getLogger
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pkg_resources import resource_filename
 
-from viahtml.blocklist import Blocklist
+from viahtml.checkmate import CheckmateClient
+from viahtml.checkmate.client import CheckmateException
+
+LOG = getLogger(__name__)
 
 
 class BlocklistView:
@@ -21,8 +25,8 @@ class BlocklistView:
         autoescape=select_autoescape(["html", "xml"]),
     )
 
-    def __init__(self, file_name):
-        self.blocklist = Blocklist(file_name)
+    def __init__(self, checkmate_host):
+        self.checkmate = CheckmateClient(checkmate_host)
 
     @classmethod
     def get_proxied_url(cls, path):
@@ -46,12 +50,17 @@ class BlocklistView:
         if not url:
             return None
 
-        reason = self.blocklist.is_blocked(url)
-        if not reason:
+        try:
+            hits = self.checkmate.check_url(url)
+        except CheckmateException as err:
+            LOG.warning("Failed to check URL against Checkmate: %s", err)
+            return None
+
+        if not hits:
             return None
 
         start_response("403 Forbidden", [("Content-Type", "text/html; charset=utf-8")])
 
         template = self.JINJA_ENV.get_template("viahtml/blocked_page.html.jinja2")
-        content = template.render(reason=reason, url_to_annotate=url)
+        content = template.render(reason=hits.reason_codes[0], url_to_annotate=url)
         return [content.encode("utf-8")]
