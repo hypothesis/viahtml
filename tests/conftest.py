@@ -10,6 +10,6 @@ def environment_variables():
             ]
         ),
         "VIA_DEBUG": "1",
-        "VIA_BLOCKLIST_PATH": "../conf/blocklist-dev.txt",
         "VIA_ROUTING_HOST": "http://example.com/via3",
+        "CHECKMATE_URL": "http://checkmate.example.com",
     }

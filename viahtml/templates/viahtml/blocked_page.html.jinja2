@@ -42,20 +42,20 @@
 {% endmacro %}
 
 {% block body_attrs %}
-    {% if reason.value == "malicious" %}
+    {% if reason == "malicious" %}
          class="danger"
     {% endif %}
 {% endblock %}
 
 {% block content %}
-    {% if reason.value == "malicious" %}
+    {% if reason == "malicious" %}
         {% set text = {
             "heading": "    <div class='icon danger'></div>Deceptive site ahead",
             "details": "This site is not available through Hypothesis because
              it might be hosting <strong>harmful</strong> content."
         } %}
 
-    {% elif reason.value == "publisher-blocked" %}
+    {% elif reason == "publisher-blocked" %}
         {% set text = {
             "heading": "Content not available",
             "details": "Unfortunately, the publisher of this page has requested
@@ -80,7 +80,7 @@
     <article>
         <p>{{ text.details }}</p>
 
-        {% if reason.value == "malicious" %}
+        {% if reason == "malicious" %}
             {{ bad_site_ahead()}}
         {% else %}
             {{ how_to_access() }}

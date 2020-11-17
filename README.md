@@ -54,11 +54,10 @@ Environment variables:
 
 | Name | Effect | Example |
 |------|--------|---------|
-| `VIA_BLOCKLIST_URL`   | Where to download the blocklist online | `https://some-aws-s3.bucket/file.txt` |
-| `VIA_BLOCKLIST_PATH`  | Where to store the blocklist locally   | `/var/lib/hypothesis/blocklist.txt` |
-| `VIA_DEBUG`           | Enable debugging logging in dev        | `1` |
-| `VIA_H_EMBED_URL`     | Client URL                             | `https://cdn.hypothes.is/hypothesis` |
-| `VIA_IGNORE_PREFIXES` | Prefixes not to proxy                  | `https://hypothes.is/,https://qa.hypothes.is/` |
+| `CHECKMATE_URL`       | The URL of the URL checking service       | `https://some-aws-machine` |
+| `VIA_DEBUG`           | Enable debugging logging in dev           | `1` |
+| `VIA_H_EMBED_URL`     | CheckmateClient URL                       | `https://cdn.hypothes.is/hypothesis` |
+| `VIA_IGNORE_PREFIXES` | Prefixes not to proxy                     | `https://hypothes.is/,https://qa.hypothes.is/` |
 | `VIA_ROUTING_HOST`    | The host to perform content based routing | `https://via3.hypothes.is` |
 
 For details of changing the blocklist see:

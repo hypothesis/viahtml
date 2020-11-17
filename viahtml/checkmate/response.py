@@ -1,4 +1,4 @@
-"""A response from the Checkmate service with reasons to block."""
+"""Objects for return values from Checkmate."""
 
 import json
 
@@ -16,7 +16,7 @@ class BlockResponse:
     )
 
     def __init__(self, payload):
-        """Creates a response object from the given response from Checkmate.
+        """Initialise a response object from the given response from Checkmate.
 
         :raises CheckmateException: If the payload is malformed
         :param payload: Decoded JSON response from the Checkmate service.
