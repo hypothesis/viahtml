@@ -1,4 +1,0 @@
-example.org publisher-blocked
-example.net media-video
-bad.example.com malicious
-*.example.edu other
