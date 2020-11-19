@@ -1,10 +1,9 @@
 from unittest.mock import create_autospec, sentinel
 
 import pytest
+from checkmatelib.exceptions import CheckmateException
 from h_matchers import Any
 
-from viahtml.checkmate.exceptions import CheckmateException
-from viahtml.checkmate.response import BlockResponse
 from viahtml.views.blocklist import BlocklistView
 
 
@@ -55,12 +54,8 @@ class TestBlocklistView:
             ("anything-else-at-all", "Content cannot be annotated"),
         ),
     )
-    # pylint: disable=too-many-arguments
-    def test_blocking(
-        self, view, block_reason, start_response, expected_heading, block_response
-    ):
-        view.checkmate.check_url.return_value = block_response
-        block_response.reason_codes = [block_reason]
+    def test_blocking(self, view, block_reason, start_response, expected_heading):
+        view.checkmate.check_url.return_value.reason_codes = [block_reason]
 
         result = view("/proxy/http://example.com", {}, start_response)
 
@@ -70,10 +65,6 @@ class TestBlocklistView:
 
         assert result == Any.list.of_size(1)
         assert expected_heading in result[0].decode("utf-8")
-
-    @pytest.fixture
-    def block_response(self):
-        return create_autospec(BlockResponse, spec_set=True, instance=True)
 
     @pytest.fixture
     def start_response(self):

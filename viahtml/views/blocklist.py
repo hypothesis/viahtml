@@ -4,11 +4,9 @@ import os
 import re
 from logging import getLogger
 
+from checkmatelib import CheckmateClient, CheckmateException
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pkg_resources import resource_filename
-
-from viahtml.checkmate import CheckmateClient
-from viahtml.checkmate.client import CheckmateException
 
 LOG = getLogger(__name__)
 
