@@ -14,13 +14,15 @@ chardet==3.0.4            # via requests
 cryptography==3.1         # via pyopenssl
 defusedxml==0.6.0         # via py3amf
 fakeredis==0.16.0         # via pywb
+future==0.18.2            # via h-checkmatelib
 gevent==1.4.0             # via pywb
 greenlet==0.4.16          # via gevent
+h-checkmatelib==1.0.0     # via -r requirements.in
 h-vialib==1.0.0           # via -r requirements.in
 idna==2.10                # via requests, tldextract
 importlib-metadata==2.0.0  # via jsonschema
 jinja2==2.11.2            # via -r requirements.in, pywb
-jsonschema==3.2.0         # via -r requirements.in
+jsonschema==3.2.0         # via h-checkmatelib
 markupsafe==1.1.1         # via jinja2
 newrelic==5.22.1.152      # via -r requirements.in
 portalocker==2.0.0        # via pywb
@@ -33,7 +35,7 @@ pywb==2.4.2               # via -r requirements.in
 pyyaml==5.3.1             # via pywb
 redis==2.10.6             # via fakeredis, pywb
 requests-file==1.5.1      # via tldextract
-requests==2.24.0          # via pywb, requests-file, tldextract
+requests==2.24.0          # via h-checkmatelib, pywb, requests-file, tldextract
 six==1.15.0               # via cryptography, jsonschema, pyopenssl, pywb, requests-file, surt, warcio, wsgiprox
 surt==0.3.1               # via pywb
 tldextract==2.2.3         # via certauth, pywb, surt
