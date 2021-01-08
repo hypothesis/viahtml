@@ -37,7 +37,9 @@ class TestBlocklistView:
         result = view("/proxy/http://example.com", {}, start_response)
 
         assert result is None
-        view.checkmate.check_url.assert_called_once_with("http://example.com")
+        view.checkmate.check_url.assert_called_once_with(
+            "http://example.com", allow_all=True
+        )
 
     def test_if_a_call_to_checkmate_fails_it_does_nothing(self, view, start_response):
         view.checkmate.check_url.side_effect = CheckmateException
