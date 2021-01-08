@@ -49,7 +49,7 @@ class BlocklistView:
             return None
 
         try:
-            hits = self.checkmate.check_url(url)
+            hits = self.checkmate.check_url(url, allow_all=True)
         except CheckmateException as err:
             LOG.warning("Failed to check URL against Checkmate: %s", err)
             return None
