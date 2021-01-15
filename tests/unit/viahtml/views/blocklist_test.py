@@ -2,7 +2,6 @@ from unittest.mock import create_autospec, sentinel
 
 import pytest
 from checkmatelib.exceptions import CheckmateException
-from h_matchers import Any
 
 from viahtml.views.blocklist import BlocklistView
 
@@ -48,25 +47,17 @@ class TestBlocklistView:
 
         assert result is None
 
-    @pytest.mark.parametrize(
-        "block_reason,expected_heading",
-        (
-            ("malicious", "Deceptive site ahead"),
-            ("publisher-blocked", "Content not available"),
-            ("anything-else-at-all", "Content cannot be annotated"),
-        ),
-    )
-    def test_blocking(self, view, block_reason, start_response, expected_heading):
-        view.checkmate.check_url.return_value.reason_codes = [block_reason]
+    def test_blocking(self, view, start_response):
+        blocked_response = view.checkmate.check_url.return_value
+        blocked_response.reason_codes = ["some_reason"]
 
         result = view("/proxy/http://example.com", {}, start_response)
 
         start_response.assert_called_once_with(
-            "403 Forbidden", [("Content-Type", "text/html; charset=utf-8")]
+            "307 Temporary Redirect", [("Location", blocked_response.presentation_url)]
         )
 
-        assert result == Any.list.of_size(1)
-        assert expected_heading in result[0].decode("utf-8")
+        assert result == []
 
     @pytest.fixture
     def start_response(self):
