@@ -17,11 +17,11 @@ fakeredis==0.16.0         # via pywb
 future==0.18.2            # via h-checkmatelib
 gevent==1.4.0             # via pywb
 greenlet==0.4.16          # via gevent
-h-checkmatelib==1.0.2     # via -r requirements.in
+h-checkmatelib==1.0.3     # via -r requirements.in
 h-vialib==1.0.0           # via -r requirements.in
 idna==2.10                # via requests, tldextract
 importlib-metadata==2.0.0  # via jsonschema
-jinja2==2.11.2            # via -r requirements.in, pywb
+jinja2==2.11.2            # via pywb
 jsonschema==3.2.0         # via h-checkmatelib
 markupsafe==1.1.1         # via jinja2
 newrelic==5.22.1.152      # via -r requirements.in

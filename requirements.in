@@ -1,7 +1,6 @@
 h_vialib
 uwsgi
 pywb
-jinja2
 whitenoise
 newrelic
 h-checkmatelib
