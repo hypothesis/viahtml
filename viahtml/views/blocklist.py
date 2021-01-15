@@ -1,12 +1,9 @@
 """The blocklist view."""
 
-import os
 import re
 from logging import getLogger
 
 from checkmatelib import CheckmateClient, CheckmateException
-from jinja2 import Environment, FileSystemLoader, select_autoescape
-from pkg_resources import resource_filename
 
 LOG = getLogger(__name__)
 
@@ -15,13 +12,6 @@ class BlocklistView:
     """A view which checks for blocked pages and returns a blocked page."""
 
     PROXY_PATTERN = re.compile(r"^/proxy/(?:[a-z]{2}_/)?(.*)$")
-
-    JINJA_ENV = Environment(
-        loader=FileSystemLoader(
-            os.path.abspath(resource_filename("viahtml", "templates"))
-        ),
-        autoescape=select_autoescape(["html", "xml"]),
-    )
 
     def __init__(self, checkmate_host):
         self.checkmate = CheckmateClient(checkmate_host)
@@ -49,16 +39,16 @@ class BlocklistView:
             return None
 
         try:
-            hits = self.checkmate.check_url(url, allow_all=True)
+            blocked = self.checkmate.check_url(url, allow_all=True)
         except CheckmateException as err:
             LOG.warning("Failed to check URL against Checkmate: %s", err)
             return None
 
-        if not hits:
+        if not blocked:
             return None
 
-        start_response("403 Forbidden", [("Content-Type", "text/html; charset=utf-8")])
-
-        template = self.JINJA_ENV.get_template("viahtml/blocked_page.html.jinja2")
-        content = template.render(reason=hits.reason_codes[0], url_to_annotate=url)
-        return [content.encode("utf-8")]
+        # Redirect the user to the presentation URL given to us by Checkmate
+        start_response(
+            "307 Temporary Redirect", [("Location", blocked.presentation_url)]
+        )
+        return []
