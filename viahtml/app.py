@@ -9,6 +9,7 @@ from werkzeug.wsgi import get_path_info
 from viahtml.hooks import Hooks
 from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks
 from viahtml.views.blocklist import BlocklistView
+from viahtml.views.robots import RobotsView
 from viahtml.views.routing import RoutingView
 from viahtml.views.status import StatusView
 
@@ -27,6 +28,7 @@ class Application:
             StatusView(),
             BlocklistView(config["checkmate_host"]),
             RoutingView(config["routing_host"]),
+            RobotsView(),
         )
 
         # Setup hook points and apply those which must be done pre-application
