@@ -1,4 +1,5 @@
 import pytest
+from h_matchers import Any
 from pytest import param
 
 from viahtml.hooks._headers import Headers
@@ -68,6 +69,13 @@ class TestHeaders:
             if header[0].lower() == "cache-control"
         ]
         assert cache_control_headers == [("Cache-Control", expected)]
+
+    def test_modify_outbound_inserts_noindex_header(self, headers):
+        modified_headers = headers.modify_outbound([])
+
+        assert modified_headers == Any.list.containing(
+            [("X-Robots-Tag", "noindex, nofollow")]
+        )
 
     @pytest.fixture(
         params=(

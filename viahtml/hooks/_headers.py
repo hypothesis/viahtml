@@ -91,6 +91,8 @@ class Headers:
             ):
                 headers.append((header, value))
 
+        headers.append(("X-Robots-Tag", "noindex, nofollow"))
+
         return headers
 
     def translate_cache_control(self, value):
