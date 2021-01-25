@@ -26,14 +26,17 @@ class TestHeaders:
     def test_modify_outbound_removes_blocked_items(
         self, headers, header_name, string_case
     ):
-        items = (
-            ("Other-Header", "ok"),
-            (string_case(header_name), "blocked"),
-        )
+        # A header that modify_outbound() should remove.
+        blocked_header = (string_case(header_name), "blocked")
+        # A header that modify_outbound() should allow.
+        expected_header = ("Other-Header", "ok")
 
-        items = headers.modify_outbound(items)
+        original_headers = [blocked_header, expected_header]
 
-        assert items == [("Other-Header", "ok")]
+        modified_headers = headers.modify_outbound(original_headers)
+
+        assert blocked_header not in modified_headers
+        assert expected_header in modified_headers
 
     @pytest.mark.parametrize(
         "value,expected",
@@ -52,12 +55,19 @@ class TestHeaders:
             ("public, max-age=604800", "public, max-age=604800"),
         ),
     )
-    def test_cache_control_translation(self, headers, value, expected, string_case):
-        items = headers.modify_outbound(
+    def test_modify_outbound_translates_cache_control_headers(
+        self, headers, value, expected, string_case
+    ):
+        modified_headers = headers.modify_outbound(
             ((string_case("X-Archive-Orig-Cache-Control"), value),)
         )
 
-        assert items == [("Cache-Control", expected)]
+        cache_control_headers = [
+            header
+            for header in modified_headers
+            if header[0].lower() == "cache-control"
+        ]
+        assert cache_control_headers == [("Cache-Control", expected)]
 
     @pytest.fixture(
         params=(
