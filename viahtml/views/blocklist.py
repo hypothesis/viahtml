@@ -11,8 +11,8 @@ LOG = getLogger(__name__)
 class BlocklistView:
     """A view which checks for blocked pages and returns a blocked page."""
 
-    def __init__(self, checkmate_host):
-        self.checkmate = CheckmateClient(checkmate_host)
+    def __init__(self, checkmate_host, checkmate_api_key):
+        self.checkmate = CheckmateClient(checkmate_host, checkmate_api_key)
 
     def __call__(self, context):
         """Provide a block page response if required.

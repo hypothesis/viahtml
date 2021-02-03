@@ -37,7 +37,7 @@ class Application:
                 required=not config["disable_authentication"],
                 http_mode=config["http_mode"],
             ),
-            BlocklistView(config["checkmate_host"]),
+            BlocklistView(config["checkmate_host"], config["checkmate_api_key"]),
             RoutingView(config["routing_host"]),
         )
 
@@ -97,6 +97,7 @@ class Application:
             ),
             "checkmate_host": os.environ["CHECKMATE_URL"],
             "http_mode": asbool(os.environ.get("VIA_HTTP_MODE", False)),
+            "checkmate_api_key": os.environ["CHECKMATE_API_KEY"],
         }
 
     @classmethod

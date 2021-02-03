@@ -55,6 +55,7 @@ Environment variables:
 | Name | Effect | Example |
 |------|--------|---------|
 | `CHECKMATE_URL`       | The URL of the URL checking service       | `https://some-aws-machine` |
+| `CHECKMATE_API_KEY`   | API key to authenticate with checkmate    | `dev_api_key` |
 | `VIA_DEBUG`           | Enable debugging logging in dev           | `1` |
 | `VIA_H_EMBED_URL`     | Hypothesis client URL                     | `https://cdn.hypothes.is/hypothesis` |
 | `VIA_IGNORE_PREFIXES` | Prefixes not to proxy                     | `https://hypothes.is/,https://qa.hypothes.is/` |
