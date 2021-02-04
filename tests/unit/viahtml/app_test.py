@@ -88,7 +88,6 @@ class TestApplication:
     HEADERS = (("Header", "Value"),)
 
     def test_it_wraps_pywb(self, app, start_response):
-        print(app.hooks)
         result = app({}, start_response)
 
         assert result == start_response.return_value
@@ -112,13 +111,15 @@ class TestApplication:
 
     @pytest.mark.parametrize("return_value", (["Hello"], []))
     # pylint: disable=too-many-arguments
-    def test_it_applies_views(self, view, app, start_response, environ, return_value):
-        environ["PATH_INFO"] = "/path"
+    def test_it_applies_views(
+        self, view, app, start_response, environ, return_value, Context
+    ):
         view.return_value = return_value
 
         result = app(environ, start_response)
 
-        view.assert_called_once_with("/path", environ, start_response)
+        Context.assert_called_once_with(environ, start_response)
+        view.assert_called_once_with(Context.return_value)
         assert result == view.return_value
 
     def test_it_does_not_apply_views_if_they_have_no_return_value(
@@ -133,9 +134,8 @@ class TestApplication:
     @pytest.fixture
     def view(self, app):
         view = create_autospec(
-            lambda path, environ, start_response: None
+            lambda context: None, spec_set=True, return_value=None
         )  # pragma: no cover
-        view.return_value = None
         app.views = [view]
 
         return view
@@ -170,6 +170,10 @@ class TestApplication:
     @pytest.fixture(autouse=True)
     def apply_post_app_hooks(self, patch):
         return patch("viahtml.app.apply_post_app_hooks")
+
+    @pytest.fixture(autouse=True)
+    def Context(self, patch):
+        return patch("viahtml.app.Context")
 
 
 pytestmark = pytest.mark.usefixtures("os")

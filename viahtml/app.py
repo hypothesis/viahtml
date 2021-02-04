@@ -4,8 +4,8 @@ import os
 
 from pkg_resources import resource_filename
 from pywb.apps.frontendapp import FrontEndApp
-from werkzeug.wsgi import get_path_info
 
+from viahtml.context import Context
 from viahtml.hooks import Hooks
 from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks
 from viahtml.views.blocklist import BlocklistView
@@ -20,6 +20,7 @@ class Application:
         self._set_config_file()
 
         config = self._config_from_env()
+
         self._setup_logging(config["debug"])
         self.hooks = Hooks(config)
 
@@ -40,15 +41,21 @@ class Application:
     def __call__(self, environ, start_response):
         """Handle WSGI requests."""
 
+        context = Context(http_environ=environ, start_response=start_response)
+
         for view in self.views:
-            path = get_path_info(environ)
-            response = view(path, environ, start_response)
+            response = view(context)
             if response is not None:
                 return response
 
         # Looks like it's a normal request to proxy...
         def proxy_start_response(status, headers):
             headers = self.hooks.headers.modify_outbound(headers)
+
+            # If any of our views added headers as they went, add them now
+            if context.headers:
+                headers.extend(headers)
+
             return start_response(status, headers)
 
         environ = self.hooks.headers.modify_inbound(environ)

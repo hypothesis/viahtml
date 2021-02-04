@@ -1,7 +1,4 @@
-import json
-
 import pytest
-from h_matchers import Any
 
 from viahtml.views.status import StatusView
 
@@ -15,24 +12,21 @@ class TestStatusView:
             ("/http://example.com", False),
         ),
     )
-    def test_it_responds_to_the_status_url(self, path, responds, start_response):
-        response = StatusView()(path, {}, start_response)
+    def test_it_responds_to_the_status_url(self, path, responds, context):
+        context.path = path
+        StatusView()(context)
 
-        assert bool(response) == responds
+        if responds:
+            context.make_json_response.assert_called_once()
+        else:
+            context.make_json_response.assert_not_called()
 
-    def test_it_returns_the_expected_response(self, start_response):
-        response = StatusView()("/_status", {}, start_response)
+    def test_it_returns_the_expected_response(self, context):
+        context.path = "/_status"
 
-        start_response.assert_called_once_with(
-            "200 OK",
-            Any.list.containing(
-                [
-                    ("Cache-Control", "no-cache"),
-                    ("Content-Type", "application/json; charset=utf-8"),
-                ]
-            ).only(),
+        response = StatusView()(context)
+
+        context.make_json_response.assert_called_once_with(
+            {"status": "okay"}, headers={"Cache-Control": "no-cache"}
         )
-
-        assert isinstance(response, list)
-        body = json.loads(response[0])
-        assert body == {"status": "okay"}
+        assert response == context.make_json_response.return_value

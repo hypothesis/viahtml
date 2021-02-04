@@ -1,6 +1,6 @@
 """The blocklist view."""
 
-import re
+from http import HTTPStatus
 from logging import getLogger
 
 from checkmatelib import CheckmateClient, CheckmateException
@@ -11,30 +11,16 @@ LOG = getLogger(__name__)
 class BlocklistView:
     """A view which checks for blocked pages and returns a blocked page."""
 
-    PROXY_PATTERN = re.compile(r"^/proxy/(?:[a-z]{2}_/)?(.*)$")
-
     def __init__(self, checkmate_host):
         self.checkmate = CheckmateClient(checkmate_host)
 
-    @classmethod
-    def get_proxied_url(cls, path):
-        """Get the proxied URL from a WSGI environment variable."""
-
-        match = cls.PROXY_PATTERN.match(path)
-        if match:
-            return match.group(1)
-
-        return None
-
-    def __call__(self, path, environ, start_response):
+    def __call__(self, context):
         """Provide a block page response if required.
 
-        :param path: The url path of the request
-        :param environ: WSGI environ dict
-        :param start_response: WSGI `start_response()` function
+        :param context: Context object relating to this call
         :return: An iterator of content if required or None
         """
-        url = self.get_proxied_url(path)
+        url = context.proxied_url
         if not url:
             return None
 
@@ -48,7 +34,8 @@ class BlocklistView:
             return None
 
         # Redirect the user to the presentation URL given to us by Checkmate
-        start_response(
-            "307 Temporary Redirect", [("Location", blocked.presentation_url)]
+
+        return context.make_response(
+            HTTPStatus.TEMPORARY_REDIRECT,
+            headers={"Location": blocked.presentation_url},
         )
-        return []
