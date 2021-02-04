@@ -10,7 +10,6 @@ class TestFixupsToPywb:
         )
 
     def test_we_do_rewrite_other_rels(self, proxied_content):
-        print(proxied_content)
         assert (
             '<link rel="other" href="/proxy/oe_/http://localhost:8080/other.json"'
             in proxied_content

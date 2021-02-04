@@ -1,4 +1,5 @@
 """Handle requests from the root for routing."""
+from http import HTTPStatus
 
 
 class RoutingView:
@@ -19,15 +20,13 @@ class RoutingView:
         """
         self._routing_host = routing_host
 
-    def __call__(self, path, environ, start_response):
+    def __call__(self, context):
         """Redirect to the content based routing service if required.
 
-        :param path: The url path of the request
-        :param environ: WSGI environ dict
-        :param start_response: WSGI `start_response()` function
+        :param context: Context object relating to this call
         :return: An iterator of content if required or None
         """
-        if path != "/":
+        if context.path != "/":
             return None
 
         location = f"{self._routing_host.rstrip('/')}/"
@@ -39,9 +38,7 @@ class RoutingView:
             ]
         )
 
-        start_response(
-            "307 Temporary Redirect",
-            [("Location", location), ("Cache-Control", cache_control)],
+        return context.make_response(
+            HTTPStatus.TEMPORARY_REDIRECT,
+            headers={"Location": location, "Cache-Control": cache_control},
         )
-
-        return []
