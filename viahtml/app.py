@@ -50,11 +50,11 @@ class Application:
 
         # Looks like it's a normal request to proxy...
         def proxy_start_response(status, headers):
-            headers = self.hooks.headers.modify_outbound(headers)
-
             # If any of our views added headers as they went, add them now
             if context.headers:
-                headers.extend(headers)
+                headers.extend(context.headers)
+
+            headers = self.hooks.headers.modify_outbound(headers)
 
             return start_response(status, headers)
 

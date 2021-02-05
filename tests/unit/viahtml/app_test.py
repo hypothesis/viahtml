@@ -85,7 +85,6 @@ class TestApplication:
     # test code as it's very nested and functional
 
     STATUS = "200 OK"
-    HEADERS = (("Header", "Value"),)
 
     def test_it_wraps_pywb(self, app, start_response):
         result = app({}, start_response)
@@ -101,13 +100,27 @@ class TestApplication:
         modify_inbound.assert_called_once_with(environ)
         app.app.assert_called_once_with(modify_inbound.return_value, Any.function())
 
-    def test_it_modifies_outbound_headers(self, app, start_response, environ):
+    def test_it_modifies_outbound_headers(self, app, start_response, environ, headers):
         result = app(environ, start_response)
 
         assert result == start_response.return_value
         modified_outbound = app.hooks.headers.modify_outbound
-        modified_outbound.assert_called_once_with(self.HEADERS)
+        modified_outbound.assert_called_once_with(headers)
         start_response.assert_called_with(Any(), modified_outbound.return_value)
+
+    def test_it_adds_context_headers(self, app, start_response, environ, Context):
+        Context.return_value.headers = [("X-Foo", "Foo")]
+
+        app(environ, start_response)
+
+        modified_outbound = app.hooks.headers.modify_outbound
+        modified_outbound.assert_called_once_with(
+            [
+                # From the fixtures
+                ("Header", "Value"),
+                ("X-Foo", "Foo"),
+            ]
+        )
 
     @pytest.mark.parametrize("return_value", (["Hello"], []))
     # pylint: disable=too-many-arguments
@@ -150,8 +163,12 @@ class TestApplication:
     def app(self):
         return Application()
 
+    @pytest.fixture
+    def headers(self):
+        return [("Header", "Value")]
+
     @pytest.fixture(autouse=True)
-    def FrontEndApp(self, patch):
+    def FrontEndApp(self, patch, headers):
         FrontEndApp = patch("viahtml.app.FrontEndApp")
 
         # It's not in the spec, but this should have this object once
@@ -162,7 +179,7 @@ class TestApplication:
 
         # When the app is called, we need it to fake serving a request
         app.side_effect = lambda environ, start_request: start_request(
-            self.STATUS, self.HEADERS
+            self.STATUS, headers
         )
 
         return FrontEndApp
@@ -173,7 +190,10 @@ class TestApplication:
 
     @pytest.fixture(autouse=True)
     def Context(self, patch):
-        return patch("viahtml.app.Context")
+        Context = patch("viahtml.app.Context")
+        Context.return_value.headers = []
+
+        return Context
 
 
 pytestmark = pytest.mark.usefixtures("os")
