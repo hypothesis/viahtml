@@ -28,9 +28,9 @@ fakeredis==0.16.0
     # via pywb
 future==0.18.2
     # via h-checkmatelib
-gevent==20.9.0
+gevent==1.4.0
     # via pywb
-greenlet==1.0.0
+greenlet==0.4.16
     # via gevent
 h-checkmatelib==1.0.3
     # via -r requirements.in
@@ -62,7 +62,7 @@ pyrsistent==0.17.3
     # via jsonschema
 pytz==2020.1
     # via babel
-pywb==2.5.0
+pywb==2.4.2
     # via -r requirements.in
 pyyaml==5.3.1
     # via pywb
@@ -113,10 +113,6 @@ wsgiprox==1.5.2
     # via pywb
 zipp==3.4.0
     # via importlib-metadata
-zope.event==4.5.0
-    # via gevent
-zope.interface==5.2.0
-    # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
