@@ -48,6 +48,9 @@ class TestHeaders:
             ("max-age=604800", "max-age=604800"),
             ("private, max-age=0", "private, max-age=0"),
             ("private, max-age=604800", "private, max-age=604800"),
+            # Invalid max-age values
+            ("max-age=604800; public", "max-age=604800; public"),  # Wrong separator
+            ("public, max-age=10.23", "public, max-age=10.23"),  # Float
             # When the cache is public, and below cloudflare caching numbers, we
             # mark it as private only. The order changes a bit here too
             ("public, max-age=0", "max-age=0, private"),

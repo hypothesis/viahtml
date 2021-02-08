@@ -111,7 +111,14 @@ class Headers:
         if not parsed.public or parsed.max_age is None:
             return value
 
-        if parsed.max_age < self.CLOUDFLARE_MIN_CACHE_TIME:
+        try:
+            max_age = int(parsed.max_age)
+        except ValueError:
+            # `max_age` can end up being a string if the header is invalid
+            # (eg. float value, wrong separator char).
+            return value
+
+        if max_age < self.CLOUDFLARE_MIN_CACHE_TIME:
             parsed.public = False
             parsed.private = True
 
