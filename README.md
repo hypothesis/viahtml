@@ -56,7 +56,7 @@ Environment variables:
 |------|--------|---------|
 | `CHECKMATE_URL`       | The URL of the URL checking service       | `https://some-aws-machine` |
 | `VIA_DEBUG`           | Enable debugging logging in dev           | `1` |
-| `VIA_H_EMBED_URL`     | CheckmateClient URL                       | `https://cdn.hypothes.is/hypothesis` |
+| `VIA_H_EMBED_URL`     | Hypothesis client URL                     | `https://cdn.hypothes.is/hypothesis` |
 | `VIA_IGNORE_PREFIXES` | Prefixes not to proxy                     | `https://hypothes.is/,https://qa.hypothes.is/` |
 | `VIA_ROUTING_HOST`    | The host to perform content based routing | `https://via3.hypothes.is` |
 
