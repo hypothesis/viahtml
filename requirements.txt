@@ -34,7 +34,7 @@ greenlet==0.4.16
     # via gevent
 h-checkmatelib==1.0.3
     # via -r requirements.in
-h-vialib==1.0.0
+h_vialib==1.0.3
     # via -r requirements.in
 idna==2.10
     # via
@@ -56,6 +56,8 @@ py3amf==0.8.10
     # via pywb
 pycparser==2.20
     # via cffi
+pyjwt==2.0.1
+    # via h-vialib
 pyopenssl==19.1.0
     # via certauth
 pyrsistent==0.17.3
