@@ -48,15 +48,19 @@ class TestHeaders:
             ("max-age=604800", "max-age=604800"),
             ("private, max-age=0", "private, max-age=0"),
             ("private, max-age=604800", "private, max-age=604800"),
-            # Invalid max-age values
-            ("max-age=604800; public", "max-age=604800; public"),  # Wrong separator
-            ("public, max-age=10.23", "public, max-age=10.23"),  # Float
+            ("public, max-age=abc", "public, max-age=abc"),  # Invalid max-age value
+            ("public, max-age=", "public, max-age="),  # Missing max-age value
             # When the cache is public, and below cloudflare caching numbers, we
             # mark it as private only. The order changes a bit here too
             ("public, max-age=0", "max-age=0, private"),
             ("public, max-age=100", "max-age=100, private"),
             # Back to over the Cloudflare minimum
             ("public, max-age=604800", "public, max-age=604800"),
+            # Ignore trailing non-digit chars in the max-age value, because this
+            # is what browsers do.
+            ("public, max-age=604800; ignore-me", "public, max-age=604800"),
+            ("public, max-age=5000.23", "public, max-age=5000"),
+            ("public, max-age=10.23", "max-age=10, private"),
         ),
     )
     def test_modify_outbound_translates_cache_control_headers(
