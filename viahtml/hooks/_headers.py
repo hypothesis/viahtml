@@ -1,4 +1,6 @@
 """Specific configuration for headers."""
+from itertools import takewhile
+
 from werkzeug.datastructures import ResponseCacheControl
 from werkzeug.http import parse_cache_control_header
 
@@ -96,7 +98,7 @@ class Headers:
         return headers
 
     def translate_cache_control(self, value):
-        """Convert a cache-control header to respect Cloudlflare limits.
+        """Convert a cache-control header to respect Cloudflare limits.
 
         Where a caching header is marked as public and with a "max-age" below
         the Cloudflare minimum, convert it to "public" caching. This prevents
@@ -111,14 +113,18 @@ class Headers:
         if not parsed.public or parsed.max_age is None:
             return value
 
-        try:
-            max_age = int(parsed.max_age)
-        except ValueError:
-            # `max_age` can end up being a string if the header is invalid
-            # (eg. float value, wrong separator char).
-            return value
+        # `parsed.max_age` will be an `int` if the value consists only of digits
+        # but a `str` if it contains anything else.
+        if isinstance(parsed.max_age, str):
+            max_age_digits = "".join(takewhile(str.isdigit, parsed.max_age))
+            try:
+                parsed.max_age = int(max_age_digits)
+            except ValueError:
+                # If we couldn't extract a valid `max_age` value, treat it the same
+                # as if it were missing.
+                return value
 
-        if max_age < self.CLOUDFLARE_MIN_CACHE_TIME:
+        if parsed.max_age < self.CLOUDFLARE_MIN_CACHE_TIME:
             parsed.public = False
             parsed.private = True
 
