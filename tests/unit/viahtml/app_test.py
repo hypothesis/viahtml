@@ -5,9 +5,10 @@ from h_matchers import Any
 from pytest import param
 from pywb.apps.rewriterapp import RewriterApp
 
-from viahtml.app import Application
+from viahtml.app import Application, asbool
 
 
+@pytest.mark.usefixtures("os", "Hooks", "with_patched_views")
 class TestApplicationCreate:
     @patch("viahtml.app.apply_pre_app_hooks", autospec=True)
     def test_it_applies_pre_app_hooks(self, apply_pre_app_hooks, Hooks):
@@ -79,6 +80,7 @@ class TestApplicationCreate:
             yield logging
 
 
+@pytest.mark.usefixtures("os", "Hooks", "with_patched_views")
 class TestApplication:
     # Test the WSGI middleware wrapping behavior
     # This is a small amount code which generates a huge and annoying amount of
@@ -190,16 +192,63 @@ class TestApplication:
 
     @pytest.fixture(autouse=True)
     def Context(self, patch):
-        Context = patch("viahtml.app.Context")
-        Context.return_value.headers = []
-
-        return Context
+        return patch("viahtml.app.Context")
 
 
-pytestmark = pytest.mark.usefixtures("os")
+class TestAsBool:
+    @pytest.mark.parametrize("uppercase", [True, False])
+    @pytest.mark.parametrize("prefix", ["", " ", "   "])
+    @pytest.mark.parametrize("suffix", ["", " ", "   "])
+    @pytest.mark.parametrize(
+        "string,expected_output",
+        [
+            ("t", True),
+            ("true", True),
+            ("t", True),
+            ("true", True),
+            ("y", True),
+            ("yes", True),
+            ("on", True),
+            ("1", True),
+            ("", False),
+            ("f", False),
+            ("false", False),
+            ("n", False),
+            ("no", False),
+            ("off", False),
+            ("0", False),
+        ],
+    )
+    def test_asbool(
+        self, string, expected_output, uppercase, prefix, suffix
+    ):  # pylint: disable=too-many-arguments
+        if uppercase:
+            string = string.upper()
+        string = prefix + string + suffix
+
+        assert asbool(string) == expected_output
+
+    @pytest.mark.parametrize("value", [True, False])
+    def test_asbool_passes_booleans(self, value):
+        assert asbool(value) == value
+
+    def test_asbool_returns_falsey_for_None(self):
+        assert not asbool(None)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture
 def Hooks():
     with patch("viahtml.app.Hooks", autospec=True) as Hooks:
         yield Hooks
+
+
+@pytest.fixture
+def with_patched_views(patch):
+    for view_class in (
+        "StatusView",
+        "AuthenticationView",
+        "BlocklistView",
+        "RoutingView",
+    ):
+        view = patch(f"viahtml.app.{view_class}")
+        view.return_value.return_value = None
