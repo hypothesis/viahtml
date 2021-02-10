@@ -87,16 +87,6 @@ class TestAuthenticationView:
 
         assert result is None
 
-    def test_it_denies_bad_tokens_even_if_required_is_False(
-        self, context, ViaSecureURL, TokenBasedCookie
-    ):
-        TokenBasedCookie.return_value.verify.side_effect = InvalidToken("gone")
-        context.url = "http://via/proxy/http://example.com?via.sec=A_BAD_TOKEN"
-
-        result = AuthenticationView(secret="not_a_secret", required=False)(context)
-
-        self.assert_is_unauthorized_response(result, context)
-
     def assert_is_unauthorized_response(self, result, context):
         assert result is context.make_response.return_value
         context.make_response.assert_called_once_with(
