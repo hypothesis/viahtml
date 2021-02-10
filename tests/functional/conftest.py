@@ -24,7 +24,7 @@ def with_environ():
 
     # It's very hard to test with URL signing on, so disable it
     env_vars = environment_variables()
-    env_vars["VIA_DISABLE_VERIFICATION"] = "1"
+    env_vars["VIA_DISABLE_AUTHENTICATION"] = "1"
 
     os.environ.update(env_vars)
 

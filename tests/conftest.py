@@ -10,7 +10,7 @@ def environment_variables():
             ]
         ),
         "VIA_SECRET": "testing_secret",
-        "VIA_DISABLE_VERIFICATION": "0",
+        "VIA_DISABLE_AUTHENTICATION": "0",
         "VIA_DEBUG": "1",
         "VIA_ROUTING_HOST": "http://example.com/via3",
         "CHECKMATE_URL": "http://checkmate.example.com",
