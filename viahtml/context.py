@@ -40,6 +40,13 @@ class Context:
 
     @property
     @lru_cache(1)
+    def url(self):
+        """Get the full request URL made to the app (with query params)."""
+
+        return wsgi.get_current_url(self.http_environ)
+
+    @property
+    @lru_cache(1)
     def proxied_url(self):
         """Get the proxied URL without any Via parameters."""
         url = self.proxied_url_with_config
@@ -56,9 +63,8 @@ class Context:
         """Get the proxied URL including any Via parameters."""
 
         app_root = wsgi.get_current_url(self.http_environ, root_only=True)
-        app_path = wsgi.get_current_url(self.http_environ)
 
-        url = app_path[len(app_root) :]
+        url = self.url[len(app_root) :]
         url = self._PROXY_PATTERN.sub("", url)
 
         # This is a root with query params, not something we can proxy
