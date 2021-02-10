@@ -8,19 +8,21 @@ from viahtml.views.authentication import AuthenticationView
 
 
 class TestAuthenticationView:
+    @pytest.mark.parametrize("http_mode", (True, False))
     def test_it_configures_security(
-        self, TokenBasedCookie, ViaSecureURL, RandomSecureNonce
+        self, TokenBasedCookie, ViaSecureURL, RandomSecureNonce, http_mode
     ):
         # This is mostly here to say that things are hooked up as we expect
         # and so we don't have to repeat ourselves in the tests. Bit of an MD5
         # type test
 
-        AuthenticationView(secret="not_a_secret", required=True)
+        AuthenticationView(secret="not_a_secret", required=True, http_mode=http_mode)
 
         ViaSecureURL.assert_called_once_with("not_a_secret")
         TokenBasedCookie.assert_called_once_with(
             AuthenticationView.COOKIE_NAME,
             token_provider=RandomSecureNonce.return_value,
+            secure=not http_mode,
         )
         RandomSecureNonce.assert_called_once_with("not_a_secret")
 

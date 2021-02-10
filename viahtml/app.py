@@ -33,7 +33,9 @@ class Application:
         self.views = (
             StatusView(),
             AuthenticationView(
-                secret=config["secret"], required=not config["disable_authentication"]
+                secret=config["secret"],
+                required=not config["disable_authentication"],
+                http_mode=config["http_mode"],
             ),
             BlocklistView(config["checkmate_host"]),
             RoutingView(config["routing_host"]),
@@ -94,6 +96,7 @@ class Application:
                 os.environ.get("VIA_DISABLE_AUTHENTICATION", False)
             ),
             "checkmate_host": os.environ["CHECKMATE_URL"],
+            "http_mode": asbool(os.environ.get("VIA_HTTP_MODE", False)),
         }
 
     @classmethod

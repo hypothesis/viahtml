@@ -28,9 +28,11 @@ class AuthenticationView:
     time.
     """
 
-    def __init__(self, secret, required=True):
+    def __init__(self, secret, required=True, http_mode=False):
         self._secure_cookie = TokenBasedCookie(
-            self.COOKIE_NAME, token_provider=RandomSecureNonce(secret)
+            self.COOKIE_NAME,
+            token_provider=RandomSecureNonce(secret),
+            secure=not http_mode,
         )
         self._secure_url = ViaSecureURL(secret)
         self._required = required
