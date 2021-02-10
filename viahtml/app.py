@@ -8,9 +8,15 @@ from pywb.apps.frontendapp import FrontEndApp
 from viahtml.context import Context
 from viahtml.hooks import Hooks
 from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks
+from viahtml.views.authentication import AuthenticationView
 from viahtml.views.blocklist import BlocklistView
 from viahtml.views.routing import RoutingView
 from viahtml.views.status import StatusView
+
+
+def asbool(value):
+    """Return True if value is any of "t", "true", "y", etc (case-insensitive)."""
+    return str(value).strip().lower() in ("t", "true", "y", "yes", "on", "1")
 
 
 class Application:
@@ -26,6 +32,9 @@ class Application:
 
         self.views = (
             StatusView(),
+            AuthenticationView(
+                secret=config["secret"], required=not config["disable_verification"]
+            ),
             BlocklistView(config["checkmate_host"]),
             RoutingView(config["routing_host"]),
         )
@@ -80,6 +89,10 @@ class Application:
             "h_embed_url": os.environ["VIA_H_EMBED_URL"],
             "debug": os.environ.get("VIA_DEBUG", False),
             "routing_host": os.environ["VIA_ROUTING_HOST"],
+            "secret": os.environ["VIA_SECRET"],
+            "disable_verification": asbool(
+                os.environ.get("VIA_DISABLE_VERIFICATION", False)
+            ),
             "checkmate_host": os.environ["CHECKMATE_URL"],
         }
 

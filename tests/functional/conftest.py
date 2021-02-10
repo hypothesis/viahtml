@@ -21,7 +21,12 @@ def with_environ():
     # WSGI uses repeated elements to express this, which means we can't use
     # the standard configparser.ConfigParser to read them. So they are
     # duplicated here:
-    os.environ.update(environment_variables())
+
+    # It's very hard to test with URL signing on, so disable it
+    env_vars = environment_variables()
+    env_vars["VIA_DISABLE_VERIFICATION"] = "1"
+
+    os.environ.update(env_vars)
 
 
 @pytest.fixture(autouse=True, scope="session")
