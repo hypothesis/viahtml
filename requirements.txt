@@ -18,7 +18,7 @@ future==0.18.2            # via h-checkmatelib
 gevent==1.4.0             # via pywb
 greenlet==0.4.16          # via gevent
 h-checkmatelib==1.0.3     # via -r requirements.in
-h-vialib==1.0.6           # via -r requirements.in
+h-vialib==1.0.10          # via -r requirements.in
 idna==2.10                # via requests, tldextract
 importlib-metadata==2.0.0  # via jsonschema
 jinja2==2.11.2            # via pywb
