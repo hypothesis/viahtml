@@ -33,7 +33,7 @@ class Application:
         self.views = (
             StatusView(),
             AuthenticationView(
-                secret=config["secret"], required=not config["disable_verification"]
+                secret=config["secret"], required=not config["disable_authentication"]
             ),
             BlocklistView(config["checkmate_host"]),
             RoutingView(config["routing_host"]),
@@ -90,8 +90,8 @@ class Application:
             "debug": os.environ.get("VIA_DEBUG", False),
             "routing_host": os.environ["VIA_ROUTING_HOST"],
             "secret": os.environ["VIA_SECRET"],
-            "disable_verification": asbool(
-                os.environ.get("VIA_DISABLE_VERIFICATION", False)
+            "disable_authentication": asbool(
+                os.environ.get("VIA_DISABLE_AUTHENTICATION", False)
             ),
             "checkmate_host": os.environ["CHECKMATE_URL"],
         }

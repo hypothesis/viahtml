@@ -60,7 +60,7 @@ Environment variables:
 | `VIA_IGNORE_PREFIXES` | Prefixes not to proxy                     | `https://hypothes.is/,https://qa.hypothes.is/` |
 | `VIA_ROUTING_HOST`    | The host to perform content based routing | `https://via3.hypothes.is` |
 | `VIA_SECRET`          | Secret used for checking signed URLs      | `a_very_long_random_string` |
-| `VIA_DISABLE_VERIFICATION` | Disable checking for dev purposes    | `false` |
+| `VIA_DISABLE_AUTHENTICATION` | Disable auth for dev purposes      | `false` |
 
 For details of changing the blocklist see:
 
