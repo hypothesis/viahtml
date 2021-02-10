@@ -13,6 +13,13 @@ class TestContext:
         assert path == wsgi.get_path_info.return_value
         wsgi.get_path_info.assert_called_once_with(environ)
 
+    def test_url(self, context, environ, wsgi):
+        url = context.url
+
+        # This is a straight wrapper, nothing fancy
+        assert url == wsgi.get_current_url.return_value
+        wsgi.get_current_url.assert_called_once_with(environ)
+
     @pytest.mark.parametrize(
         "path,proxied_url",
         (
