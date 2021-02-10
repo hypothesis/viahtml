@@ -4,115 +4,51 @@
 #
 #    pip-compile
 #
-attrs==20.3.0
-    # via jsonschema
-babel==2.8.0
-    # via pywb
-brotlipy==0.7.0
-    # via pywb
-certauth==1.3.0
-    # via wsgiprox
-certifi==2020.6.20
-    # via requests
-cffi==1.14.2
-    # via
-    #   brotlipy
-    #   cryptography
-chardet==3.0.4
-    # via requests
-cryptography==3.2
-    # via pyopenssl
-defusedxml==0.6.0
-    # via py3amf
-fakeredis==0.16.0
-    # via pywb
-future==0.18.2
-    # via h-checkmatelib
-gevent==1.4.0
-    # via pywb
-greenlet==0.4.16
-    # via gevent
-h-checkmatelib==1.0.3
-    # via -r requirements.in
-h-vialib==1.0.0
-    # via -r requirements.in
-idna==2.10
-    # via
-    #   requests
-    #   tldextract
-importlib-metadata==2.0.0
-    # via jsonschema
-jinja2==2.11.2
-    # via pywb
-jsonschema==3.2.0
-    # via h-checkmatelib
-markupsafe==1.1.1
-    # via jinja2
-newrelic==6.0.1.155
-    # via -r requirements.in
-portalocker==2.0.0
-    # via pywb
-py3amf==0.8.10
-    # via pywb
-pycparser==2.20
-    # via cffi
-pyopenssl==19.1.0
-    # via certauth
-pyrsistent==0.17.3
-    # via jsonschema
-pytz==2020.1
-    # via babel
-pywb==2.4.2
-    # via -r requirements.in
-pyyaml==5.3.1
-    # via pywb
-redis==2.10.6
-    # via
-    #   fakeredis
-    #   pywb
-requests-file==1.5.1
-    # via tldextract
-requests==2.24.0
-    # via
-    #   h-checkmatelib
-    #   pywb
-    #   requests-file
-    #   tldextract
-six==1.15.0
-    # via
-    #   cryptography
-    #   jsonschema
-    #   pyopenssl
-    #   pywb
-    #   requests-file
-    #   surt
-    #   warcio
-    #   wsgiprox
-surt==0.3.1
-    # via pywb
-tldextract==2.2.3
-    # via
-    #   certauth
-    #   pywb
-    #   surt
-urllib3==1.25.10
-    # via requests
-uwsgi==2.0.19.1
-    # via -r requirements.in
-warcio==1.7.4
-    # via pywb
-webassets==0.12.1
-    # via pywb
-webencodings==0.5.1
-    # via pywb
-werkzeug==1.0.1
-    # via pywb
-whitenoise==5.2.0
-    # via -r requirements.in
-wsgiprox==1.5.2
-    # via pywb
-zipp==3.4.0
-    # via importlib-metadata
+attrs==20.3.0             # via jsonschema
+babel==2.8.0              # via pywb
+brotlipy==0.7.0           # via pywb
+certauth==1.3.0           # via wsgiprox
+certifi==2020.6.20        # via requests
+cffi==1.14.2              # via brotlipy, cryptography
+chardet==3.0.4            # via requests
+cryptography==3.2         # via pyopenssl
+defusedxml==0.6.0         # via py3amf
+fakeredis==0.16.0         # via pywb
+future==0.18.2            # via h-checkmatelib
+gevent==1.4.0             # via pywb
+greenlet==0.4.16          # via gevent
+h-checkmatelib==1.0.3     # via -r requirements.in
+h-vialib==1.0.6           # via -r requirements.in
+idna==2.10                # via requests, tldextract
+importlib-metadata==2.0.0  # via jsonschema
+jinja2==2.11.2            # via pywb
+jsonschema==3.2.0         # via h-checkmatelib
+markupsafe==1.1.1         # via jinja2
+newrelic==6.0.1.155       # via -r requirements.in
+portalocker==2.0.0        # via pywb
+py3amf==0.8.10            # via pywb
+pycparser==2.20           # via cffi
+pyjwt==2.0.1              # via h-vialib
+pyopenssl==19.1.0         # via certauth
+pyrsistent==0.17.3        # via jsonschema
+pytz==2020.1              # via babel
+pywb==2.4.2               # via -r requirements.in
+pyyaml==5.3.1             # via pywb
+redis==2.10.6             # via fakeredis, pywb
+requests-file==1.5.1      # via tldextract
+requests==2.24.0          # via h-checkmatelib, pywb, requests-file, tldextract
+six==1.15.0               # via cryptography, jsonschema, pyopenssl, pywb, requests-file, surt, warcio, wsgiprox
+surt==0.3.1               # via pywb
+tldextract==2.2.3         # via certauth, pywb, surt
+urllib3==1.25.10          # via requests
+uwsgi==2.0.19.1           # via -r requirements.in
+warcio==1.7.4             # via pywb
+webassets==0.12.1         # via pywb
+webencodings==0.5.1       # via pywb
+werkzeug==1.0.1           # via pywb
+whitenoise==5.2.0         # via -r requirements.in
+wsgiprox==1.5.2           # via pywb
+zipp==3.4.0               # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
