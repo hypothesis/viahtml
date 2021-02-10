@@ -42,13 +42,13 @@ class AuthenticationView:
         :return: An iterator of content if required or None
         """
 
+        if not self._required:
+            return None
+
         try:
             self._verify_tokens(context)
 
         except TokenException as err:
-            if isinstance(err, MissingToken) and not self._required:
-                return None
-
             return context.make_response(
                 HTTPStatus.UNAUTHORIZED,
                 lines=[f"<h1>401 Unauthorized</h1><p>{err}</p>"],
