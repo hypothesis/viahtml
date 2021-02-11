@@ -1,6 +1,7 @@
 """Token based security measures."""
 from datetime import timedelta
 from http import HTTPStatus
+from urllib.parse import urlparse
 
 from h_vialib.exceptions import MissingToken, TokenException
 from h_vialib.secure import RandomSecureNonce, TokenBasedCookie, ViaSecureURL
@@ -48,7 +49,7 @@ class AuthenticationView:
             return None
 
         try:
-            self._verify_tokens(context)
+            self._check_for_authorization(context)
 
         except TokenException as err:
             return context.make_response(
@@ -59,20 +60,41 @@ class AuthenticationView:
         # We might have added a header, but we don't want to handle the request
         return None
 
-    def _verify_tokens(self, context):
-        # Look for cookies first
+    def _check_for_authorization(self, context):
+        if self._has_browsing_cookie(context):
+            return
+
+        if self._is_referred_by_us(context) or self._has_signed_url(context):
+            # Set a browsing cookie in this case
+            cookie_header, cookie_value = self._secure_cookie.create(
+                max_age=self.COOKIE_MAX_AGE
+            )
+
+            context.add_header(cookie_header, cookie_value)
+
+    @classmethod
+    def _is_referred_by_us(cls, context):
+        """Check if the referrer is ourselves."""
+
+        # This header is set by some browsers like Chrome to let you know
+        # general information about where the request came from, without
+        # directly divulging the origin URL for privacy reasons
+        sec_fetch = context.get_header("Sec-Fetch-Site")
+        if sec_fetch and sec_fetch in ("same-origin", "same-site"):
+            return True
+
+        referrer = context.get_header("Referer")
+        if not referrer:
+            return False
+
+        parsed_referrer = urlparse(referrer)
+        return parsed_referrer.netloc == context.host
+
+    def _has_browsing_cookie(self, context):
         try:
             return self._secure_cookie.verify(context.get_header("Cookie"))
         except MissingToken:
-            pass
+            return False
 
-        # Looks like there's no cookie, so try the path
-        self._secure_url.verify(context.url)
-
-        # Looks like we do have a signed URL, so add a cookie for future
-        # surfing
-        cookie_header, cookie_value = self._secure_cookie.create(
-            max_age=self.COOKIE_MAX_AGE
-        )
-
-        return context.add_header(cookie_header, cookie_value)
+    def _has_signed_url(self, context):
+        return self._secure_url.verify(context.url)

@@ -47,6 +47,13 @@ class Context:
 
     @property
     @lru_cache(1)
+    def host(self):
+        """Get our own hostname."""
+
+        return wsgi.get_host(self.http_environ)
+
+    @property
+    @lru_cache(1)
     def proxied_url(self):
         """Get the proxied URL without any Via parameters."""
         url = self.proxied_url_with_config
