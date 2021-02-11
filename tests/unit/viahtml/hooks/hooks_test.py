@@ -2,6 +2,8 @@ from unittest.mock import patch, sentinel
 
 import pytest
 from h_matchers import Any
+from pywb.apps.wbrequestresponse import WbResponse
+from warcio.statusandheaders import StatusAndHeaders
 
 from viahtml.hooks import Hooks
 
@@ -53,15 +55,66 @@ class TestHooks:
         )
         assert config == Configuration.extract_from_wsgi_environment.return_value
 
-    def test_get_upstream_url(self, Configuration):
-        config = Hooks({}).get_upstream_url(sentinel.doc_url)
+    def test_get_upstream_url(self, hooks, Configuration):
+        config = hooks.get_upstream_url(sentinel.doc_url)
 
         Configuration.strip_from_url.assert_called_once_with(sentinel.doc_url)
         assert config == Configuration.strip_from_url.return_value
 
+    @pytest.mark.parametrize(
+        "status_line",
+        (
+            "301 Moved Permanently",
+            "302 Found",
+            "303 See Other",
+            "305 Use Proxy",
+            "307 Temporary Redirect",
+            "308 Permanent Redirect",
+        ),
+    )
+    def test_modify_render_response_rewrites_redirects(
+        self, hooks, wb_response, status_line
+    ):
+        wb_response.status_headers.statusline = status_line
+        wb_response.status_headers.add_header("Location", "foo")
+
+        response = hooks.modify_render_response(wb_response)
+
+        location = response.status_headers.get_header("Location")
+        assert location == Any.url.with_query({"via.sec": Any.string()})
+
+    def test_modify_render_response_survives_no_location(self, hooks, wb_response):
+        wb_response.status_headers.statusline = "307 Temporary Redirect"
+
+        response = hooks.modify_render_response(wb_response)
+
+        assert response == wb_response
+
+    @pytest.mark.parametrize(
+        "status_line",
+        (
+            "304 Not Modified",
+            "200 Ok",
+        ),
+    )
+    def test_modify_render_response_does_not_modify_other_requests(
+        self, hooks, status_line, wb_response
+    ):
+        wb_response.status_headers.statusline = status_line
+        wb_response.status_headers.add_header("Location", "foo")
+
+        response = hooks.modify_render_response(wb_response)
+
+        location = response.status_headers.get_header("Location")
+        assert location == "foo"
+
+    @pytest.fixture
+    def wb_response(self):
+        return WbResponse(status_headers=StatusAndHeaders("200 OK", headers=[]))
+
     @pytest.fixture
     def hooks(self):
-        return Hooks({"ignore_prefixes": sentinel.prefixes})
+        return Hooks({"ignore_prefixes": sentinel.prefixes, "secret": "not_a_secret"})
 
     @pytest.fixture
     def Configuration(self):

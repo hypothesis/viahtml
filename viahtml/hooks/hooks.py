@@ -29,6 +29,7 @@ class Hooks:
         }
 
         template_vars.update(self.config)
+        template_vars.pop("secret")
 
         # This is already in the config, but run through the property just in
         # case that grows some logic in it
@@ -48,6 +49,8 @@ class Hooks:
 
         return Configuration.extract_from_wsgi_environment(http_env)
 
+    _REDIRECTS = ("301", "302", "303", "305", "307", "308")
+
     def modify_render_response(self, response):
         """Return a potentially modified response from pywb.
 
@@ -58,13 +61,14 @@ class Hooks:
         # `warcio.statusandheaders.StatusAndHeaders`
         status_code = response.status_headers.get_statuscode()
 
-        if status_code.startswith("3"):
+        if status_code in self._REDIRECTS:
             # This is a redirect, so we'll sign it to ensure we know it
             # came from us. This prevents long redirect chains from breaking
             # our referrer checking
             location = response.status_headers.get_header("Location")
-            location = self._secure_url.create(location)
-            response.status_headers.replace_header("Location", location)
+            if location:
+                location = self._secure_url.create(location)
+                response.status_headers.replace_header("Location", location)
 
         return response
 

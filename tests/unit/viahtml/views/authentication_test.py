@@ -99,6 +99,13 @@ class TestAuthenticationView:
 
         assert result is None
 
+    def test_it_does_not_set_cookies_with_persistence_disabled(self, context, headers):
+        headers["Referer"] = f"http://{context.host}/some/path"
+
+        AuthenticationView(secret="not_a_secret", persistence=False)(context)
+
+        context.add_header.assert_not_called()
+
     def assert_browser_cookie_set(self, TokenBasedCookie, context):
         secure_cookie = TokenBasedCookie.return_value
         secure_cookie.create.assert_called_once_with(
