@@ -119,7 +119,7 @@ class TestContext:
         assert context.headers == [("X-Foo", "Foo")]
 
     def test_get_header_reads_from_environ(self, context, environ):
-        environ["HTTP_XFOO"] = "Foo!"
+        environ["HTTP_X_FOO"] = "Foo!"
 
         value = context.get_header("X-Foo")
 
@@ -130,7 +130,7 @@ class TestContext:
         # Noise must come first to get coverage
         context.add_header("X-Noise", "Noo")
         context.add_header(header_name, "Foo!")
-        environ["HTTP_XFOO"] = "Noo"
+        environ["HTTP_X_FOO"] = "Noo"
 
         value = context.get_header("X-Foo")
 
