@@ -124,8 +124,7 @@ class Context:
         """
         for key, value in self.headers:
             if key.lower() == name.lower():
-                return value  #
+                return value
 
-        # https://tools.ietf.org/html/rfc3875#section-4.1.18
-        cgi_name = "HTTP_" + name.upper().replace("-", "")
-        return self.http_environ.get(cgi_name)
+        wsgi_name = "HTTP_" + name.upper().replace("-", "_")
+        return self.http_environ.get(wsgi_name)
