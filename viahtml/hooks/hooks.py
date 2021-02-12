@@ -70,7 +70,18 @@ class Hooks:
                 location = self._secure_url.create(location)
                 response.status_headers.replace_header("Location", location)
 
+        # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
+        response.status_headers.replace_header("Referrer-Policy", "same-origin")
+
         return response
+
+    def rewrite_url(self, url):
+        return url
+
+        signed_url = self._secure_url.create(url)
+
+
+        return signed_url
 
     @classmethod
     def get_upstream_url(cls, doc_url):

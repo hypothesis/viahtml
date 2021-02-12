@@ -3,6 +3,7 @@
 from pywb.apps.rewriterapp import RewriterApp
 from pywb.rewrite.default_rewriter import DefaultRewriter
 from pywb.rewrite.html_rewriter import HTMLRewriter
+from pywb.rewrite.regex_rewriters import CSSRewriter
 from pywb.rewrite.url_rewriter import UrlRewriter
 
 
@@ -16,6 +17,7 @@ def apply_pre_app_hooks(hooks):
 
     _patch_url_rewriter(hooks)
     _PatchedHTMLRewriter.patch()
+    _PatchedURLRewriter.patch(hooks)
 
 
 def _patch_url_rewriter(hooks):
@@ -43,6 +45,28 @@ class _PatchedHTMLRewriter(HTMLRewriter):  # pylint: disable=abstract-method
             return self._rewrite_url(attr_value, "id_")
 
         return super()._rewrite_link_href(attr_value, tag_attrs, rw_mod)
+
+
+class _PatchedURLRewriter:
+    _rewrite = None
+    _hooks = None
+
+    @classmethod
+    def patch(cls, hooks):
+        cls._hooks = hooks
+        cls._rewrite = UrlRewriter.rewrite
+        UrlRewriter.rewrite = _PatchedURLRewriter.rewrite
+
+    @staticmethod
+    def rewrite(self, url, mod=None, force_abs=False):
+        # Make everything absolute... what could go wrong?
+        url = _PatchedURLRewriter._rewrite(self, url, mod, force_abs=True)
+
+        if url.startswith(self.prefix):
+            url =_PatchedURLRewriter._hooks.rewrite_url(url)
+
+        return url
+
 
 
 class _PatchedRewriterApp(RewriterApp):
