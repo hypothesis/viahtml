@@ -60,6 +60,13 @@ class _PatchedRewriterApp(RewriterApp):
         # Update the Jinja environment to have the vars we want
         rewriter.jinja_env.jinja_env.globals.update(hooks.template_vars)
 
+    def render_content(self, wb_url, kwargs, environ):
+        response = super().render_content(wb_url, kwargs, environ)
+
+        response = self.hooks.modify_render_response(response)
+
+        return response
+
     def get_upstream_url(self, wb_url, kwargs, params):
         params["url"] = self.hooks.get_upstream_url(doc_url=params["url"])
 

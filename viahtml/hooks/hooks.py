@@ -1,5 +1,6 @@
 """The majority of configuration options."""
 from h_vialib import Configuration
+from h_vialib.secure import ViaSecureURL
 
 from viahtml.hooks._headers import Headers
 
@@ -11,6 +12,7 @@ class Hooks:
 
     def __init__(self, config):
         self.config = config
+        self._secure_url = ViaSecureURL(config["secret"])
 
     @property
     def template_vars(self):
@@ -27,6 +29,7 @@ class Hooks:
         }
 
         template_vars.update(self.config)
+        template_vars.pop("secret")
 
         # This is already in the config, but run through the property just in
         # case that grows some logic in it
@@ -45,6 +48,29 @@ class Hooks:
         """Return the h-client parameters from a WSGI environment."""
 
         return Configuration.extract_from_wsgi_environment(http_env)
+
+    _REDIRECTS = ("301", "302", "303", "305", "307", "308")
+
+    def modify_render_response(self, response):
+        """Return a potentially modified response from pywb.
+
+        :param response: WbResponse object returned from pywb
+        :returns: Either the same or a modified response object
+        """
+        # `status_headers` is an instance of
+        # `warcio.statusandheaders.StatusAndHeaders`
+        status_code = response.status_headers.get_statuscode()
+
+        if status_code in self._REDIRECTS:
+            # This is a redirect, so we'll sign it to ensure we know it
+            # came from us. This prevents long redirect chains from breaking
+            # our referrer checking
+            location = response.status_headers.get_header("Location")
+            if location:
+                location = self._secure_url.create(location)
+                response.status_headers.replace_header("Location", location)
+
+        return response
 
     @classmethod
     def get_upstream_url(cls, doc_url):
