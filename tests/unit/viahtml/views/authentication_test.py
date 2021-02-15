@@ -89,6 +89,16 @@ class TestAuthenticationView:
 
         assert result is None
 
+    def test_it_does_not_set_cookies_with_persistence_disabled(
+        self, context, TokenBasedCookie
+    ):
+        TokenBasedCookie.return_value.verify.side_effect = MissingToken
+        context.url = "http://via/proxy/http://example.com?via.sec=A_GOOD_TOKEN"
+
+        AuthenticationView(secret="not_a_secret", persistence=False)(context)
+
+        context.add_header.assert_not_called()
+
     def assert_is_unauthorized_response(self, result, context):
         assert result is context.make_response.return_value
         context.make_response.assert_called_once_with(
