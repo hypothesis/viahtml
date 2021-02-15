@@ -29,7 +29,7 @@ class AuthenticationView:
     time.
     """
 
-    def __init__(self, secret, required=True, http_mode=False):
+    def __init__(self, secret, required=True, persistence=True, http_mode=False):
         self._secure_cookie = TokenBasedCookie(
             self.COOKIE_NAME,
             token_provider=RandomSecureNonce(secret),
@@ -37,6 +37,7 @@ class AuthenticationView:
         )
         self._secure_url = ViaSecureURL(secret)
         self._required = required
+        self._persistence = persistence
 
     def __call__(self, context):
         """Provide a block page response if required.
@@ -65,6 +66,9 @@ class AuthenticationView:
             return
 
         if self._is_referred_by_us(context) or self._has_signed_url(context):
+            if not self._persistence:
+                return
+
             # Set a browsing cookie in this case
             cookie_header, cookie_value = self._secure_cookie.create(
                 max_age=self.COOKIE_MAX_AGE
