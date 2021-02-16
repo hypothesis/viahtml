@@ -2,6 +2,7 @@
 from h_vialib import Configuration
 from h_vialib.secure import ViaSecureURL
 
+from viahtml.context import Context
 from viahtml.hooks._headers import Headers
 
 
@@ -51,10 +52,11 @@ class Hooks:
 
     _REDIRECTS = ("301", "302", "303", "305", "307", "308")
 
-    def modify_render_response(self, response):
+    def modify_render_response(self, response, environ):
         """Return a potentially modified response from pywb.
 
         :param response: WbResponse object returned from pywb
+        :param environ: WSGI environ dict
         :returns: Either the same or a modified response object
         """
         # `status_headers` is an instance of
@@ -67,6 +69,7 @@ class Hooks:
             # our referrer checking
             location = response.status_headers.get_header("Location")
             if location:
+                location = self._make_absolute(location, environ)
                 location = self._secure_url.create(location)
                 response.status_headers.replace_header("Location", location)
 
@@ -80,3 +83,19 @@ class Hooks:
         # page is correct. Most other URLs are resources in the page which
         # don't have any of our params anyway
         return Configuration.strip_from_url(doc_url)
+
+    def _make_absolute(self, url, environ):
+        if url.startswith("http:") or url.startswith("https:"):
+            return url
+
+        scheme = "http" if self.config["http_mode"] else "https"
+
+        if url.startswith("//"):
+            return f"{scheme}:{url}"
+
+        context = Context(environ, None)
+        if url.startswith("/"):
+            return f"{scheme}://{context.host}{url}"
+
+        # Who knows what happened here
+        return url

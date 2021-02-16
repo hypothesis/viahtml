@@ -63,7 +63,7 @@ class _PatchedRewriterApp(RewriterApp):
     def render_content(self, wb_url, kwargs, environ):
         response = super().render_content(wb_url, kwargs, environ)
 
-        response = self.hooks.modify_render_response(response)
+        response = self.hooks.modify_render_response(response, environ)
 
         return response
 

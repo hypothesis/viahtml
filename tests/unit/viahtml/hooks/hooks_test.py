@@ -13,7 +13,9 @@ class TestHooks:
         assert hooks.template_vars == {
             "client_params": Any.function(),
             "external_link_mode": Any.function(),
+            # Just persisting the configuration
             "ignore_prefixes": hooks.ignore_prefixes,
+            "http_mode": False,
         }
 
     def test_client_params_in_template_vars(self, hooks):
@@ -78,7 +80,7 @@ class TestHooks:
         wb_response.status_headers.statusline = status_line
         wb_response.status_headers.add_header("Location", "foo")
 
-        response = hooks.modify_render_response(wb_response)
+        response = hooks.modify_render_response(wb_response, {})
 
         location = response.status_headers.get_header("Location")
         assert location == Any.url.with_query({"via.sec": Any.string()})
@@ -86,7 +88,7 @@ class TestHooks:
     def test_modify_render_response_survives_no_location(self, hooks, wb_response):
         wb_response.status_headers.statusline = "307 Temporary Redirect"
 
-        response = hooks.modify_render_response(wb_response)
+        response = hooks.modify_render_response(wb_response, {})
 
         assert response == wb_response
 
@@ -103,10 +105,45 @@ class TestHooks:
         wb_response.status_headers.statusline = status_line
         wb_response.status_headers.add_header("Location", "foo")
 
-        response = hooks.modify_render_response(wb_response)
+        response = hooks.modify_render_response(wb_response, {})
 
         location = response.status_headers.get_header("Location")
         assert location == "foo"
+
+    @pytest.mark.parametrize(
+        "location",
+        (
+            "https://via/proxy/http://example.com",
+            "//via/proxy/http://example.com",
+            "/proxy/http://example.com",
+        ),
+    )
+    def test_modify_render_response_makes_locations_absolute(
+        self, hooks, wb_response, location
+    ):
+        wb_response.status_headers.statusline = "307 Temporary Redirect"
+        wb_response.status_headers.add_header("Location", location)
+
+        response = hooks.modify_render_response(wb_response, {})
+
+        location = response.status_headers.get_header("Location")
+        assert (
+            location
+            == Any.url.matching(f"https://via/proxy/http://example.com").with_query()
+        )
+
+    @pytest.mark.parametrize("http_mode", (True, False))
+    def test_modify_render_response_reads_the_http_mode(
+        self, hooks, wb_response, http_mode
+    ):
+        hooks.config["http_mode"] = True
+        wb_response.status_headers.statusline = "307 Temporary Redirect"
+        wb_response.status_headers.add_header("Location", "//proxy/http://example.com")
+
+        response = hooks.modify_render_response(wb_response, {})
+
+        location = response.status_headers.get_header("Location")
+        assert location == Any.url.with_scheme("http")
 
     @pytest.fixture
     def wb_response(self):
@@ -114,9 +151,21 @@ class TestHooks:
 
     @pytest.fixture
     def hooks(self):
-        return Hooks({"ignore_prefixes": sentinel.prefixes, "secret": "not_a_secret"})
+        return Hooks(
+            {
+                "ignore_prefixes": sentinel.prefixes,
+                "secret": "not_a_secret",
+                "http_mode": False,
+            }
+        )
 
     @pytest.fixture
     def Configuration(self):
         with patch("viahtml.hooks.hooks.Configuration", autospec=True) as Configuration:
             yield Configuration
+
+    @pytest.fixture(autouse=True)
+    def Context(self, patch):
+        Context = patch("viahtml.hooks.hooks.Context")
+        Context.return_value.host = "via"
+        return Context
