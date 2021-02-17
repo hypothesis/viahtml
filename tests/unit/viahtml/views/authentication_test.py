@@ -72,6 +72,43 @@ class TestAuthenticationView:
 
         self.assert_is_unauthorized_response(result, context)
 
+    @pytest.mark.parametrize(
+        "header,value",
+        (
+            ("Referer", "http://via/some/path"),
+            ("Sec-Fetch-Site", "same-origin"),
+            ("Sec-Fetch-Site", "same-site"),
+        ),
+    )
+    def test_it_allows_through_if_self_referred(
+        self, view, context, headers, TokenBasedCookie, header, value
+    ):  # pylint: disable=too-many-arguments
+        headers[header] = value
+
+        result = view(context)
+
+        assert result is None
+        self.assert_browser_cookie_set(TokenBasedCookie, context)
+
+    @pytest.mark.parametrize(
+        "header,value",
+        (
+            ("Referer", "http://NOT_VIA/some/path"),
+            # This is us, but it's a URL designed to crash URL parsing
+            ("Referer", "http://via]"),
+            ("Sec-Fetch-Site", "none"),
+            ("Sec-Fetch-Site", "cross-origin"),
+        ),
+    )
+    def test_it_blocks_if_not_self_referred(
+        self, view, context, headers, header, value
+    ):  # pylint: disable=too-many-arguments
+        headers[header] = value
+
+        result = view(context)
+
+        self.assert_is_unauthorized_response(result, context)
+
     def test_it_allows_missing_tokens_if_required_is_False(
         self, context, ViaSecureURL, TokenBasedCookie
     ):
@@ -108,6 +145,7 @@ class TestAuthenticationView:
 
     @pytest.fixture(autouse=True)
     def context(self, context, headers):
+        context.host = "via"
         context.get_header.side_effect = headers.get
         return context
 

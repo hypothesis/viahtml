@@ -6,19 +6,21 @@ from viahtml.context import Context
 
 
 class TestContext:
-    def test_get_path(self, context, environ, wsgi):
-        path = context.path
+    @pytest.mark.parametrize(
+        "prop,wsgi_method",
+        (
+            ("path", "get_path_info"),
+            ("url", "get_current_url"),
+            ("host", "get_host"),
+        ),
+    )
+    def test_pass_through_properties(
+        self, context, environ, wsgi, prop, wsgi_method
+    ):  # pylint: disable=too-many-arguments
+        value = getattr(context, prop)
 
-        # This is a straight wrapper, nothing fancy
-        assert path == wsgi.get_path_info.return_value
-        wsgi.get_path_info.assert_called_once_with(environ)
-
-    def test_url(self, context, environ, wsgi):
-        url = context.url
-
-        # This is a straight wrapper, nothing fancy
-        assert url == wsgi.get_current_url.return_value
-        wsgi.get_current_url.assert_called_once_with(environ)
+        assert value == getattr(wsgi, wsgi_method).return_value
+        getattr(wsgi, wsgi_method).assert_called_once_with(environ)
 
     @pytest.mark.parametrize(
         "path,proxied_url",
