@@ -9,9 +9,11 @@ from viahtml.views.blocklist import BlocklistView
 
 class TestBlocklistView:
     def test_construction(self, CheckmateClient):
-        view = BlocklistView(sentinel.checkmate_host)
+        view = BlocklistView(sentinel.checkmate_host, sentinel.checkmate_api_key)
 
-        CheckmateClient.assert_called_once_with(sentinel.checkmate_host)
+        CheckmateClient.assert_called_once_with(
+            sentinel.checkmate_host, sentinel.checkmate_api_key
+        )
         assert view.checkmate == CheckmateClient.return_value
 
     def test_if_there_is_no_url_it_does_nothing(self, view, context):
@@ -53,7 +55,7 @@ class TestBlocklistView:
 
     @pytest.fixture
     def view(self):
-        return BlocklistView(sentinel.checkmate_host)
+        return BlocklistView(sentinel.checkmate_host, sentinel.checkmate_api_key)
 
 
 @pytest.fixture(autouse=True)
