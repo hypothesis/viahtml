@@ -13,7 +13,7 @@ class TestHooks:
         assert hooks.template_vars == {
             "client_params": Any.function(),
             "external_link_mode": Any.function(),
-            # Just persisting the configuration
+            "h_embed_url": sentinel.h_embed_url,
             "ignore_prefixes": hooks.ignore_prefixes,
         }
 
@@ -121,8 +121,10 @@ class TestHooks:
     def hooks(self):
         return Hooks(
             {
+                "config_noise": "noise",
+                "h_embed_url": sentinel.h_embed_url,
                 "ignore_prefixes": sentinel.prefixes,
-                "secret": "not_a_secret"
+                "secret": "not_a_secret",
             }
         )
 

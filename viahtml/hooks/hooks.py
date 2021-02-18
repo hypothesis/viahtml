@@ -23,20 +23,13 @@ class Hooks:
             via_config, _ = self.get_config(http_env)
             return via_config.get("external_link_mode", "same-tab").lower()
 
-        template_vars = {
+        return {
             # It would be much nicer to calculate this once somehow
             "client_params": lambda http_env: self.get_config(http_env)[1],
             "external_link_mode": external_link_mode,
+            "ignore_prefixes": self.ignore_prefixes,
+            "h_embed_url": self.config["h_embed_url"],
         }
-
-        template_vars.update(self.config)
-        template_vars.pop("secret")
-
-        # This is already in the config, but run through the property just in
-        # case that grows some logic in it
-        template_vars["ignore_prefixes"] = self.ignore_prefixes
-
-        return template_vars
 
     @property
     def ignore_prefixes(self):
