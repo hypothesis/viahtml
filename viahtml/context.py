@@ -135,3 +135,27 @@ class Context:
 
         wsgi_name = "HTTP_" + name.upper().replace("-", "_")
         return self.http_environ.get(wsgi_name)
+
+    def make_absolute(self, url):
+        """Make a `pywb` URL absolute.
+
+        This accepts `pywb` URLs like `/proxy/...` or `//host/proxy/...` and
+        makes them absolute by filling out the missing host or scheme as
+        appropriate. Behavior is undefined for 3rd party URLs.
+
+        :param url: First party `pywb` URL to convert
+        :return: An absolute URL to our service
+        """
+        if url.startswith("http:") or url.startswith("https:"):
+            return url
+
+        scheme = self.http_environ["wsgi.url_scheme"]
+
+        if url.startswith("//"):
+            return f"{scheme}:{url}"
+
+        if url.startswith("/"):
+            return f"{scheme}://{self.host}{url}"
+
+        # Who knows what happened here
+        return url

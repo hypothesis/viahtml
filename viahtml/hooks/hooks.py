@@ -69,7 +69,7 @@ class Hooks:
             # our referrer checking
             location = response.status_headers.get_header("Location")
             if location:
-                location = self._make_absolute(location, environ)
+                location = Context(environ, start_response=None).make_absolute(location)
                 location = self._secure_url.create(location)
                 response.status_headers.replace_header("Location", location)
 
@@ -83,19 +83,3 @@ class Hooks:
         # page is correct. Most other URLs are resources in the page which
         # don't have any of our params anyway
         return Configuration.strip_from_url(doc_url)
-
-    def _make_absolute(self, url, environ):
-        if url.startswith("http:") or url.startswith("https:"):
-            return url
-
-        scheme = "http" if self.config["http_mode"] else "https"
-
-        if url.startswith("//"):
-            return f"{scheme}:{url}"
-
-        context = Context(environ, None)
-        if url.startswith("/"):
-            return f"{scheme}://{context.host}{url}"
-
-        # Who knows what happened here
-        return url

@@ -138,6 +138,23 @@ class TestContext:
 
         assert value == "Foo!"
 
+    @pytest.mark.parametrize("scheme", ("http", "https"))
+    @pytest.mark.parametrize(
+        "url", ("SCHEME://hostname:9999/path", "//hostname:9999/path", "/path")
+    )
+    def test_make_absolute(self, context, environ, scheme, url):
+        url = url.replace("SCHEME", scheme)
+        environ["wsgi.url_scheme"] = scheme
+
+        result = context.make_absolute(url)
+
+        assert result == f"{scheme}://hostname:9999/path"
+
+    def test_make_absolute_ignores_things_it_does_not_understand(self, context):
+        result = context.make_absolute("wabble://what?")
+
+        assert result == "wabble://what?"
+
     @pytest.fixture
     def environ(self):
         return {
