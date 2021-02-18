@@ -28,12 +28,12 @@ class AuthenticationView:
     time.
     """
 
-    def __init__(self, secret, required=True, persistence=True, http_mode=False):
+    def __init__(self, secret, required=True, enable_cookie=True, http_mode=False):
         """Initialize the view.
 
         :param secret: Secret used for signing and checking signatures
         :param required: Require auth
-        :param persistence: Enable cookie based persistence of auth
+        :param enable_cookie: Enable cookie based persistence of auth
         :param http_mode: Expect the service to run on HTTP rather than HTTPS
         """
         self._secure_cookie = TokenBasedCookie(
@@ -43,7 +43,7 @@ class AuthenticationView:
         )
         self._secure_url = ViaSecureURL(secret)
         self._required = required
-        self._persistence = persistence
+        self._enable_cookie = enable_cookie
 
     def __call__(self, context):
         """Provide a block page response if required.
@@ -77,7 +77,7 @@ class AuthenticationView:
         # Looks like there's no cookie, so try the path
         self._secure_url.verify(context.url)
 
-        if not self._persistence:
+        if not self._enable_cookie:
             return None
 
         # Looks like we do have a signed URL, so add a cookie for future

@@ -35,7 +35,7 @@ class Application:
             AuthenticationView(
                 secret=config["secret"],
                 required=not config["disable_authentication"],
-                persistence=not config["disable_session"],
+                enable_cookie=not config["disable_cookie"],
                 http_mode=config["http_mode"],
             ),
             BlocklistView(config["checkmate_host"], config["checkmate_api_key"]),
@@ -96,7 +96,7 @@ class Application:
             "disable_authentication": asbool(
                 os.environ.get("VIA_DISABLE_AUTHENTICATION", False)
             ),
-            "disable_session": asbool(os.environ.get("VIA_DISABLE_SESSION", False)),
+            "disable_cookie": asbool(os.environ.get("VIA_DISABLE_COOKIE", False)),
             "checkmate_host": os.environ["CHECKMATE_URL"],
             "http_mode": asbool(os.environ.get("VIA_HTTP_MODE", False)),
             "checkmate_api_key": os.environ["CHECKMATE_API_KEY"],
