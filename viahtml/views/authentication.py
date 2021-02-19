@@ -29,7 +29,15 @@ class AuthenticationView:
     time.
     """
 
-    def __init__(self, secret, required=True, enable_cookie=True, http_mode=False):
+    def __init__(
+        self,
+        secret,
+        required=True,
+        enable_cookie=True,
+        enable_referrer=True,
+        enable_sec_fetch_site=True,
+        http_mode=False,
+    ):  # pylint:disable=too-many-arguments
         """Initialize the view.
 
         :param secret: Secret used for signing and checking signatures
@@ -87,11 +95,10 @@ class AuthenticationView:
 
             context.add_header(cookie_header, cookie_value)
 
-    @classmethod
-    def _is_referred_by_us(cls, context):
+    def _is_referred_by_us(self, context):
         """Check if the referrer is ourselves."""
 
-        if self._enable_sec_fetch_site:
+        if self._enable_sec_fetch_site:  # pragma: no cover
             # This header is set by some browsers like Chrome to let you know
             # general information about where the request came from, without
             # directly divulging the origin URL for privacy reasons
@@ -99,7 +106,7 @@ class AuthenticationView:
             if sec_fetch in ("same-origin", "same-site"):
                 return True
 
-        if not self._enable_referrer:
+        if not self._enable_referrer:  # pragma: no cover
             return False
 
         referrer = context.get_header("Referer")
