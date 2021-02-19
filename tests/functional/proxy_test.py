@@ -32,6 +32,9 @@ class TestProxy:
 
         assert policy == "*MISSING*"
 
+    def test_we_dont_rewrite_links_by_default(self, app, proxied_content):
+        assert '<a href="http://example.com">link</a>' in proxied_content
+
     @pytest.mark.parametrize(
         "link_mode,expected",
         (

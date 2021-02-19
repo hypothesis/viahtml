@@ -138,28 +138,40 @@ class TestContext:
 
         assert value == "Foo!"
 
-    @pytest.mark.parametrize("scheme", ("http", "https"))
     @pytest.mark.parametrize(
-        "url", ("SCHEME://hostname:9999/path", "//hostname:9999/path", "/path")
+        "url,proxy,expected",
+        (
+            ("/proxy/http://example.com", True, "http://via/proxy/http://example.com"),
+            (
+                "//via/proxy/http://example.com",
+                True,
+                "http://via/proxy/http://example.com",
+            ),
+            (
+                "http://via/proxy/http://example.com",
+                True,
+                "http://via/proxy/http://example.com",
+            ),
+            ("subpath", False, "https://example.com/path/subpath"),
+            ("/path2", False, "https://example.com/path2"),
+            ("//example.com", False, "https://example.com"),
+            ("ftp://example.com", False, "ftp://example.com"),
+        ),
     )
-    def test_make_absolute(self, context, environ, scheme, url):
-        url = url.replace("SCHEME", scheme)
-        environ["wsgi.url_scheme"] = scheme
+    def test_make_absolute(
+        self, context, url, proxy, expected, environ
+    ):  # pylint: disable=too-many-arguments
+        environ["PATH_INFO"] = "/proxy/https://example.com/path/"
 
-        result = context.make_absolute(url)
+        result = context.make_absolute(url, proxy)
 
-        assert result == f"{scheme}://hostname:9999/path"
-
-    def test_make_absolute_ignores_things_it_does_not_understand(self, context):
-        result = context.make_absolute("wabble://what?")
-
-        assert result == "wabble://what?"
+        assert result == expected
 
     @pytest.fixture
     def environ(self):
         return {
             "wsgi.url_scheme": "http",
-            "SERVER_NAME": "hostname",
+            "SERVER_NAME": "via",
             "SERVER_PORT": "9999",
             "SCRIPT_NAME": "script",
             "PATH_INFO": "/",

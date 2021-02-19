@@ -15,7 +15,7 @@ def apply_pre_app_hooks(hooks):
     """Apply hooks before the app has been instantiated."""
 
     _patch_url_rewriter(hooks)
-    _PatchedHTMLRewriter.patch()
+    _PatchedHTMLRewriter.patch(hooks)
 
 
 def _patch_url_rewriter(hooks):
@@ -26,10 +26,13 @@ def _patch_url_rewriter(hooks):
 
 
 class _PatchedHTMLRewriter(HTMLRewriter):  # pylint: disable=abstract-method
+    hooks = None
+
     @classmethod
-    def patch(cls):
+    def patch(cls, hooks):
         """Patch the parent object."""
 
+        cls.hooks = hooks
         DefaultRewriter.DEFAULT_REWRITERS["html"] = _PatchedHTMLRewriter
 
     def _rewrite_link_href(self, attr_value, tag_attrs, rw_mod):
@@ -43,6 +46,30 @@ class _PatchedHTMLRewriter(HTMLRewriter):  # pylint: disable=abstract-method
             return self._rewrite_url(attr_value, "id_")
 
         return super()._rewrite_link_href(attr_value, tag_attrs, rw_mod)
+
+    def _rewrite_tag_attrs(self, tag, tag_attrs, set_parsing_context=True):
+        # Jump into the general tag + attr rewriting step to allow flexible
+        # rewriting of tags should we need to
+
+        new_attrs = self.hooks.modify_tag_attrs(tag, tag_attrs)
+
+        # If the hook returns anything, we need to take over writing out the
+        # response. This replicates the behavior of _rewrite_tag_attrs if
+        # it didn't change any of the attrs provided
+        if new_attrs is not None:
+            self.out.write("<" + tag)
+
+            for name, value in new_attrs:
+                self._write_attr(
+                    name=name,
+                    value="" if value is None else value,
+                    empty_attr=bool(value is None),
+                )
+
+            return True
+
+        # Continue with default behavior instead
+        return super()._rewrite_tag_attrs(tag, tag_attrs, set_parsing_context)
 
 
 class _PatchedRewriterApp(RewriterApp):
@@ -63,7 +90,7 @@ class _PatchedRewriterApp(RewriterApp):
     def render_content(self, wb_url, kwargs, environ):
         response = super().render_content(wb_url, kwargs, environ)
 
-        response = self.hooks.modify_render_response(response, environ)
+        response = self.hooks.modify_render_response(response)
 
         return response
 

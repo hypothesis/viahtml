@@ -4,6 +4,7 @@ import json
 import re
 from functools import lru_cache
 from http import HTTPStatus
+from urllib.parse import urljoin
 
 from h_vialib import Configuration
 from werkzeug import wsgi
@@ -136,26 +137,15 @@ class Context:
         wsgi_name = "HTTP_" + name.upper().replace("-", "_")
         return self.http_environ.get(wsgi_name)
 
-    def make_absolute(self, url):
-        """Make a `pywb` URL absolute.
+    def make_absolute(self, url, proxy=True):
+        """Make a URL absolute.
 
-        This accepts `pywb` URLs like `/proxy/...` or `//host/proxy/...` and
-        makes them absolute by filling out the missing host or scheme as
-        appropriate. Behavior is undefined for 3rd party URLs.
+        Any URL which is already absolute will be returned as is, regardless
+        of the `proxy` setting.
 
-        :param url: First party `pywb` URL to convert
+        :param url: URL to convert
+        :param proxy: Make the path relative with regards to Via rather than
+            the original site
         :return: An absolute URL to our service
         """
-        if url.startswith("http:") or url.startswith("https:"):
-            return url
-
-        scheme = self.http_environ["wsgi.url_scheme"]
-
-        if url.startswith("//"):
-            return f"{scheme}:{url}"
-
-        if url.startswith("/"):
-            return f"{scheme}://{self.host}{url}"
-
-        # Who knows what happened here
-        return url
+        return urljoin(self.url if proxy else self.proxied_url, url)
