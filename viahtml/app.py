@@ -36,6 +36,8 @@ class Application:
                 secret=config["secret"],
                 required=not config["disable_authentication"],
                 enable_cookie=not config["disable_cookie"],
+                enable_referrer=not config["disable_referrer"],
+                enable_sec_fetch_site=not config["disable_sec_fetch_site"],
                 http_mode=config["http_mode"],
             ),
             BlocklistView(config["checkmate_host"], config["checkmate_api_key"]),
@@ -97,6 +99,10 @@ class Application:
                 os.environ.get("VIA_DISABLE_AUTHENTICATION", False)
             ),
             "disable_cookie": asbool(os.environ.get("VIA_DISABLE_COOKIE", False)),
+            "disable_referrer": asbool(os.environ.get("VIA_DISABLE_REFERRER", False)),
+            "disable_sec_fetch_site": asbool(
+                os.environ.get("VIA_DISABLE_SEC_FETCH_SITE", False)
+            ),
             "checkmate_host": os.environ["CHECKMATE_URL"],
             "http_mode": asbool(os.environ.get("VIA_HTTP_MODE", False)),
             "checkmate_api_key": os.environ["CHECKMATE_API_KEY"],

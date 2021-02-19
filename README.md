@@ -63,6 +63,8 @@ Environment variables:
 | `VIA_SECRET`          | Secret used for checking signed URLs      | `a_very_long_random_string` |
 | `VIA_DISABLE_AUTHENTICATION` | Disable auth for dev purposes      | `false` |
 | `VIA_DISABLE_COOKIE` | Disable persistent auth sessions           | `false` |
+| `VIA_DISABLE_REFERRER` | Disable Referer header-based auth        | `false` |
+| `VIA_DISABLE_SEC_FETCH_SITE` | Disable Sec-Fetch-Site header-based auth | `false` |
 | `VIA_HTTP_MODE` | Enabled HTTP (rather than HTTPS) mode for dev   | `false` |
 
 

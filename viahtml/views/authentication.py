@@ -35,6 +35,8 @@ class AuthenticationView:
         :param secret: Secret used for signing and checking signatures
         :param required: Require auth
         :param enable_cookie: Enable cookie based persistence of auth
+        :param enable_referrer: Enable Referer header-based auth
+        :param enable_sec_fetch_site: Enable Sec-Fetch-Site header-based auth
         :param http_mode: Expect the service to run on HTTP rather than HTTPS
         """
         self._secure_cookie = TokenBasedCookie(
@@ -45,6 +47,8 @@ class AuthenticationView:
         self._secure_url = ViaSecureURL(secret)
         self._required = required
         self._enable_cookie = enable_cookie
+        self._enable_referrer = enable_referrer
+        self._enable_sec_fetch_site = enable_sec_fetch_site
 
     def __call__(self, context):
         """Provide a block page response if required.
@@ -87,12 +91,16 @@ class AuthenticationView:
     def _is_referred_by_us(cls, context):
         """Check if the referrer is ourselves."""
 
-        # This header is set by some browsers like Chrome to let you know
-        # general information about where the request came from, without
-        # directly divulging the origin URL for privacy reasons
-        sec_fetch = context.get_header("Sec-Fetch-Site")
-        if sec_fetch in ("same-origin", "same-site"):
-            return True
+        if self._enable_sec_fetch_site:
+            # This header is set by some browsers like Chrome to let you know
+            # general information about where the request came from, without
+            # directly divulging the origin URL for privacy reasons
+            sec_fetch = context.get_header("Sec-Fetch-Site")
+            if sec_fetch in ("same-origin", "same-site"):
+                return True
+
+        if not self._enable_referrer:
+            return False
 
         referrer = context.get_header("Referer")
         if not referrer:
