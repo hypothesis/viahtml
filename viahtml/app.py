@@ -27,6 +27,7 @@ class Application:
 
         config = self._config_from_env()
 
+        self._config = config
         self._setup_logging(config["debug"])
         self.hooks = Hooks(config)
 
@@ -54,6 +55,7 @@ class Application:
         """Handle WSGI requests."""
 
         context = Context(http_environ=environ, start_response=start_response)
+        self.hooks.set_context(context)
 
         for view in self.views:
             response = view(context)
@@ -100,6 +102,12 @@ class Application:
             "checkmate_host": os.environ["CHECKMATE_URL"],
             "http_mode": asbool(os.environ.get("VIA_HTTP_MODE", False)),
             "checkmate_api_key": os.environ["CHECKMATE_API_KEY"],
+            # Rewriting related options
+            "rewrite": {
+                # Enable rewriting HTML links in the page so they lead back to
+                # Via instead of the original site
+                "a_href": False
+            },
         }
 
     @classmethod

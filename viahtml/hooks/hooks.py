@@ -2,7 +2,6 @@
 from h_vialib import Configuration
 from h_vialib.secure import ViaSecureURL
 
-from viahtml.context import Context
 from viahtml.hooks._headers import Headers
 
 
@@ -14,6 +13,12 @@ class Hooks:
     def __init__(self, config):
         self.config = config
         self._secure_url = ViaSecureURL(config["secret"])
+        self.context = None
+
+    def set_context(self, context):
+        """Set the request context for access in hook points."""
+
+        self.context = context
 
     @property
     def template_vars(self):
@@ -45,11 +50,10 @@ class Hooks:
 
     _REDIRECTS = ("301", "302", "303", "305", "307", "308")
 
-    def modify_render_response(self, response, environ):
+    def modify_render_response(self, response):
         """Return a potentially modified response from pywb.
 
         :param response: WbResponse object returned from pywb
-        :param environ: WSGI environ dict
         :returns: Either the same or a modified response object
         """
         # `status_headers` is an instance of
@@ -62,11 +66,33 @@ class Hooks:
             # our referrer checking
             location = response.status_headers.get_header("Location")
             if location:
-                location = Context(environ, start_response=None).make_absolute(location)
+                location = self.context.make_absolute(location)
                 location = self._secure_url.create(location)
                 response.status_headers.replace_header("Location", location)
 
         return response
+
+    def modify_tag_attrs(self, tag, attrs):
+        """Modify tag attributes or let `pywb` default behavior take over.
+
+        :param tag: Tag being rewritten
+        :param attrs: List of tuples of key, value attributes
+        :return: None for default behavior, or attrs to write in the same
+            format as received
+        """
+        # Prevent any rewriting of tags if we are configured to
+        if tag == "a" and not self.config["rewrite"]["a_href"]:
+
+            def value_map(key, value):
+                if key == "href":
+                    value = self.context.make_absolute(value, proxy=False)
+
+                return key, value
+
+            return [value_map(key, value) for key, value in attrs]
+
+        # Allow everything else through
+        return None
 
     @classmethod
     def get_upstream_url(cls, doc_url):

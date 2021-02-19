@@ -43,6 +43,7 @@ def upstream_website():
        </head>
        <body>
          <!-- upstream content -->
+         <a href="http://example.com">link</a>
        </body>
      </html>
      """

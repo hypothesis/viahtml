@@ -1,10 +1,11 @@
-from unittest.mock import patch, sentinel
+from unittest.mock import create_autospec, patch, sentinel
 
 import pytest
 from h_matchers import Any
 from pywb.apps.wbrequestresponse import WbResponse
 from warcio.statusandheaders import StatusAndHeaders
 
+from viahtml.context import Context
 from viahtml.hooks import Hooks
 
 
@@ -74,16 +75,16 @@ class TestHooks:
         ),
     )
     def test_modify_render_response_rewrites_redirects(
-        self, hooks, wb_response, status_line, Context
+        self, hooks, wb_response, status_line
     ):
         wb_response.status_headers.statusline = status_line
         original_location = "http://via/proxy/http://example.com"
         wb_response.status_headers.add_header("Location", original_location)
 
-        response = hooks.modify_render_response(wb_response, {})
+        response = hooks.modify_render_response(wb_response)
 
         location = response.status_headers.get_header("Location")
-        Context.return_value.make_absolute.assert_called_once_with(original_location)
+        hooks.context.make_absolute.assert_called_once_with(original_location)
         assert location == Any.url.matching(original_location).with_query(
             {"via.sec": Any.string()}
         )
@@ -91,7 +92,7 @@ class TestHooks:
     def test_modify_render_response_survives_no_location(self, hooks, wb_response):
         wb_response.status_headers.statusline = "307 Temporary Redirect"
 
-        response = hooks.modify_render_response(wb_response, {})
+        response = hooks.modify_render_response(wb_response)
 
         assert response == wb_response
 
@@ -108,34 +109,65 @@ class TestHooks:
         wb_response.status_headers.statusline = status_line
         wb_response.status_headers.add_header("Location", "foo")
 
-        response = hooks.modify_render_response(wb_response, {})
+        response = hooks.modify_render_response(wb_response)
 
         location = response.status_headers.get_header("Location")
         assert location == "foo"
+
+    @pytest.mark.parametrize(
+        "tag,attrs,rewrite_settings,expected",
+        (
+            # When rewriting is _disabled_ and we have an <a> tag we return
+            # something to prevent pywb from rewriting the <a> tag's `src`.
+            (
+                "a",
+                [("href", "foo"), ("a", "b")],
+                {"a_href": False},
+                [("href", "ABS:foo"), ("a", "b")],
+            ),
+            # In all other cases we return None to allow pywb's behavior.
+            ("h1", [], {"a_href": False}, None),
+            ("a", [("href", "foo")], {"a_href": True}, None),
+            ("h1", [], {"a_href": True}, None),
+        ),
+    )
+    def test_modify_tag_attrs_disables_rewriting(
+        self, hooks, tag, attrs, rewrite_settings, expected
+    ):  # pylint: disable=too-many-arguments
+        hooks.config["rewrite"] = rewrite_settings
+        hooks.context.make_absolute.side_effect = lambda url, proxy=True: "ABS:" + url
+
+        new_attrs = hooks.modify_tag_attrs(tag, attrs)
+        assert new_attrs == expected
 
     @pytest.fixture
     def wb_response(self):
         return WbResponse(status_headers=StatusAndHeaders("200 OK", headers=[]))
 
     @pytest.fixture
-    def hooks(self):
-        return Hooks(
+    def context(self):
+        context = create_autospec(Context, spec_set=True, instance=True)
+        context.host = "via"
+        context.make_absolute.side_effect = lambda url, proxy=True: url
+        return context
+
+    @pytest.fixture
+    def hooks(self, context):
+        hooks = Hooks(
             {
                 "config_noise": "noise",
                 "h_embed_url": sentinel.h_embed_url,
                 "ignore_prefixes": sentinel.prefixes,
                 "secret": "not_a_secret",
+                "rewrite": {"a_href": True},
             }
         )
+
+        hooks.set_context(context)
+
+        return hooks
 
     @pytest.fixture
     def Configuration(self):
         with patch("viahtml.hooks.hooks.Configuration", autospec=True) as Configuration:
             yield Configuration
-
-    @pytest.fixture(autouse=True)
-    def Context(self, patch):
-        Context = patch("viahtml.hooks.hooks.Context")
-        Context.return_value.host = "via"
-        Context.return_value.make_absolute.side_effect = lambda url: url
-        return Context
