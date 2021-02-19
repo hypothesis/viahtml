@@ -136,7 +136,9 @@ class TestAuthenticationView:
     def assert_is_unauthorized_response(self, result, context):
         assert result is context.make_response.return_value
         context.make_response.assert_called_once_with(
-            HTTPStatus.UNAUTHORIZED, lines=[Any.string.containing("401")]
+            HTTPStatus.UNAUTHORIZED,
+            lines=[Any.string.containing("401")],
+            headers={"Content-Type": "text/html; charset=utf-8"},
         )
 
     @pytest.fixture
