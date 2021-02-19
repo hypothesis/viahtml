@@ -85,9 +85,23 @@ class TestHooks:
 
         location = response.status_headers.get_header("Location")
         hooks.context.make_absolute.assert_called_once_with(original_location)
-        assert location == Any.url.matching(original_location).with_query(
+        assert location == Any.url.matching(original_location).containing_query(
             {"via.sec": Any.string()}
         )
+
+    def test_modify_render_response_preserves_via_params_on_redirect(
+        self, hooks, wb_response
+    ):
+        wb_response.status_headers.statusline = "307 Temporary Redirect"
+        wb_response.status_headers.add_header(
+            "Location", "http://example.com?via.option=foo"
+        )
+
+        response = hooks.modify_render_response(wb_response)
+
+        location = response.status_headers.get_header("Location")
+
+        assert location == Any.url.containing_query({"via.option": "foo"})
 
     def test_modify_render_response_survives_no_location(self, hooks, wb_response):
         wb_response.status_headers.statusline = "307 Temporary Redirect"

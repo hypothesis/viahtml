@@ -67,6 +67,15 @@ class Hooks:
             location = response.status_headers.get_header("Location")
             if location:
                 location = self.context.make_absolute(location)
+
+                via_params, client_params = Configuration.extract_from_url(
+                    location, add_defaults=False
+                )
+                if via_params or client_params:
+                    location = Configuration.add_to_url(
+                        location, via_params, client_params
+                    )
+
                 location = self._secure_url.create(location)
                 response.status_headers.replace_header("Location", location)
 
