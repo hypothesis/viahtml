@@ -62,7 +62,8 @@ class AuthenticationView:
         except TokenException as err:
             return context.make_response(
                 HTTPStatus.UNAUTHORIZED,
-                lines=[f"<h1>401 Unauthorized</h1><p>{err}</p>"],
+                lines=[self._error_template(err)],
+                headers={"Content-Type": "text/html; charset=utf-8"},
             )
 
         # We might have added a header, but we don't want to handle the request
@@ -116,3 +117,21 @@ class AuthenticationView:
 
     def _has_signed_url(self, context):
         return self._secure_url.verify(context.url)
+
+    @classmethod
+    def _error_template(cls, exception):
+        # We add a fake favicon here, to prevent the browser from requesting
+        # one, as this can trigger `pywb` to issue a redirect which effectively
+        # logs the user in by setting a `via.sec` cookie in the response.
+
+        return f"""
+        <html>
+            <head>
+                <link rel="icon" href="data:,">
+            </head>
+            <body>
+                <h1>401 Unauthorized</h1>
+                <p>{exception}</p>
+            </body>
+        </html>
+        """
