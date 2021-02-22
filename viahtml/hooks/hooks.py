@@ -68,9 +68,10 @@ class Hooks:
             if location:
                 location = self.context.make_absolute(location)
 
-                via_params, client_params = Configuration.extract_from_url(
-                    location, add_defaults=False
+                via_params, client_params = Configuration.extract_from_wsgi_environment(
+                    self.context.http_environ, add_defaults=False
                 )
+                print("REIIRIDDD", via_params, client_params)
                 if via_params or client_params:
                     location = Configuration.add_to_url(
                         location, via_params, client_params
