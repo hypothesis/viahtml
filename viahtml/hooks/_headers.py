@@ -120,9 +120,10 @@ class Headers:
             try:
                 parsed.max_age = int(max_age_digits)
             except ValueError:
-                # If we couldn't extract a valid `max_age` value, treat it the same
-                # as if it were missing.
-                return value
+                # If we couldn't extract a valid `max_age` value, treat it as zero
+                # to prevent downstream from caching it in case it was intended to
+                # be < CLOUDFLARE_MIN_CACHE_TIME.
+                parsed.max_age = 0
 
         if parsed.max_age < self.CLOUDFLARE_MIN_CACHE_TIME:
             parsed.public = False
