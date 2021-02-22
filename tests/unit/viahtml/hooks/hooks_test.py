@@ -90,12 +90,11 @@ class TestHooks:
         )
 
     def test_modify_render_response_preserves_via_params_on_redirect(
-        self, hooks, wb_response
+        self, hooks, wb_response, context
     ):
+        context.http_environ = {"QUERY_STRING": "via.option=foo"}
         wb_response.status_headers.statusline = "307 Temporary Redirect"
-        wb_response.status_headers.add_header(
-            "Location", "http://example.com?via.option=foo"
-        )
+        wb_response.status_headers.add_header("Location", "http://example.com")
 
         response = hooks.modify_render_response(wb_response)
 
