@@ -29,13 +29,21 @@ class AuthenticationView:
     time.
     """
 
-    def __init__(self, secret, required=True, enable_cookie=True, http_mode=False):
+    def __init__(
+        self,
+        secret,
+        required=True,
+        enable_cookie=True,
+        http_mode=False,
+        allowed_referrers=None,
+    ):  # pylint: disable=too-many-arguments
         """Initialize the view.
 
         :param secret: Secret used for signing and checking signatures
         :param required: Require auth
         :param enable_cookie: Enable cookie based persistence of auth
         :param http_mode: Expect the service to run on HTTP rather than HTTPS
+        :param allowed_referrers: A list of hosts allowed to route requests to this service
         """
         self._secure_cookie = TokenBasedCookie(
             self.COOKIE_NAME,
@@ -45,6 +53,7 @@ class AuthenticationView:
         self._secure_url = ViaSecureURL(secret)
         self._required = required
         self._enable_cookie = enable_cookie
+        self._allowed_referrers = allowed_referrers or []
 
     def __call__(self, context):
         """Provide a block page response if required.
@@ -73,7 +82,7 @@ class AuthenticationView:
         if self._has_valid_browsing_cookie(context):
             return
 
-        if self._is_referred_by_us(context) or self._has_signed_url(context):
+        if self._has_allowed_referrer(context) or self._has_signed_url(context):
             if not self._enable_cookie:
                 return
 
@@ -84,15 +93,19 @@ class AuthenticationView:
 
             context.add_header(cookie_header, cookie_value)
 
-    @classmethod
-    def _is_referred_by_us(cls, context):
-        """Check if the referrer is ourselves."""
+    def _has_allowed_referrer(self, context):
+        """Check if the request came from an allowed referrer."""
 
-        # This header is set by some browsers like Chrome to let you know
-        # general information about where the request came from, without
-        # directly divulging the origin URL for privacy reasons
+        # The `Sec-Fetch-Site` header is set in some browsers (eg. Chrome) to
+        # indicate where a request came from, without divulging the actual
+        # origin.
+        #
+        # Testing this header in addition to `Referer` is needed because Chrome
+        # does not set the `Referer` in some subresource requests. See
+        # https://github.com/hypothesis/viahtml/issues/70.
         sec_fetch = context.get_header("Sec-Fetch-Site")
-        if sec_fetch in ("same-origin", "same-site"):
+        if sec_fetch == "same-origin":
+            # Request came from us.
             return True
 
         referrer = context.get_header("Referer")
@@ -104,10 +117,13 @@ class AuthenticationView:
         except ValueError:
             # By rights this shouldn't be possible, as the browser shouldn't
             # send us broken URLs, but why leave it to chance?
-
             return False
 
-        return parsed_referrer.netloc == context.host
+        # Allow requests that came from us or additional allowed referrers.
+        return (
+            parsed_referrer.netloc == context.host
+            or parsed_referrer.netloc in self._allowed_referrers
+        )
 
     def _has_valid_browsing_cookie(self, context):
         try:

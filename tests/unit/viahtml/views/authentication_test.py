@@ -75,12 +75,14 @@ class TestAuthenticationView:
     @pytest.mark.parametrize(
         "header,value",
         (
+            # Request from ourselves - always allowed.
             ("Referer", "http://via/some/path"),
             ("Sec-Fetch-Site", "same-origin"),
-            ("Sec-Fetch-Site", "same-site"),
+            # Request from a different, but allowed, origin.
+            ("Referer", "http://allowed-origin/another/path"),
         ),
     )
-    def test_it_allows_through_if_self_referred(
+    def test_it_allows_through_if_allowed_referrer(
         self, view, context, headers, TokenBasedCookie, header, value
     ):  # pylint: disable=too-many-arguments
         headers[header] = value
@@ -97,6 +99,7 @@ class TestAuthenticationView:
             # This is us, but it's a URL designed to crash URL parsing
             ("Referer", "http://via]"),
             ("Sec-Fetch-Site", "none"),
+            ("Sec-Fetch-Site", "same-site"),
             ("Sec-Fetch-Site", "cross-origin"),
         ),
     )
@@ -153,7 +156,9 @@ class TestAuthenticationView:
 
     @pytest.fixture
     def view(self):
-        return AuthenticationView(secret="not_a_secret", required=True)
+        return AuthenticationView(
+            secret="not_a_secret", required=True, allowed_referrers=["allowed-origin"]
+        )
 
     @pytest.fixture(autouse=True)
     def TokenBasedCookie(self, patch):
