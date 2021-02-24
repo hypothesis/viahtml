@@ -1,5 +1,10 @@
 def environment_variables():
     return {
+        "VIA_ALLOWED_REFERRERS": ",".join(
+            [
+                "localhost:8001",
+            ]
+        ),
         "VIA_H_EMBED_URL": "http://localhost:3001/hypothesis",
         "VIA_IGNORE_PREFIXES": ",".join(
             [

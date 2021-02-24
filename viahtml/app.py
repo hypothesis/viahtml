@@ -38,6 +38,7 @@ class Application:
                 required=not config["disable_authentication"],
                 enable_cookie=not config["disable_cookie"],
                 http_mode=config["http_mode"],
+                allowed_referrers=config["allowed_referrers"],
             ),
             BlocklistView(config["checkmate_host"], config["checkmate_api_key"]),
             RoutingView(config["routing_host"]),
@@ -90,6 +91,9 @@ class Application:
         """Parse options from environment variables."""
 
         return {
+            "allowed_referrers": cls._split_multiline(
+                os.environ.get("VIA_ALLOWED_REFERRERS", "")
+            ),
             "ignore_prefixes": cls._split_multiline(os.environ["VIA_IGNORE_PREFIXES"]),
             "h_embed_url": os.environ["VIA_H_EMBED_URL"],
             "debug": os.environ.get("VIA_DEBUG", False),
