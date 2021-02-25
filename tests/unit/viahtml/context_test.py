@@ -10,7 +10,6 @@ class TestContext:
         "prop,wsgi_method",
         (
             ("path", "get_path_info"),
-            ("url", "get_current_url"),
             ("host", "get_host"),
         ),
     )
@@ -167,6 +166,27 @@ class TestContext:
 
         assert result == expected
 
+    @pytest.mark.parametrize(
+        "request_uri,expected",
+        [
+            ("/proxy/http://example.com", "http://via/proxy/http://example.com"),
+            ("/proxy/http://example.com/", "http://via/proxy/http://example.com/"),
+            ("/proxy/http://example.com/?", "http://via/proxy/http://example.com/?"),
+            (
+                "/proxy/http://en.wikipedia.org/Bob (singer)",
+                "http://via/proxy/http://en.wikipedia.org/Bob (singer)",
+            ),
+        ],
+    )
+    def test_url_returns_exact_url_from_request(
+        self, environ, context, request_uri, expected
+    ):
+        environ["REQUEST_URI"] = request_uri
+
+        result = context.url
+
+        assert result == expected
+
     @pytest.fixture
     def environ(self):
         return {
@@ -175,6 +195,7 @@ class TestContext:
             "SERVER_PORT": "9999",
             "SCRIPT_NAME": "script",
             "PATH_INFO": "/",
+            "REQUEST_URI": "/",
         }
 
     @pytest.fixture

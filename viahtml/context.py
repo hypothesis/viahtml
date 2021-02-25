@@ -44,7 +44,14 @@ class Context:
     def url(self):
         """Get the full request URL made to the app (with query params)."""
 
-        return wsgi.get_current_url(self.http_environ)
+        # The URL origin is obtained using `get_current_url` but the path and
+        # query string are obtained directly from `REQUEST_URI` to ensure that
+        # the returned URL exactly matches what was passed to the service. This
+        # is important if the URL contains a signature that needs to be
+        # validated.
+        root_url = wsgi.get_current_url(self.http_environ, root_only=True).rstrip("/")
+        request_uri = self.http_environ.get("REQUEST_URI", "/")
+        return root_url + request_uri
 
     @property
     @lru_cache(1)
