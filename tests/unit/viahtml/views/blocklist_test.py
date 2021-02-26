@@ -25,12 +25,13 @@ class TestBlocklistView:
 
     def test_if_the_url_is_not_blocked_it_does_nothing(self, view, context):
         view.checkmate.check_url.return_value = None
+        context.query_params.get.return_value = sentinel.blocked_for
 
         result = view(context)
 
         assert result is None
         view.checkmate.check_url.assert_called_once_with(
-            context.proxied_url, allow_all=True
+            context.proxied_url, allow_all=True, blocked_for=sentinel.blocked_for
         )
 
     def test_if_a_call_to_checkmate_fails_it_does_nothing(self, view, context):
