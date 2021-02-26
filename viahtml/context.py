@@ -4,7 +4,7 @@ import json
 import re
 from functools import lru_cache
 from http import HTTPStatus
-from urllib.parse import urljoin
+from urllib.parse import urljoin, parse_qs
 
 from h_vialib import Configuration
 from werkzeug import wsgi
@@ -45,6 +45,12 @@ class Context:
         """Get the full request URL made to the app (with query params)."""
 
         return wsgi.get_current_url(self.http_environ)
+
+    @property
+    @lru_cache(1)
+    def query_params(self):
+        """Get all the query params present on the request"""
+        return parse_qs(self.http_environ["QUERY_STRING"])
 
     @property
     @lru_cache(1)
