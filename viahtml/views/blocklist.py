@@ -24,8 +24,11 @@ class BlocklistView:
         if not url:
             return None
 
+        blocked_for = context.query_params.get("via.blocked_for")
         try:
-            blocked = self.checkmate.check_url(url, allow_all=True)
+            blocked = self.checkmate.check_url(
+                url, allow_all=True, blocked_for=blocked_for
+            )
         except CheckmateException as err:
             LOG.warning("Failed to check URL against Checkmate: %s", err)
             return None

@@ -4,7 +4,7 @@ import json
 import re
 from functools import lru_cache
 from http import HTTPStatus
-from urllib.parse import urljoin, parse_qs
+from urllib.parse import parse_qs, urljoin
 
 from h_vialib import Configuration
 from werkzeug import wsgi
@@ -49,7 +49,7 @@ class Context:
     @property
     @lru_cache(1)
     def query_params(self):
-        """Get all the query params present on the request"""
+        """Get all the query params present on the request."""
         return parse_qs(self.http_environ["QUERY_STRING"])
 
     @property
