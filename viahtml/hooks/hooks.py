@@ -88,22 +88,32 @@ class Hooks:
 
         :param tag: Tag being rewritten
         :param attrs: List of tuples of key, value attributes
-        :return: None for default behavior, or attrs to write in the same
-            format as received
+        :return: Tuple of (attrs, stop) where stop disables default `pywb`
+            rewriting
         """
-        # Prevent any rewriting of tags if we are configured to
+        stop = False
+        rewrites = {}
+
+        # Replace any referrerpolicy attr values with "no-referrer-when-downgrade".
+        #
+        # This is to prevent sites from telling browsers not to send the
+        # Referer header. See the comments about the Referrer-Policy header
+        # handling in _headers.py for more details.
+        rewrites["referrerpolicy"] = lambda value: "no-referrer-when-downgrade"
+
+        # Prevent any rewriting of tags if we are configured to.
         if tag == "a" and not self.config["rewrite"]["a_href"]:
+            rewrites["href"] = lambda value: self.context.make_absolute(
+                value, proxy=False
+            )
+            stop = True
 
-            def value_map(key, value):
-                if key == "href":
-                    value = self.context.make_absolute(value, proxy=False)
+        attrs = [
+            (key, rewrites[key](value) if key in rewrites else value)
+            for key, value in attrs
+        ]
 
-                return key, value
-
-            return [value_map(key, value) for key, value in attrs]
-
-        # Allow everything else through
-        return None
+        return attrs, stop
 
     @classmethod
     def get_upstream_url(cls, doc_url):

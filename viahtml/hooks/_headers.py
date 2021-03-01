@@ -35,6 +35,20 @@ class Headers:
         # Various headers added by `pywb` relating to archival
         "Memento-Datetime",
         "Link",
+        # Block third-party Referrer-Policy headers so that they can't tell the
+        # browser not to send us a Referer header.
+        #
+        # When responses that Via proxies cause the browser to send subsequent
+        # requests to Via (e.g. if the page contains resources like images, CSS
+        # or JavaScript, or if the response is a redirect) we need to make sure
+        # that the browser sends a Referer header in those subsequent requests
+        # because we use the Referer header to identify them as subsequent
+        # requests.
+        #
+        # Sites can use the Referrer-Policy header to tell the browser *not* to
+        # send the Referer header (for example: Referrer-Policy: no-referrer).
+        # We block Referrer-Policy headers to prevent that.
+        "Referrer-Policy",
     } | BLOCKED
 
     def __init__(self):
@@ -93,6 +107,23 @@ class Headers:
             ):
                 headers.append((header, value))
 
+        # Add our own Referrer-Policy header.
+        #
+        # This isn't strictly necessary because we block third-party
+        # Referrer-Policy headers in BLOCKED_OUTBOUND above and browsers
+        # default referrer policies *do* send the Referer header.
+        #
+        # But just for good measure (e.g. if some browser settings, extensions,
+        # or future browser versions change to *not* sending Referer by
+        # default) we inject a header to explicitly ask for Referer.
+        #
+        # "no-referrer-when-downgrade" is the default in most browsers at the
+        # time of writing and means that the Referer header *will* be sent
+        # unless the protocol is changing from HTTP to HTTPS.
+        headers.append(("Referrer-Policy", "no-referrer-when-downgrade"))
+
+        # Tell Google and other search engines not to index third-party pages
+        # proxied by Via HTML and not to follow links on those pages.
         headers.append(("X-Robots-Tag", "noindex, nofollow"))
 
         return headers
