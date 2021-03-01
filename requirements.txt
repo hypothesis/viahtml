@@ -34,7 +34,7 @@ greenlet==1.0.0
     # via gevent
 h-checkmatelib==1.0.6
     # via -r requirements.in
-h-vialib==1.0.11
+h_vialib==1.0.12
     # via -r requirements.in
 idna==2.10
     # via
