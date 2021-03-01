@@ -94,8 +94,20 @@ class AuthenticationView:
             context.add_header(cookie_header, cookie_value)
 
     def _has_allowed_referrer(self, context):
-        """Check if the request came from an allowed referrer."""
+        """Check if the request came from an allowed referrer.
 
+        When responses that Via proxies cause the browser to send subsequent
+        requests to Via (e.g. if the page contains resources like images, CSS
+        or JavaScript, or if the response is a redirect) we need to allow those
+        subsequent requests to be proxied even though their URLs may not be on
+        Checkmate's allow-list.
+
+        We identify these subsequent requests from their Referer or
+        Sec-Fetch-Site header and allow them.
+
+        The Referer header can also be used to allow requests sent to Via from
+        other Hypothesis apps (e.g. from the LMS app).
+        """
         # The `Sec-Fetch-Site` header is set in some browsers (eg. Chrome) to
         # indicate where a request came from, without divulging the actual
         # origin.
@@ -119,7 +131,7 @@ class AuthenticationView:
             # send us broken URLs, but why leave it to chance?
             return False
 
-        # Allow requests that came from us or additional allowed referrers.
+        # Allow requests that came from Via or additional allowed referrers.
         return (
             parsed_referrer.netloc == context.host
             or parsed_referrer.netloc in self._allowed_referrers
