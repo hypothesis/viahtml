@@ -51,12 +51,12 @@ class _PatchedHTMLRewriter(HTMLRewriter):  # pylint: disable=abstract-method
         # Jump into the general tag + attr rewriting step to allow flexible
         # rewriting of tags should we need to
 
-        new_attrs = self.hooks.modify_tag_attrs(tag, tag_attrs)
+        new_attrs, stop = self.hooks.modify_tag_attrs(tag, tag_attrs)
 
-        # If the hook returns anything, we need to take over writing out the
-        # response. This replicates the behavior of _rewrite_tag_attrs if
-        # it didn't change any of the attrs provided
-        if new_attrs is not None:
+        # If the hook returns stop=True we need to stop pywb's default
+        # rewriting and take over writing out the response with the new_attrs
+        # returned by the hook.
+        if stop:
             self.out.write("<" + tag)
 
             for name, value in new_attrs:
@@ -68,8 +68,9 @@ class _PatchedHTMLRewriter(HTMLRewriter):  # pylint: disable=abstract-method
 
             return True
 
-        # Continue with default behavior instead
-        return super()._rewrite_tag_attrs(tag, tag_attrs, set_parsing_context)
+        # If the hook returns stop=False we go on to all pywb's default
+        # _rewrite_tag_attrs with the new attrs returned by the hook.
+        return super()._rewrite_tag_attrs(tag, new_attrs, set_parsing_context)
 
 
 class _PatchedRewriterApp(RewriterApp):

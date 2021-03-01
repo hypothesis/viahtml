@@ -79,6 +79,13 @@ class TestHeaders:
         ]
         assert cache_control_headers == [("Cache-Control", expected)]
 
+    def test_modify_outbound_inserts_referrer_policy_header(self, headers):
+        modified_headers = headers.modify_outbound([])
+
+        assert modified_headers == Any.list.containing(
+            [("Referrer-Policy", "no-referrer-when-downgrade")]
+        )
+
     def test_modify_outbound_inserts_noindex_header(self, headers):
         modified_headers = headers.modify_outbound([])
 

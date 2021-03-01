@@ -10,7 +10,13 @@ class TestHeaders:
     ):
         assert header_name in proxied_content.headers
 
-    @pytest.mark.parametrize("header_name", Headers.BLOCKED_OUTBOUND)
+    @pytest.mark.parametrize(
+        "header_name",
+        # Remove Referrer-Policy from the list of headers that we test are
+        # blocked because _headers.py actually inserts our own Referrer-Policy
+        # header.
+        Headers.BLOCKED_OUTBOUND - {"Referrer-Policy"},
+    )
     def test_outbound_headers_do_not_contain_banned_values(
         self, proxied_content, header_name
     ):
