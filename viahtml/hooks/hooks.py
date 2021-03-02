@@ -76,7 +76,9 @@ class Hooks:
                         location, via_params, client_params
                     )
 
-                location = self._secure_url.create(location)
+                if self.config["enable_redirect_signing"]:
+                    location = self._secure_url.create(location)
+
                 response.status_headers.replace_header("Location", location)
 
         return response

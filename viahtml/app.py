@@ -103,6 +103,9 @@ class Application:
                 os.environ.get("VIA_DISABLE_AUTHENTICATION", False)
             ),
             "disable_cookie": asbool(os.environ.get("VIA_DISABLE_COOKIE", False)),
+            "enable_redirect_signing": asbool(
+                os.environ.get("VIA_ENABLE_REDIRECT_SIGNING", False)
+            ),
             "checkmate_host": os.environ["CHECKMATE_URL"],
             "http_mode": asbool(os.environ.get("VIA_HTTP_MODE", False)),
             "checkmate_api_key": os.environ["CHECKMATE_API_KEY"],
