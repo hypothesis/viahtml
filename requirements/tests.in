@@ -1,5 +1,7 @@
 pytest
-webtest
 httpretty
 responses
+webtest
 h-matchers>=1.2.10
+coverage
+-r requirements.txt
