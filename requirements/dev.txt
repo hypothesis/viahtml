@@ -4,8 +4,6 @@
 #
 #    pip-compile requirements/dev.in
 #
--e file:///home/marcos/hypo/viahtml
-    # via -r requirements/dev.in
 attrs==20.3.0
     # via
     #   -r requirements/requirements.txt
