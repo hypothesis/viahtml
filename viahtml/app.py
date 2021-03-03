@@ -106,12 +106,6 @@ class Application:
             "checkmate_host": os.environ["CHECKMATE_URL"],
             "http_mode": asbool(os.environ.get("VIA_HTTP_MODE", False)),
             "checkmate_api_key": os.environ["CHECKMATE_API_KEY"],
-            # Rewriting related options
-            "rewrite": {
-                # Enable rewriting HTML links in the page so they lead back to
-                # Via instead of the original site
-                "a_href": False
-            },
         }
 
     @classmethod

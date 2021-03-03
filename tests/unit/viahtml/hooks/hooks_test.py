@@ -128,46 +128,40 @@ class TestHooks:
         assert location == "foo"
 
     @pytest.mark.parametrize(
-        "tag,attrs,rewrite_settings,expected_new_attrs,expected_stop",
+        "tag,attrs,expected_new_attrs,expected_stop",
         (
-            # When href rewriting is _disabled_ and we have an <a> tag we
-            # make the <a> tag's href absolute (to make sure that requests for
-            # the href's URL are not proxied through Via) and return stop=True
-            # to prevent pywb from rewriting the href to be proxied through Via.
+            # When we have an <a> tag we make the tag's href absolute (to make
+            # sure that requests for the href's URL are not proxied through
+            # Via) and return stop=True to prevent pywb from rewriting the href
+            # to be proxied through Via.
             (
                 "a",
                 [("href", "foo"), ("a", "b")],
-                {"a_href": False},
                 [("href", "ABS:foo"), ("a", "b")],
                 True,
             ),
             # In all other cases we return stop=False to allow pywb's usual
             # rewriting to happen.
-            ("h1", [], {"a_href": False}, [], False),
-            ("a", [("href", "foo")], {"a_href": True}, [("href", "foo")], False),
-            ("h1", [], {"a_href": True}, [], False),
+            ("h1", [], [], False),
             # We replace referrerpolicy attrs with "no-referrer-when-downgrade"
             # to prevent third-party sites from blocking the Referer header.
             (
                 "img",
                 [("referrerpolicy", "no-referrer")],
-                {"a_href": True},
                 [("referrerpolicy", "no-referrer-when-downgrade")],
                 False,
             ),
             (
                 "img",
                 [("referrerpolicy", "no-referrer")],
-                {"a_href": False},
                 [("referrerpolicy", "no-referrer-when-downgrade")],
                 False,
             ),
         ),
     )
     def test_modify_tag_attrs_disables_rewriting(
-        self, hooks, tag, attrs, rewrite_settings, expected_new_attrs, expected_stop
+        self, hooks, tag, attrs, expected_new_attrs, expected_stop
     ):  # pylint: disable=too-many-arguments
-        hooks.config["rewrite"] = rewrite_settings
         hooks.context.make_absolute.side_effect = lambda url, proxy=True: "ABS:" + url
 
         new_attrs, stop = hooks.modify_tag_attrs(tag, attrs)

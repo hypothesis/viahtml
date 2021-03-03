@@ -98,8 +98,12 @@ class Hooks:
         # authenticate requests (see authentication.py).
         rewrites = {"referrerpolicy": lambda value: "no-referrer-when-downgrade"}
 
-        # Prevent any rewriting of tags if we are configured to.
-        if tag == "a" and not self.config["rewrite"]["a_href"]:
+        # Disable pywb's from rewriting the href URLs of <a> tags.
+        #
+        # We don't want users to stay within Via when clicking on a link,
+        # we want clicking a link to take users to the target site directly
+        # (not proxied by Via).
+        if tag == "a":
             rewrites["href"] = lambda value: self.context.make_absolute(
                 value, proxy=False
             )
