@@ -1,0 +1,4 @@
+pylint<2.5
+pydocstyle
+-r tests.txt
+-r requirements.txt

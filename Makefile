@@ -17,6 +17,7 @@ help:
 	@echo "make run-docker        Run the app's Docker image locally."
 	@echo "make clean             Delete development artefacts (cached files, "
 	@echo "                       dependencies, etc)"
+	@echo "make requirements      Compile all requirements files"
 
 .PHONY: dev
 dev: python
@@ -44,10 +45,6 @@ test: python
 
 .PHONY: sure
 sure: checkformatting lint test
-
-.PHONY: pip-compile
-pip-compile: python
-	@tox -qe pip-compile
 
 .PHONY: upgrade-package
 upgrade-package: python
@@ -96,5 +93,9 @@ web:
 .PHONY: python
 python:
 	@./bin/install-python
+
+.PHONY: requirements
+requirements:
+	@requirements/compile.sh
 
 DOCKER_TAG = dev
