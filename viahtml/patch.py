@@ -35,7 +35,7 @@ class _PatchedHTMLRewriter(HTMLRewriter):  # pylint: disable=abstract-method
         cls.hooks = hooks
         DefaultRewriter.DEFAULT_REWRITERS["html"] = _PatchedHTMLRewriter
 
-    def _rewrite_link_href(self, attr_value, tag_attrs, rw_mod):  # pragma: no cover
+    def _rewrite_link_href(self, attr_value, tag_attrs, rw_mod):
         # Prevent `pywb` from attempting to insert Javascript style rewriting
         # stuff into "<link rel='manifest'>" items. This fixes a bug with
         # www.theguardian.com which declares it's manifest as `text/javascript`
@@ -47,9 +47,7 @@ class _PatchedHTMLRewriter(HTMLRewriter):  # pylint: disable=abstract-method
 
         return super()._rewrite_link_href(attr_value, tag_attrs, rw_mod)
 
-    def _rewrite_tag_attrs(
-        self, tag, tag_attrs, set_parsing_context=True
-    ):  # pragma: no cover
+    def _rewrite_tag_attrs(self, tag, tag_attrs, set_parsing_context=True):
         # Jump into the general tag + attr rewriting step to allow flexible
         # rewriting of tags should we need to
 
@@ -90,14 +88,14 @@ class _PatchedRewriterApp(RewriterApp):
         # Update the Jinja environment to have the vars we want
         rewriter.jinja_env.jinja_env.globals.update(hooks.template_vars)
 
-    def render_content(self, wb_url, kwargs, environ):  # pragma: no cover
+    def render_content(self, wb_url, kwargs, environ):
         response = super().render_content(wb_url, kwargs, environ)
 
         response = self.hooks.modify_render_response(response)
 
         return response
 
-    def get_upstream_url(self, wb_url, kwargs, params):  # pragma: no cover
+    def get_upstream_url(self, wb_url, kwargs, params):
         params["url"] = self.hooks.get_upstream_url(doc_url=params["url"])
 
         return super().get_upstream_url(wb_url, kwargs, params)
