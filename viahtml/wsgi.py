@@ -4,4 +4,4 @@
 # it's what uWSGI expects to find.
 from viahtml.app import Application
 
-application = Application()  # pylint: disable=invalid-name
+application = Application()
