@@ -5,6 +5,8 @@ concurrency = gevent
 source =
     viahtml
     tests/unit
+    tests/functional
+
 
 [report]
 show_missing = True
