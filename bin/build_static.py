@@ -53,6 +53,7 @@ def _create_static(source, target):
 
 
 if __name__ == "__main__":
+    # pylint: disable=invalid-name
     bin_dir = os.path.abspath(os.path.dirname(__file__))
     root_dir = os.path.abspath(os.path.join(bin_dir, "../static/static/pywb"))
 
