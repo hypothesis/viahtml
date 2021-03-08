@@ -8,6 +8,7 @@ help:
 	@echo "make format            Correctly format the code"
 	@echo "make checkformatting   Crash if the code isn't correctly formatted"
 	@echo "make test              Run the unit tests and produce a coverage report"
+	@echo "make functests         Run the functional tests"
 	@echo "make sure              Make sure that the formatter, linter, tests, etc all pass"
 	@echo "make update-pdfjs      Update our copy of PDF-js"
 	@echo "make pip-compile       Compile requirements.in to requirements.txt"
@@ -42,6 +43,10 @@ checkformatting: python
 .PHONY: test
 test: python
 	@tox -q
+
+.PHONY: functests
+functests: python
+	@tox -qe functests
 
 .PHONY: sure
 sure: checkformatting lint test
