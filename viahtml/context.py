@@ -48,7 +48,7 @@ class Context:
 
     @property
     @lru_cache(1)
-    def query_params(self):
+    def query_params(self):  # pragma: no cover
         """Get all the query params present on the request."""
         return parse_qs(self.http_environ["QUERY_STRING"])
 
