@@ -82,7 +82,7 @@ greenlet==1.0.0
     #   gevent
 h-checkmatelib==1.0.6
     # via -r requirements/requirements.txt
-h-vialib==1.0.12
+h_vialib==1.0.13
     # via -r requirements/requirements.txt
 idna==2.10
     # via
