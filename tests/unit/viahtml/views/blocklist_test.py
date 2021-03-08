@@ -31,7 +31,10 @@ class TestBlocklistView:
 
         assert result is None
         view.checkmate.check_url.assert_called_once_with(
-            context.proxied_url, allow_all=True, blocked_for=sentinel.blocked_for
+            context.proxied_url,
+            allow_all=True,
+            blocked_for=sentinel.blocked_for,
+            ignore_reasons=None,
         )
 
     def test_if_a_call_to_checkmate_fails_it_does_nothing(self, view, context):

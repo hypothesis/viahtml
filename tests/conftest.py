@@ -20,4 +20,5 @@ def environment_variables():
         "VIA_ROUTING_HOST": "http://example.com/via3",
         "CHECKMATE_URL": "http://checkmate.example.com",
         "CHECKMATE_API_KEY": "dev_api_key",
+        "CHECKMATE_IGNORE_REASONS": "",
     }

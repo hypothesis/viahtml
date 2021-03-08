@@ -40,7 +40,11 @@ class Application:
                 http_mode=config["http_mode"],
                 allowed_referrers=config["allowed_referrers"],
             ),
-            BlocklistView(config["checkmate_host"], config["checkmate_api_key"]),
+            BlocklistView(
+                config["checkmate_host"],
+                config["checkmate_api_key"],
+                config["checkmate_ignore_reasons"],
+            ),
             RoutingView(config["routing_host"]),
         )
 
@@ -107,6 +111,7 @@ class Application:
                 os.environ.get("VIA_ENABLE_REDIRECT_SIGNING", False)
             ),
             "checkmate_host": os.environ["CHECKMATE_URL"],
+            "checkmate_ignore_reasons": os.environ.get("CHECKMATE_IGNORE_REASONS"),
             "http_mode": asbool(os.environ.get("VIA_HTTP_MODE", False)),
             "checkmate_api_key": os.environ["CHECKMATE_API_KEY"],
         }
