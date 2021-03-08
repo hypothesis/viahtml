@@ -64,7 +64,7 @@ class Application:
                 return response
 
         # Looks like it's a normal request to proxy...
-        def proxy_start_response(status, headers):
+        def proxy_start_response(status, headers):  # pragma: no cover
             # If any of our views added headers as they went, add them now
             if context.headers:
                 headers.extend(context.headers)
