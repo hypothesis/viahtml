@@ -3,4 +3,5 @@ uwsgi
 pywb
 whitenoise
 newrelic
+sentry-sdk
 h-checkmatelib
