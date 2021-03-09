@@ -27,6 +27,7 @@ certifi==2020.6.20
     # via
     #   -r requirements/requirements.txt
     #   requests
+    #   sentry-sdk
 cffi==1.14.2
     # via
     #   -r requirements/requirements.txt
@@ -160,6 +161,8 @@ requests==2.24.0
     #   tldextract
 responses==0.12.1
     # via -r requirements/tests.in
+sentry-sdk==1.0.0
+    # via -r requirements/requirements.txt
 six==1.15.0
     # via
     #   -r requirements/requirements.txt
@@ -192,6 +195,7 @@ urllib3==1.25.10
     #   -r requirements/requirements.txt
     #   requests
     #   responses
+    #   sentry-sdk
 uwsgi==2.0.19.1
     # via -r requirements/requirements.txt
 waitress==1.4.4

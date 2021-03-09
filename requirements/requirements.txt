@@ -13,7 +13,9 @@ brotlipy==0.7.0
 certauth==1.3.0
     # via wsgiprox
 certifi==2020.6.20
-    # via requests
+    # via
+    #   requests
+    #   sentry-sdk
 cffi==1.14.2
     # via
     #   brotlipy
@@ -80,6 +82,8 @@ requests==2.24.0
     #   pywb
     #   requests-file
     #   tldextract
+sentry-sdk==1.0.0
+    # via -r requirements/requirements.in
 six==1.15.0
     # via
     #   cryptography
@@ -98,7 +102,9 @@ tldextract==2.2.3
     #   pywb
     #   surt
 urllib3==1.25.10
-    # via requests
+    # via
+    #   requests
+    #   sentry-sdk
 uwsgi==2.0.19.1
     # via -r requirements/requirements.in
 warcio==1.7.4
