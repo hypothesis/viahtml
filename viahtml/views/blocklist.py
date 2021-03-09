@@ -34,7 +34,7 @@ class BlocklistView:
                 ignore_reasons=self._ignore_reasons,
             )
         except CheckmateException as err:
-            LOG.warning("Failed to check URL against Checkmate: %s", err)
+            LOG.exception("Failed to check URL against Checkmate: %s", err)
             return None
 
         if not blocked:
