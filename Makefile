@@ -49,7 +49,7 @@ functests: python
 	@tox -qe functests
 
 .PHONY: sure
-sure: checkformatting lint test
+sure: checkformatting lint test functests
 
 .PHONY: upgrade-package
 upgrade-package: python
