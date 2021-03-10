@@ -192,7 +192,9 @@ class TestApplication:
 
     @pytest.fixture(autouse=True)
     def Context(self, patch):
-        return patch("viahtml.app.Context")
+        Context = patch("viahtml.app.Context")
+        Context.return_value.headers = []
+        return Context
 
 
 class TestAsBool:
