@@ -22,6 +22,13 @@ class TestContext:
         assert value == getattr(wsgi, wsgi_method).return_value
         getattr(wsgi, wsgi_method).assert_called_once_with(environ)
 
+    def test_query_params(self, context, environ):
+        environ["QUERY_STRING"] = "foo=bar&har=gar"
+
+        query_params = context.query_params
+
+        assert query_params == {"foo": ["bar"], "har": ["gar"]}
+
     @pytest.mark.parametrize(
         "path,proxied_url",
         (
