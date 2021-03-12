@@ -86,11 +86,19 @@ class Headers:
         :return: Modified key-value pairs
         """
         headers = []
+        vary_types = set()
 
         for header, value in header_items:
             header_lower = header.lower()
             if header_lower == "x-archive-orig-cache-control":
                 headers.append(("Cache-Control", self.translate_cache_control(value)))
+
+            elif header_lower == "vary":
+                # Strip out any Vary headers, but keep the values
+                vary_types.update(
+                    [vary_type.strip().lower() for vary_type in value.split(",")]
+                )
+                continue
 
             if (
                 # Skip any of the many, many headers `pywb` emits
@@ -99,6 +107,12 @@ class Headers:
                 and header_lower not in self._bad_outbound_lower
             ):
                 headers.append((header, value))
+
+        # Ensure our caching is sharded by Referer and Sec-Fetch-Site, as we
+        # use these values to check sites are proxied by us. This prevents
+        # poisoning the cache by passing the referrer using `curl` for example
+        vary_types |= {"referer", "sec-fetch-site"}
+        headers.append(("Vary", ", ".join(sorted(vary_types))))
 
         # Add our own Referrer-Policy telling browsers to send us Referer headers.
         #
