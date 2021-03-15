@@ -93,35 +93,6 @@ class TestHeaders:
             [("X-Robots-Tag", "noindex, nofollow")]
         )
 
-    @pytest.mark.parametrize(
-        "upstream_headers,expected",
-        (
-            ([], "referer, sec-fetch-site"),
-            ([("Vary", "sec-fetch-site")], "referer, sec-fetch-site"),
-            ([("Vary", "Sec-Fetch-Site")], "referer, sec-fetch-site"),
-            ([("Noise", "Upstream-Value")], "referer, sec-fetch-site"),
-            (
-                [("Vary", "Upstream-Value, Upstream-Value-2")],
-                "referer, sec-fetch-site, upstream-value, upstream-value-2",
-            ),
-            (
-                [
-                    ("Vary", "Upstream-Value"),
-                    ("Vary", "Upstream-Value-2"),
-                ],
-                "referer, sec-fetch-site, upstream-value, upstream-value-2",
-            ),
-        ),
-    )
-    def test_modify_outbound_converts_vary_headers(
-        self, headers, upstream_headers, expected
-    ):
-        modified_headers = headers.modify_outbound(upstream_headers)
-
-        values = [value for (key, value) in modified_headers if key == "Vary"]
-
-        assert values == [expected]
-
     @pytest.fixture(
         params=(
             param(lambda v: v, id="mixed case"),
