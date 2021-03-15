@@ -94,7 +94,7 @@ importlib-metadata==2.0.0
     # via
     #   -r requirements/requirements.txt
     #   jsonschema
-ipdb==0.13.5
+ipdb==0.13.6
     # via -r requirements/dev.in
 ipython-genutils==0.2.0
     # via traitlets
@@ -223,6 +223,8 @@ tldextract==2.2.3
     #   certauth
     #   pywb
     #   surt
+toml==0.10.2
+    # via ipdb
 traitlets==4.3.3
     # via ipython
 urllib3==1.25.10
