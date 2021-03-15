@@ -109,7 +109,7 @@ iniconfig==1.1.1
     # via
     #   -r requirements/tests.txt
     #   pytest
-isort==4.3.21
+isort==5.7.0
     # via pylint
 jinja2==2.11.2
     # via
