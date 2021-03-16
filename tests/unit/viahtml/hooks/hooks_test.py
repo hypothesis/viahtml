@@ -185,7 +185,6 @@ class TestHooks:
                 "config_noise": "noise",
                 "h_embed_url": sentinel.h_embed_url,
                 "ignore_prefixes": sentinel.prefixes,
-                "secret": "not_a_secret",
                 "rewrite": {"a_href": True},
             }
         )
