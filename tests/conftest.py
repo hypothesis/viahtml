@@ -14,7 +14,6 @@ def environment_variables():
                 "https://localhost:3001/",
             ]
         ),
-        "VIA_SECRET": "testing_secret",
         "VIA_DISABLE_AUTHENTICATION": "0",
         "VIA_DEBUG": "1",
         "VIA_ROUTING_HOST": "http://example.com/via3",
