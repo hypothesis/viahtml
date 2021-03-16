@@ -1,14 +1,8 @@
 """Specific configuration for headers."""
-from itertools import takewhile
-
-from werkzeug.datastructures import ResponseCacheControl
-from werkzeug.http import parse_cache_control_header
 
 
 class Headers:
     """Methods for manipulating the headers we accept and emit."""
-
-    CLOUDFLARE_MIN_CACHE_TIME = 30 * 60
 
     BLOCKED = {
         # h CSRF token header
@@ -42,6 +36,8 @@ class Headers:
         # send the Referer header (for example: Referrer-Policy: no-referrer).
         # We block Referrer-Policy headers to prevent that.
         "Referrer-Policy",
+        # We want to add our own cache control, so we knock this out
+        "Cache-Control",
     } | BLOCKED
 
     def __init__(self):
@@ -90,10 +86,8 @@ class Headers:
 
         for header, value in header_items:
             header_lower = header.lower()
-            if header_lower == "x-archive-orig-cache-control":
-                headers.append(("Cache-Control", self.translate_cache_control(value)))
 
-            elif header_lower == "vary":
+            if header_lower == "vary":
                 # Strip out any Vary headers, but keep the values
                 vary_types.update(
                     [vary_type.strip().lower() for vary_type in value.split(",")]
@@ -107,6 +101,9 @@ class Headers:
                 and header_lower not in self._bad_outbound_lower
             ):
                 headers.append((header, value))
+
+        # Disable caching in general to avoid cache poisoning
+        headers.append(("Cache-Control", "no-store"))
 
         # Ensure our caching is sharded by Referer and Sec-Fetch-Site, as we
         # use these values to check sites are proxied by us. This prevents
@@ -133,37 +130,3 @@ class Headers:
         headers.append(("X-Robots-Tag", "noindex, nofollow"))
 
         return headers
-
-    def translate_cache_control(self, value):
-        """Convert a cache-control header to respect Cloudflare limits.
-
-        Where a caching header is marked as public and with a "max-age" below
-        the Cloudflare minimum, convert it to "public" caching. This prevents
-        Cloudflare from caching things too long but still allows browsers to
-        cache.
-
-        :param value: A cache control header value
-        :return: A modified cache control value
-        """
-        parsed = parse_cache_control_header(value, cls=ResponseCacheControl)
-
-        if not parsed.public or parsed.max_age is None:
-            return value
-
-        # `parsed.max_age` will be an `int` if the value consists only of digits
-        # but a `str` if it contains anything else.
-        if isinstance(parsed.max_age, str):
-            max_age_digits = "".join(takewhile(str.isdigit, parsed.max_age))
-            try:
-                parsed.max_age = int(max_age_digits)
-            except ValueError:
-                # If we couldn't extract a valid `max_age` value, treat it as zero
-                # to prevent downstream from caching it in case it was intended to
-                # be < CLOUDFLARE_MIN_CACHE_TIME.
-                parsed.max_age = 0
-
-        if parsed.max_age < self.CLOUDFLARE_MIN_CACHE_TIME:
-            parsed.public = False
-            parsed.private = True
-
-        return parsed.to_header()

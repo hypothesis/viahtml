@@ -4,7 +4,9 @@ from viahtml.hooks._headers import Headers
 
 
 class TestHeaders:
-    @pytest.mark.parametrize("header_name", ("Content-Type", "Content-Length"))
+    @pytest.mark.parametrize(
+        "header_name", ("Content-Type", "Content-Length", "Cache-Control")
+    )
     def test_outbound_headers_contain_expected_values(
         self, proxied_content, header_name
     ):
@@ -12,17 +14,10 @@ class TestHeaders:
 
     @pytest.mark.parametrize(
         "header_name",
-        # Remove Referrer-Policy from the list of headers that we test are
-        # blocked because _headers.py actually inserts our own Referrer-Policy
-        # header.
-        Headers.BLOCKED_OUTBOUND - {"Referrer-Policy"},
+        # We block some headers just to add them back, so lets not include them
+        Headers.BLOCKED_OUTBOUND - {"Referrer-Policy", "Cache-Control"},
     )
     def test_outbound_headers_do_not_contain_banned_values(
         self, proxied_content, header_name
     ):
         assert header_name not in proxied_content.headers
-
-    def test_cache_control_translation(self, proxied_content):
-        # This is set in the content served, we're looking for public to become
-        # private as the time is lower than the Cloudflare minimum
-        assert proxied_content.headers["Cache-Control"] == "max-age=60, private"

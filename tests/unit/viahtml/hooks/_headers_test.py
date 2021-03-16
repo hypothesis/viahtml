@@ -39,45 +39,10 @@ class TestHeaders:
         assert blocked_header not in modified_headers
         assert expected_header in modified_headers
 
-    @pytest.mark.parametrize(
-        "value,expected",
-        (
-            # Things we don't mess with
-            ("invalid_header", "invalid_header"),
-            ("no-cache, must-revalidate", "no-cache, must-revalidate"),
-            ("max-age=604800", "max-age=604800"),
-            ("private, max-age=0", "private, max-age=0"),
-            ("private, max-age=604800", "private, max-age=604800"),
-            # When the cache is public, and below cloudflare caching numbers, we
-            # mark it as private only. The order changes a bit here too
-            ("public, max-age=0", "max-age=0, private"),
-            ("public, max-age=100", "max-age=100, private"),
-            # Back to over the Cloudflare minimum
-            ("public, max-age=604800", "public, max-age=604800"),
-            # Ignore trailing non-digit chars in the max-age value, because this
-            # is what browsers do.
-            ("public, max-age=604800; ignore-me", "public, max-age=604800"),
-            ("public, max-age=5000.23", "public, max-age=5000"),
-            ("public, max-age=10.23", "max-age=10, private"),
-            # Unparseable max-age values, treated as 0 to prevent Cloudflare
-            # from caching for a minimum of 30 minutes.
-            ("public, max-age=abc", "max-age=0, private"),
-            ("public, max-age=", "max-age=0, private"),
-        ),
-    )
-    def test_modify_outbound_translates_cache_control_headers(
-        self, headers, value, expected, string_case
-    ):
-        modified_headers = headers.modify_outbound(
-            ((string_case("X-Archive-Orig-Cache-Control"), value),)
-        )
+    def test_cache_control_header_is_set_to_no_store(self, headers):
+        modified_headers = headers.modify_outbound(tuple())
 
-        cache_control_headers = [
-            header
-            for header in modified_headers
-            if header[0].lower() == "cache-control"
-        ]
-        assert cache_control_headers == [("Cache-Control", expected)]
+        assert modified_headers == Any.list.containing([("Cache-Control", "no-store")])
 
     def test_modify_outbound_inserts_referrer_policy_header(self, headers):
         modified_headers = headers.modify_outbound([])
