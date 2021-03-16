@@ -34,7 +34,6 @@ class Application:
         self.views = (
             StatusView(),
             AuthenticationView(
-                secret=config["secret"],
                 required=not config["disable_authentication"],
                 allowed_referrers=config["allowed_referrers"],
             ),
@@ -100,7 +99,6 @@ class Application:
             "h_embed_url": os.environ["VIA_H_EMBED_URL"],
             "debug": os.environ.get("VIA_DEBUG", False),
             "routing_host": os.environ["VIA_ROUTING_HOST"],
-            "secret": os.environ["VIA_SECRET"],
             "disable_authentication": asbool(
                 os.environ.get("VIA_DISABLE_AUTHENTICATION", False)
             ),

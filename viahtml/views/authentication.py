@@ -3,9 +3,6 @@
 from http import HTTPStatus
 from urllib.parse import urlparse
 
-from h_vialib.exceptions import TokenException
-from h_vialib.secure import ViaSecureURL
-
 
 class AuthenticationView:
     """A view for checking that this request came from a Hypothesis service.
@@ -18,15 +15,13 @@ class AuthenticationView:
     context, which should be honored for this to work.
     """
 
-    def __init__(self, secret, required=True, allowed_referrers=None):
+    def __init__(self, required=True, allowed_referrers=None):
         """Initialize the view.
 
-        :param secret: Secret used for signing and checking signatures
         :param required: Require auth
         :param allowed_referrers: A list of hosts allowed to route requests to this service
         """
 
-        self._secure_url = ViaSecureURL(secret)
         self._required = required
         self._allowed_referrers = allowed_referrers or []
 
@@ -40,22 +35,15 @@ class AuthenticationView:
         if not self._required:
             return None
 
-        try:
-            self._check_for_authorization(context)
-
-        except TokenException as err:
+        if not self._has_allowed_referrer(context):
             return context.make_response(
                 HTTPStatus.UNAUTHORIZED,
-                lines=[self._error_template(err)],
+                lines=[self._error_template("Untrusted origin")],
                 headers={"Content-Type": "text/html; charset=utf-8"},
             )
 
         # We might have added a header, but we don't want to handle the request
         return None
-
-    def _check_for_authorization(self, context):
-        if self._has_allowed_referrer(context) or self._has_signed_url(context):
-            return
 
     def _has_allowed_referrer(self, context):
         """Check if the request came from an allowed referrer.
@@ -100,9 +88,6 @@ class AuthenticationView:
             parsed_referrer.netloc == context.host
             or parsed_referrer.netloc in self._allowed_referrers
         )
-
-    def _has_signed_url(self, context):
-        return self._secure_url.verify(context.url)
 
     @classmethod
     def _error_template(cls, exception):
