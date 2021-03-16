@@ -63,8 +63,6 @@ Environment variables:
 | `VIA_ROUTING_HOST`    | The host to perform content based routing | `https://via3.hypothes.is` |
 | `VIA_SECRET`          | Secret used for checking signed URLs      | `a_very_long_random_string` |
 | `VIA_DISABLE_AUTHENTICATION` | Disable auth for dev purposes      | `false` |
-| `VIA_ENABLE_REDIRECT_SIGNING` | Enable signing of proxied redirect locations | `false` |
-
 
 For details of changing the blocklist see:
 

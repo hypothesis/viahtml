@@ -87,32 +87,6 @@ class TestHooks:
         hooks.context.make_absolute.assert_called_once_with(original_location)
         assert location == "http://via/proxy/http://example.com"
 
-    @pytest.mark.parametrize(
-        "status_line",
-        (
-            "301 Moved Permanently",
-            "302 Found",
-            "303 See Other",
-            "305 Use Proxy",
-            "307 Temporary Redirect",
-            "308 Permanent Redirect",
-        ),
-    )
-    def test_modify_render_signs_redirects_if_enabled(
-        self, hooks, wb_response, status_line
-    ):
-        hooks.config["enable_redirect_signing"] = True
-        wb_response.status_headers.statusline = status_line
-        original_location = "http://via/proxy/http://example.com"
-        wb_response.status_headers.add_header("Location", original_location)
-
-        response = hooks.modify_render_response(wb_response)
-
-        location = response.status_headers.get_header("Location")
-        assert location == Any.url.matching(original_location).containing_query(
-            {"via.sec": Any.string()}
-        )
-
     def test_modify_render_response_preserves_via_params_on_redirect(
         self, hooks, wb_response, context
     ):
@@ -213,7 +187,6 @@ class TestHooks:
                 "ignore_prefixes": sentinel.prefixes,
                 "secret": "not_a_secret",
                 "rewrite": {"a_href": True},
-                "enable_redirect_signing": False,
             }
         )
 
