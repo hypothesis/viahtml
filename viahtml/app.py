@@ -36,8 +36,6 @@ class Application:
             AuthenticationView(
                 secret=config["secret"],
                 required=not config["disable_authentication"],
-                enable_cookie=not config["disable_cookie"],
-                http_mode=config["http_mode"],
                 allowed_referrers=config["allowed_referrers"],
             ),
             BlocklistView(
@@ -106,13 +104,11 @@ class Application:
             "disable_authentication": asbool(
                 os.environ.get("VIA_DISABLE_AUTHENTICATION", False)
             ),
-            "disable_cookie": asbool(os.environ.get("VIA_DISABLE_COOKIE", False)),
             "enable_redirect_signing": asbool(
                 os.environ.get("VIA_ENABLE_REDIRECT_SIGNING", False)
             ),
             "checkmate_host": os.environ["CHECKMATE_URL"],
             "checkmate_ignore_reasons": os.environ.get("CHECKMATE_IGNORE_REASONS"),
-            "http_mode": asbool(os.environ.get("VIA_HTTP_MODE", False)),
             "checkmate_api_key": os.environ["CHECKMATE_API_KEY"],
         }
 
