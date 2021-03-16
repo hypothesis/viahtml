@@ -104,9 +104,6 @@ class Application:
             "disable_authentication": asbool(
                 os.environ.get("VIA_DISABLE_AUTHENTICATION", False)
             ),
-            "enable_redirect_signing": asbool(
-                os.environ.get("VIA_ENABLE_REDIRECT_SIGNING", False)
-            ),
             "checkmate_host": os.environ["CHECKMATE_URL"],
             "checkmate_ignore_reasons": os.environ.get("CHECKMATE_IGNORE_REASONS"),
             "checkmate_api_key": os.environ["CHECKMATE_API_KEY"],

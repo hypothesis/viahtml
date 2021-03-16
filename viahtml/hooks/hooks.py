@@ -1,6 +1,5 @@
 """The majority of configuration options."""
 from h_vialib import Configuration
-from h_vialib.secure import ViaSecureURL
 
 from viahtml.hooks._headers import Headers
 
@@ -12,7 +11,6 @@ class Hooks:
 
     def __init__(self, config):
         self.config = config
-        self._secure_url = ViaSecureURL(config["secret"])
         self.context = None
 
     def set_context(self, context):
@@ -61,9 +59,7 @@ class Hooks:
         status_code = response.status_headers.get_statuscode()
 
         if status_code in self._REDIRECTS:
-            # This is a redirect, so we'll sign it to ensure we know it
-            # came from us. This prevents long redirect chains from breaking
-            # our referrer checking
+            # Make sure redirects pass on our config
             location = response.status_headers.get_header("Location")
             if location:
                 location = self.context.make_absolute(location)
@@ -75,9 +71,6 @@ class Hooks:
                     location = Configuration.add_to_url(
                         location, via_params, client_params
                     )
-
-                if self.config["enable_redirect_signing"]:
-                    location = self._secure_url.create(location)
 
                 response.status_headers.replace_header("Location", location)
 
