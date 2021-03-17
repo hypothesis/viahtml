@@ -46,6 +46,13 @@ class TestAuthenticationView:
 
         self.assert_is_unauthorized_response(result, context)
 
+    def test_is_allows_anything_if_authentication_is_disabled(self, context):
+        view = AuthenticationView(required=False)
+
+        result = view(context)
+
+        assert result is None
+
     def assert_is_unauthorized_response(self, result, context):
         assert result is context.make_response.return_value
         context.make_response.assert_called_once_with(
