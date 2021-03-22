@@ -12,7 +12,7 @@ click==7.1.2
     # via black
 dataclasses==0.7
     # via black
-isort==5.7.0
+isort==5.8.0
     # via -r requirements/format.in
 mypy-extensions==0.4.3
     # via black
