@@ -161,7 +161,7 @@ pycparser==2.20
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   cffi
-pydocstyle==5.1.1
+pydocstyle==6.0.0
     # via -r requirements/lint.in
 pyjwt==2.0.1
     # via
