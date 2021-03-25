@@ -1,11 +1,8 @@
 """The blocklist view."""
 
 from http import HTTPStatus
-from logging import getLogger
 
 from checkmatelib import CheckmateClient, CheckmateException
-
-LOG = getLogger(__name__)
 
 
 class BlocklistView:
@@ -33,9 +30,8 @@ class BlocklistView:
                 blocked_for=blocked_for,
                 ignore_reasons=self._ignore_reasons,
             )
-        except CheckmateException as err:
-            LOG.exception("Failed to check URL against Checkmate: %s", err)
-            return None
+        except CheckmateException:
+            blocked = None
 
         if not blocked:
             return None
