@@ -32,7 +32,7 @@ class Application:
         self.hooks = Hooks(config)
 
         self.views = (
-            StatusView(config["checkmate_host"], config["checkmate_api_key"]),
+            StatusView(),
             AuthenticationView(
                 required=not config["disable_authentication"],
                 allowed_referrers=config["allowed_referrers"],
