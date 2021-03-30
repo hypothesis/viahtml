@@ -43,6 +43,8 @@ onlyOnMaster {
     milestone()
     stage("qa deploy") {
 	lock("qa deploy") {
+            deployApp(image: img, app: "viahtml", env: "qa")
+            deployApp(image: img, app: "viahtml", env: "qa3")
 	    parallel(
 	        qa: {
 		    deployApp(image: img, app: "viahtml", env: "qa")
