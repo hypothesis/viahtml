@@ -45,7 +45,7 @@ onlyOnMaster {
 	lock("qa deploy") {
 	    parallel(
 	        qa: {
-		    sleep 20
+		    sleep 5
 		    deployApp(image: img, app: "viahtml", env: "qa")
 		},
 		qa3: {
