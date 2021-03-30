@@ -41,8 +41,17 @@ node {
 
 onlyOnMaster {
     milestone()
-    stage("qa3 deploy") {
-        deployApp(image: img, app: "viahtml", env: "qa3")
+    stage("qa deploy") {
+	lock("qa deploy") {
+	    parallel(
+	        qa: {
+		    deployApp(image: img, app: "viahtml", env: "qa")
+		},
+		qa3: {
+		    deployApp(image: img, app: "viahtml", env: "qa3")
+		}
+	    )
+	}
     }
 
     milestone()
