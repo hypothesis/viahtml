@@ -62,9 +62,17 @@ onlyOnMaster {
 
     milestone()
     stage("Deploy (prod)") {
-        input(message: "Deploy to prod?")
-        milestone()
-        deployApp(image: img, app: "viahtml", env: "prod3")
+	lock("prod deploy") {
+	    parallel(
+	        prod: {
+		    sleep 2
+		    deployApp(image: img, app: "viahtml", env: "prod")
+		},
+		prod3: {
+		    deployApp(image: img, app: "viahtml", env: "prod3")
+		}
+	    )
+	}
     }
 }
 
