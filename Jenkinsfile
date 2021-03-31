@@ -33,7 +33,7 @@ node {
     }
 
     onlyOnMaster {
-        stage("release") {
+        stage("Release") {
             releaseApp(image: img)
         }
     }
@@ -41,11 +41,11 @@ node {
 
 onlyOnMaster {
     milestone()
-    stage("qa deploy") {
+    stage("Deploy (qa)") {
 	lock("qa deploy") {
 	    parallel(
 	        qa: {
-		    sleep 5
+		    sleep 2
 		    deployApp(image: img, app: "viahtml", env: "qa")
 		},
 		qa3: {
@@ -56,7 +56,12 @@ onlyOnMaster {
     }
 
     milestone()
-    stage("prod3 deploy") {
+    stage("Approval") {
+        input(message: "Proceed to production deploy?")
+    }
+
+    milestone()
+    stage("Deploy (prod)") {
         input(message: "Deploy to prod?")
         milestone()
         deployApp(image: img, app: "viahtml", env: "prod3")
