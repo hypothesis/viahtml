@@ -27,6 +27,7 @@ class TestStatusView:
         response = StatusView()(context)
 
         context.make_json_response.assert_called_once_with(
-            {"status": "okay"}, headers={"Cache-Control": "no-cache"}
+            {"status": "okay"},
+            headers={"Cache-Control": "max-age=0, must-revalidate, no-cache, no-store"},
         )
         assert response == context.make_json_response.return_value
