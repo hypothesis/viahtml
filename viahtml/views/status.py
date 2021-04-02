@@ -15,5 +15,6 @@ class StatusView:
             return None
 
         return context.make_json_response(
-            {"status": "okay"}, headers={"Cache-Control": "no-cache"}
+            {"status": "okay"},
+            headers={"Cache-Control": "max-age=0, must-revalidate, no-cache, no-store"},
         )
