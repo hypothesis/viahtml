@@ -184,7 +184,7 @@ pyrsistent==0.17.3
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   jsonschema
-pytest==6.2.2
+pytest==6.2.3
     # via -r requirements/tests.txt
 pytz==2020.1
     # via
