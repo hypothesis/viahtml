@@ -27,6 +27,7 @@ certifi==2020.6.20
     # via
     #   -r requirements/requirements.txt
     #   requests
+    #   sentry-sdk
 cffi==1.14.2
     # via
     #   -r requirements/requirements.txt
@@ -62,7 +63,7 @@ greenlet==1.0.0
     #   gevent
 h-checkmatelib==1.0.7
     # via -r requirements/requirements.txt
-h-vialib==1.0.13
+h_vialib==1.0.13
     # via -r requirements/requirements.txt
 idna==2.10
     # via
@@ -123,7 +124,7 @@ pyrsistent==0.17.3
     # via
     #   -r requirements/requirements.txt
     #   jsonschema
-pytest==6.2.2
+pytest==6.2.3
     # via -r requirements/functests.in
 pytz==2020.1
     # via
@@ -151,6 +152,8 @@ requests==2.24.0
     #   pywb
     #   requests-file
     #   tldextract
+sentry-sdk==1.0.0
+    # via -r requirements/requirements.txt
 six==1.15.0
     # via
     #   -r requirements/requirements.txt
@@ -181,6 +184,7 @@ urllib3==1.25.10
     # via
     #   -r requirements/requirements.txt
     #   requests
+    #   sentry-sdk
 uwsgi==2.0.19.1
     # via -r requirements/requirements.txt
 waitress==2.0.0
