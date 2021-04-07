@@ -1,6 +1,10 @@
 """The application providing a WSGI entry-point."""
 import os
 
+import newrelic.agent
+
+newrelic.agent.initialize("conf/newrelic.ini")
+
 # Our job here is to leave this `application` attribute laying around as
 # it's what uWSGI expects to find.
 from viahtml.app import Application
@@ -16,3 +20,5 @@ if os.environ.get("SENTRY_DSN"):  # pragma: no cover
     # pylint: disable=redefined-variable-type
     sentry_sdk.init(dsn=os.environ["SENTRY_DSN"])
     application = SentryWsgiMiddleware(application)
+
+application = newrelic.agent.WSGIApplicationWrapper(application)
