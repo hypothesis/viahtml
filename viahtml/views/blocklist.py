@@ -32,6 +32,9 @@ class BlocklistView:
             )
         except CheckmateException:
             blocked = None
+            newrelic.agent.record_custom_metric("Custom/Checkmate/Failed_requests", 1)
+        else:
+            newrelic.agent.record_custom_metric("Custom/Checkmate/Failed_requests", 0)
 
         if not blocked:
             return None
