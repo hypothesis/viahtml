@@ -1,7 +1,25 @@
 import json
 
+import httpretty
+import pytest
 
-def test_status_view_is_connected_correctly(app):
-    response = app.get("/_status")
 
-    assert json.loads(response.body) == {"status": "okay"}
+@pytest.mark.usefixtures("httpretty")
+class TestStatusView:
+    def test_it(self, app):
+        httpretty.register_uri(
+            httpretty.GET,
+            "http://checkmate.example.com/api/check",
+            status=500,  # Checkmate crashes.
+        )
+
+        response = app.get(
+            "/_status",
+            params="checkmate",
+            status=500,  # The status endpoint reports failure.
+        )
+
+        assert json.loads(response.body) == {
+            "status": "down",
+            "components": {"checkmate": {"status": "down"}},
+        }

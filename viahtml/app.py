@@ -2,6 +2,7 @@
 import logging
 import os
 
+from checkmatelib import CheckmateClient
 from pkg_resources import resource_filename
 from pywb.apps.frontendapp import FrontEndApp
 
@@ -31,17 +32,17 @@ class Application:
         self._setup_logging(config["debug"])
         self.hooks = Hooks(config)
 
+        checkmate = CheckmateClient(
+            config["checkmate_host"], config["checkmate_api_key"]
+        )
+
         self.views = (
-            StatusView(),
+            StatusView(checkmate),
             AuthenticationView(
                 required=not config["disable_authentication"],
                 allowed_referrers=config["allowed_referrers"],
             ),
-            BlocklistView(
-                config["checkmate_host"],
-                config["checkmate_api_key"],
-                config["checkmate_ignore_reasons"],
-            ),
+            BlocklistView(checkmate, config["checkmate_ignore_reasons"]),
             RoutingView(config["routing_host"]),
         )
 

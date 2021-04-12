@@ -50,7 +50,7 @@ class Context:
     @lru_cache(1)
     def query_params(self):
         """Get all the query params present on the request."""
-        return parse_qs(self.http_environ["QUERY_STRING"])
+        return parse_qs(self.http_environ["QUERY_STRING"], keep_blank_values=True)
 
     @property
     @lru_cache(1)
