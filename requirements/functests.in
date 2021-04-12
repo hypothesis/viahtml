@@ -1,3 +1,4 @@
 pytest
 webtest
+httpretty
 -r requirements.txt

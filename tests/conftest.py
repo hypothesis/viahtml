@@ -1,3 +1,6 @@
+import httpretty
+
+
 def environment_variables():
     return {
         "VIA_ALLOWED_REFERRERS": ",".join(
