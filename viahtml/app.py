@@ -2,9 +2,16 @@
 import logging
 import os
 
+# isort: off
+# This import has to come before the CheckmateClient import or the functional
+# tests break.
+# See https://github.com/gevent/gevent/issues/1016
+from pywb.apps.frontendapp import FrontEndApp
+
+# isort: on
+
 from checkmatelib import CheckmateClient
 from pkg_resources import resource_filename
-from pywb.apps.frontendapp import FrontEndApp
 
 from viahtml.context import Context
 from viahtml.hooks import Hooks
