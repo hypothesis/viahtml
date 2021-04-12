@@ -1,5 +1,13 @@
 import os
 
+# isort: off
+# This import has to come before the CheckmateClient import or the functional
+# tests break.
+# See https://github.com/gevent/gevent/issues/1016
+import pywb.apps.frontendapp  # pylint:disable=unused-import
+
+# isort: on
+
 import httpretty as httpretty_
 import pytest
 import webtest
