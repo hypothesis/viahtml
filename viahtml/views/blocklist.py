@@ -2,14 +2,14 @@
 
 from http import HTTPStatus
 
-from checkmatelib import CheckmateClient, CheckmateException
+from checkmatelib import CheckmateException
 
 
 class BlocklistView:
     """A view which checks for blocked pages and returns a blocked page."""
 
-    def __init__(self, checkmate_host, checkmate_api_key, ignore_reasons=None):
-        self.checkmate = CheckmateClient(checkmate_host, checkmate_api_key)
+    def __init__(self, checkmate, ignore_reasons=None):
+        self._checkmate = checkmate
         self._ignore_reasons = ignore_reasons
 
     def __call__(self, context):
@@ -24,7 +24,7 @@ class BlocklistView:
 
         blocked_for = context.query_params.get("via.blocked_for")
         try:
-            blocked = self.checkmate.check_url(
+            blocked = self._checkmate.check_url(
                 url,
                 allow_all=True,
                 blocked_for=blocked_for,
