@@ -1,8 +1,14 @@
 """The status end-point for health checks."""
+from http import HTTPStatus
+
+from checkmatelib import CheckmateException
 
 
 class StatusView:
     """Status end-point."""
+
+    def __init__(self, checkmate):
+        self._checkmate = checkmate
 
     def __call__(self, context):
         """Provide a status response if required.
@@ -11,10 +17,24 @@ class StatusView:
         :return: An iterator of content if required or None
         """
         if context.path.rstrip("/") != "/_status":
-            # We don't want to handle this call
+            # We don't want to handle this call.
             return None
 
+        body = {"status": "okay"}
+        http_status = HTTPStatus.OK
+
+        if "checkmate" in context.query_params:
+            try:
+                self._checkmate.check_url("https://example.com/")
+            except CheckmateException:
+                body["status"] = "down"
+                http_status = HTTPStatus.INTERNAL_SERVER_ERROR
+                body.setdefault("components", {})["checkmate"] = {"status": "down"}
+            else:
+                body.setdefault("components", {})["checkmate"] = {"status": "okay"}
+
         return context.make_json_response(
-            {"status": "okay"},
+            body,
+            http_status=http_status,
             headers={"Cache-Control": "max-age=0, must-revalidate, no-cache, no-store"},
         )

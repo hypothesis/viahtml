@@ -1,5 +1,6 @@
 import os
 
+import httpretty as httpretty_
 import pytest
 import webtest
 
@@ -61,3 +62,19 @@ def proxied_content(app):
     return app.get(
         "/proxy/http://localhost:8080/?via.client.openSidebar=yup", expect_errors=True
     )
+
+
+@pytest.fixture
+def httpretty():
+    """Monkey-patch Python's socket core module to mock all HTTP responses.
+
+    We never want real HTTP requests to be sent by the tests so replace them
+    all with mock responses. This handles requests sent using the standard
+    urllib2 library and the third-party httplib2 and requests libraries.
+    """
+    httpretty_.enable(allow_net_connect=False)
+
+    yield
+
+    httpretty_.disable()
+    httpretty_.reset()
