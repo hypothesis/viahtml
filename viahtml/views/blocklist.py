@@ -8,8 +8,22 @@ from checkmatelib import CheckmateException
 class BlocklistView:
     """A view which checks for blocked pages and returns a blocked page."""
 
-    def __init__(self, checkmate, ignore_reasons=None):
+    def __init__(self, checkmate, allow_all, ignore_reasons=None):
+        """Initialize a new BlocklistView.
+
+        :param checkmate: the Checkmate client object
+        :type checkmate: checkmatelib.CheckmateClient
+
+        :param allow_all: whether to bypass Checkmate's allow list
+        :type allow_all_: bool
+
+        :param ignore_reasons: comma-separated list of Checkmate
+            "detection reasons" to ignore, for example:
+            "publisher-blocked,high-io"
+        :type ignore_reasons: str
+        """
         self._checkmate = checkmate
+        self._allow_all = allow_all
         self._ignore_reasons = ignore_reasons
 
     def __call__(self, context):
@@ -26,7 +40,7 @@ class BlocklistView:
         try:
             blocked = self._checkmate.check_url(
                 url,
-                allow_all=True,
+                allow_all=self._allow_all,
                 blocked_for=blocked_for,
                 ignore_reasons=self._ignore_reasons,
             )

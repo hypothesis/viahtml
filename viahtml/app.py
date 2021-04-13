@@ -49,7 +49,11 @@ class Application:
                 required=not config["disable_authentication"],
                 allowed_referrers=config["allowed_referrers"],
             ),
-            BlocklistView(checkmate, config["checkmate_ignore_reasons"]),
+            BlocklistView(
+                checkmate,
+                asbool(config.get("checkmate_allow_all")),
+                config["checkmate_ignore_reasons"],
+            ),
             RoutingView(config["routing_host"]),
         )
 
@@ -113,6 +117,7 @@ class Application:
             "checkmate_host": os.environ["CHECKMATE_URL"],
             "checkmate_ignore_reasons": os.environ.get("CHECKMATE_IGNORE_REASONS"),
             "checkmate_api_key": os.environ["CHECKMATE_API_KEY"],
+            "checkmate_allow_all": os.environ.get("CHECKMATE_ALLOW_ALL"),
         }
 
     @classmethod
