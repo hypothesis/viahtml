@@ -56,6 +56,7 @@ Environment variables:
 |------|--------|---------|
 | `CHECKMATE_URL`       | The URL of the URL checking service       | `https://some-aws-machine` |
 | `CHECKMATE_API_KEY`   | API key to authenticate with checkmate    | `dev_api_key` |
+| `CHECKMATE_ALLOW_ALL`   | Whether to bypass Checkmate's allow-list | true |
 | `CHECKMATE_IGNORE_REASONS`   | Ignored reasons on checkmate detections    | `reason1,reason2` |
 | `VIA_DEBUG`           | Enable debugging logging in dev           | `1` |
 | `VIA_H_EMBED_URL`     | Hypothesis client URL                     | `https://cdn.hypothes.is/hypothesis` |

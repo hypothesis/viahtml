@@ -24,7 +24,7 @@ class TestBlocklistView:
         assert result is None
         checkmate.check_url.assert_called_once_with(
             context.proxied_url,
-            allow_all=True,
+            allow_all=sentinel.allow_all,
             blocked_for=sentinel.blocked_for,
             ignore_reasons=None,
         )
@@ -53,7 +53,7 @@ class TestBlocklistView:
 
     @pytest.fixture
     def view(self, checkmate):
-        return BlocklistView(checkmate)
+        return BlocklistView(checkmate, sentinel.allow_all)
 
     @pytest.fixture
     def checkmate(self):
