@@ -23,15 +23,19 @@ class StatusView:
         body = {"status": "okay"}
         http_status = HTTPStatus.OK
 
-        if "checkmate" in context.query_params:
+        if "include-checkmate" in context.query_params:
             try:
                 self._checkmate.check_url("https://example.com/")
             except CheckmateException:
-                body["status"] = "down"
-                http_status = HTTPStatus.INTERNAL_SERVER_ERROR
-                body.setdefault("components", {})["checkmate"] = {"status": "down"}
+                body["down"] = ["checkmate"]
             else:
-                body.setdefault("components", {})["checkmate"] = {"status": "okay"}
+                body["okay"] = ["checkmate"]
+
+        # If any of the components checked above were down then report the
+        # status check as a whole as being down.
+        if body.get("down"):
+            http_status = HTTPStatus.INTERNAL_SERVER_ERROR
+            body["status"] = "down"
 
         return context.make_json_response(
             body,
