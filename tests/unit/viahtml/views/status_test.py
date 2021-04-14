@@ -36,20 +36,10 @@ class TestStatusView:
             # succeeds even if Checkmate is failing.
             (True, False, {"status": "okay"}, 200),
             # If the `checkmate` query param is given then it checks Checkmate.
-            (
-                False,
-                True,
-                {"status": "okay", "components": {"checkmate": {"status": "okay"}}},
-                200,
-            ),
+            (False, True, {"status": "okay", "okay": ["checkmate"]}, 200),
             # With the `checkmate` query param if Checkmate fails then the
             # status endpoint fails.
-            (
-                True,
-                True,
-                {"status": "down", "components": {"checkmate": {"status": "down"}}},
-                500,
-            ),
+            (True, True, {"status": "down", "down": ["checkmate"]}, 500),
         ],
     )
     def test_it(
@@ -66,7 +56,7 @@ class TestStatusView:
             checkmate.check_url.side_effect = CheckmateException
 
         if checkmate_param:
-            context.query_params = {"checkmate": [""]}
+            context.query_params = {"include-checkmate": [""]}
 
         response = view(context)
 

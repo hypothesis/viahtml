@@ -15,11 +15,8 @@ class TestStatusView:
 
         response = app.get(
             "/_status",
-            params="checkmate",
+            params="include-checkmate",
             status=500,  # The status endpoint reports failure.
         )
 
-        assert json.loads(response.body) == {
-            "status": "down",
-            "components": {"checkmate": {"status": "down"}},
-        }
+        assert json.loads(response.body) == {"status": "down", "down": ["checkmate"]}
