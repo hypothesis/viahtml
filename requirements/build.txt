@@ -67,10 +67,6 @@ idna==2.10
     #   -r requirements/requirements.txt
     #   requests
     #   tldextract
-importlib-metadata==2.0.0
-    # via
-    #   -r requirements/requirements.txt
-    #   jsonschema
 jinja2==2.11.2
     # via
     #   -r requirements/requirements.txt
@@ -193,10 +189,6 @@ wsgiprox==1.5.2
     # via
     #   -r requirements/requirements.txt
     #   pywb
-zipp==3.4.0
-    # via
-    #   -r requirements/requirements.txt
-    #   importlib-metadata
 zope.event==4.5.0
     # via
     #   -r requirements/requirements.txt

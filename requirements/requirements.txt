@@ -42,8 +42,6 @@ idna==2.10
     # via
     #   requests
     #   tldextract
-importlib-metadata==2.0.0
-    # via jsonschema
 jinja2==2.11.2
     # via pywb
 jsonschema==3.2.0
@@ -121,8 +119,6 @@ whitenoise==5.2.0
     # via -r requirements/requirements.in
 wsgiprox==1.5.2
     # via pywb
-zipp==3.4.0
-    # via importlib-metadata
 zope.event==4.5.0
     # via gevent
 zope.interface==5.2.0
