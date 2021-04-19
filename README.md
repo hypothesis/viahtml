@@ -54,16 +54,17 @@ Environment variables:
 
 | Name | Effect | Example |
 |------|--------|---------|
-| `CHECKMATE_URL`       | The URL of the URL checking service       | `https://some-aws-machine` |
-| `CHECKMATE_API_KEY`   | API key to authenticate with checkmate    | `dev_api_key` |
-| `CHECKMATE_ALLOW_ALL`   | Whether to bypass Checkmate's allow-list | true |
-| `CHECKMATE_IGNORE_REASONS`   | Ignored reasons on checkmate detections    | `reason1,reason2` |
-| `VIA_DEBUG`           | Enable debugging logging in dev           | `1` |
-| `VIA_H_EMBED_URL`     | Hypothesis client URL                     | `https://cdn.hypothes.is/hypothesis` |
-| `VIA_IGNORE_PREFIXES` | Prefixes not to proxy                     | `https://hypothes.is/,https://qa.hypothes.is/` |
-| `VIA_ROUTING_HOST`    | The host to perform content based routing | `https://via3.hypothes.is` |
-| `VIA_SECRET`          | Secret used for checking signed URLs      | `a_very_long_random_string` |
-| `VIA_DISABLE_AUTHENTICATION` | Disable auth for dev purposes      | `false` |
+| `CHECKMATE_URL` | The URL of the URL Checkmate instance to use | `https://checkmate.example.com` |
+| `CHECKMATE_API_KEY` | API key to authenticate with Checkmate |
+| `CHECKMATE_ALLOW_ALL` | Whether to bypass Checkmate's allow-list (and use only the blocklist) | `true`
+| `CHECKMATE_IGNORE_REASONS` | Comma-separated list of Checkmate block reasons to ignore | `publisher-blocked,high-io` |
+| `VIA_DEBUG` | Enable debugging logging in dev | `false` |
+| `VIA_H_EMBED_URL` | The URL of the client's embed script | `https://cdn.hypothes.is/hypothesis`
+| `VIA_IGNORE_PREFIXES` | Prefixes not to proxy | `https://hypothes.is/,https://qa.hypothes.is/` |
+| `VIA_ROUTING_HOST` | The host to perform content based routing | `https://via.hypothes.is` |
+| `VIA_DISABLE_AUTHENTICATION` | Disable auth for dev purposes | `false` |
+| `NEW_RELIC_*` | Various New Relic settings. See New Relic's docs for details |
+| `SENTRY_*` | Various Sentry settings. See Sentry's docs for details |
 
 For details of changing the blocklist see:
 
