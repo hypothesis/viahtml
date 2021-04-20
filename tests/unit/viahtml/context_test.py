@@ -186,7 +186,7 @@ class TestContext:
 
     @pytest.fixture
     def context(self, environ, start_response):
-        return Context(environ, start_response)
+        return Context(debug=True, http_environ=environ, start_response=start_response)
 
     @pytest.fixture
     def wsgi(self, patch):

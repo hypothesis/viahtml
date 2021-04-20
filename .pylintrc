@@ -15,12 +15,14 @@ enable=
     bad-inline-option,
     deprecated-pragma,
     useless-suppression,
-    use-symbolic-message-instead
+    use-symbolic-message-instead,
 
 disable=bad-continuation,
         missing-type-doc,
+        missing-return-doc,
         missing-return-type-doc,
-        too-few-public-methods
+        too-few-public-methods,
+        missing-docstring,
 
 [REPORTS]
 output-format=colorized

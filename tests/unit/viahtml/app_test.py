@@ -27,7 +27,7 @@ class TestApplicationCreate:
     @pytest.mark.parametrize(
         "variable,value,expected",
         (
-            ("VIA_DEBUG", "value", {"debug": "value"}),
+            ("VIA_DEBUG", True, {"debug": True}),
             (
                 "VIA_IGNORE_PREFIXES",
                 "  value_1, value_2 ",
@@ -133,7 +133,7 @@ class TestApplication:
 
         result = app(environ, start_response)
 
-        Context.assert_called_once_with(environ, start_response)
+        Context.assert_called_once_with(True, environ, start_response)
         view.assert_called_once_with(Context.return_value)
         assert result == view.return_value
 
@@ -248,8 +248,7 @@ def Hooks():
 def with_patched_views(patch):
     for view_class in (
         "StatusView",
-        "AuthenticationView",
-        "BlocklistView",
+        "SecurityView",
         "RoutingView",
     ):
         view = patch(f"viahtml.app.{view_class}")

@@ -13,6 +13,9 @@ from werkzeug import wsgi
 class Context:
     """A request context object."""
 
+    debug = False
+    """Whether debug mode is enabled."""
+
     headers = None
     """A list of tuples of headers to add to the request."""
 
@@ -22,12 +25,13 @@ class Context:
     start_response = None
     """The start response function if you need it."""
 
-    def __init__(self, http_environ, start_response):
+    def __init__(self, debug, http_environ, start_response):
         """Initialize a new context object.
 
         :param http_environ: WSGI HTTP environment
         :param start_response: WSGI start_response function
         """
+        self.debug = debug
         self.http_environ = http_environ
         self.start_response = start_response
 
