@@ -18,7 +18,7 @@ from viahtml.app import Application
 
 
 @pytest.fixture(scope="session")
-def app(with_environ):
+def app(with_environ):  # pylint:disable=unused-argument
     app = Application()
     app.debug = True
 

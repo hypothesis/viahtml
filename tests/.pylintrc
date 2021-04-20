@@ -22,7 +22,6 @@ disable=bad-continuation,
         no-value-for-parameter,
         redefined-outer-name,
         too-few-public-methods,
-        unused-argument,
 
 [REPORTS]
 output-format=colorized
