@@ -38,5 +38,5 @@ def start_response():
 @pytest.fixture
 def context(start_response):
     return create_autospec(
-        Context, instance=True, spec_set=True, start_response=start_response
+        Context, instance=True, spec_set=True, debug=True, start_response=start_response
     )

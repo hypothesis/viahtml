@@ -1,6 +1,7 @@
 """The WSGI app."""
 import logging
 import os
+from functools import partial
 
 # isort: off
 # This import has to come before the CheckmateClient import or the functional
@@ -16,9 +17,8 @@ from pkg_resources import resource_filename
 from viahtml.context import Context
 from viahtml.hooks import Hooks
 from viahtml.patch import apply_post_app_hooks, apply_pre_app_hooks
-from viahtml.views.authentication import AuthenticationView
-from viahtml.views.blocklist import BlocklistView
 from viahtml.views.routing import RoutingView
+from viahtml.views.security import SecurityView
 from viahtml.views.status import StatusView
 
 
@@ -42,17 +42,17 @@ class Application:
         checkmate = CheckmateClient(
             config["checkmate_host"], config["checkmate_api_key"]
         )
+        check_url = partial(
+            checkmate.check_url, ignore_reasons=config["checkmate_ignore_reasons"]
+        )
 
         self.views = (
             StatusView(checkmate),
-            AuthenticationView(
-                required=not config["disable_authentication"],
-                allowed_referrers=config["allowed_referrers"],
-            ),
-            BlocklistView(
-                checkmate,
-                asbool(config.get("checkmate_allow_all")),
-                config["checkmate_ignore_reasons"],
+            SecurityView(
+                config["checkmate_allow_all"],
+                config["allowed_referrers"],
+                not config["disable_authentication"],
+                check_url,
             ),
             RoutingView(config["routing_host"]),
         )
@@ -68,7 +68,11 @@ class Application:
     def __call__(self, environ, start_response):
         """Handle WSGI requests."""
 
-        context = Context(http_environ=environ, start_response=start_response)
+        context = Context(
+            debug=self._config["debug"],
+            http_environ=environ,
+            start_response=start_response,
+        )
         self.hooks.set_context(context)
 
         for view in self.views:
@@ -109,7 +113,7 @@ class Application:
             ),
             "ignore_prefixes": cls._split_multiline(os.environ["VIA_IGNORE_PREFIXES"]),
             "h_embed_url": os.environ["VIA_H_EMBED_URL"],
-            "debug": os.environ.get("VIA_DEBUG", False),
+            "debug": asbool(os.environ.get("VIA_DEBUG", False)),
             "routing_host": os.environ["VIA_ROUTING_HOST"],
             "disable_authentication": asbool(
                 os.environ.get("VIA_DISABLE_AUTHENTICATION", False)
@@ -117,7 +121,7 @@ class Application:
             "checkmate_host": os.environ["CHECKMATE_URL"],
             "checkmate_ignore_reasons": os.environ.get("CHECKMATE_IGNORE_REASONS"),
             "checkmate_api_key": os.environ["CHECKMATE_API_KEY"],
-            "checkmate_allow_all": os.environ.get("CHECKMATE_ALLOW_ALL"),
+            "checkmate_allow_all": asbool(os.environ.get("CHECKMATE_ALLOW_ALL")),
         }
 
     @classmethod
