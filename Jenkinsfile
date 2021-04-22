@@ -44,12 +44,12 @@ onlyOnMaster {
     stage("Deploy (qa)") {
 	lock("qa deploy") {
 	    parallel(
-	        qa: {
+	        public: {
 		    sleep 2
 		    deployApp(image: img, app: "viahtml", env: "qa")
 		},
-		qa3: {
-		    deployApp(image: img, app: "viahtml", env: "qa3")
+		lms: {
+		    deployApp(image: img, app: "lms-viahtml", env: "qa")
 		}
 	    )
 	}
@@ -64,12 +64,12 @@ onlyOnMaster {
     stage("Deploy (prod)") {
 	lock("prod deploy") {
 	    parallel(
-	        prod: {
+	        public: {
 		    sleep 2
 		    deployApp(image: img, app: "viahtml", env: "prod")
 		},
-		prod3: {
-		    deployApp(image: img, app: "viahtml", env: "prod3")
+		lms: {
+		    deployApp(image: img, app: "lms-viahtml", env: "prod")
 		}
 	    )
 	}
