@@ -91,6 +91,54 @@
       }
     }
 
+    /**
+     * Return true if two objects `a` and `b` have the same keys and corresponding values,
+     * ignoring key order.
+     */
+    function shallowEqual(a, b) {
+      const keysA = Object.keys(a).sort();
+      const keysB = Object.keys(b).sort();
+      return keysA.length === keysB.length && keysA.every((k, i) => keysB[i] === k && a[k] === b[k]);
+    }
+
+    /**
+     * Send metadata about the document (title, URL etc.) to the top frame.
+     *
+     * Via 3 displays proxied HTML content inside an iframe using viahtml.
+     * It listens to these notifications to reflect the metadata of the
+     * proxied document in the top frame (eg. to set the document title).
+     */
+    function sendDocumentMetadataToParent() {
+      if (window === window.top) {
+        // We're already the top frame.
+        return;
+      }
+
+      let prevMetadata = {};
+      const checkMetadata = () => {
+        const currentMetadata = {
+          location: location.href,
+          title: document.title,
+        }
+        if (!shallowEqual(prevMetadata, currentMetadata)) {
+          prevMetadata = currentMetadata;
+          window.parent.postMessage({
+            type: 'metadatachange',
+            metadata: currentMetadata,
+          }, '*');
+        }
+      };
+
+      // Send initial metadata once the document has loaded.
+      window.addEventListener('DOMContentLoaded', checkMetadata);
+
+      // Monitor for future changes to metadata elements in `<head>`.
+      const mo = new MutationObserver(checkMetadata);
+      if (document.head) {
+        mo.observe(document.head, { subtree: true, attributes: true, characterData: true });
+      }
+    }
+
     (function () {
         if (!isTopViaFrame()) {
             // Do not inject Hypothesis into iframes in documents proxied through Via.
@@ -113,5 +161,7 @@
         document.head.appendChild(embed_script);
 
         setupExternalLinkHandler({{external_link_mode(env) | tojson}});
+
+        sendDocumentMetadataToParent();
     })();
 </script>
