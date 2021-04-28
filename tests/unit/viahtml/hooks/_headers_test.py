@@ -58,6 +58,16 @@ class TestHeaders:
             [("X-Robots-Tag", "noindex, nofollow")]
         )
 
+    def test_modify_outbound_inserts_abuse_headers(self, headers):
+        modified_headers = headers.modify_outbound([])
+
+        assert modified_headers == Any.list.containing(
+            [
+                ("X-Abuse-Policy", "https://web.hypothes.is/abuse-policy/"),
+                ("X-Complaints-To", "https://web.hypothes.is/report-abuse/"),
+            ]
+        )
+
     @pytest.fixture(
         params=(
             param(lambda v: v, id="mixed case"),

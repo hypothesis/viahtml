@@ -116,4 +116,7 @@ class Headers:
         # proxied by Via HTML and not to follow links on those pages.
         headers.append(("X-Robots-Tag", "noindex, nofollow"))
 
+        headers.append(("X-Abuse-Policy", "https://web.hypothes.is/abuse-policy/"))
+        headers.append(("X-Complaints-To", "https://web.hypothes.is/report-abuse/"))
+
         return headers
