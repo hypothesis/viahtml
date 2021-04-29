@@ -72,6 +72,9 @@ class Headers:
         for bad_key in bad_keys:
             http_env.pop(bad_key)
 
+        http_env["HTTP_X_ABUSE_POLICY"] = "https://web.hypothes.is/abuse-policy/"
+        http_env["HTTP_X_COMPLAINTS_TO"] = "https://web.hypothes.is/report-abuse/"
+
         return http_env
 
     def modify_outbound(self, header_items):

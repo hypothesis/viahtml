@@ -21,6 +21,17 @@ class TestHeaders:
         assert Headers.environ_name(header_name) not in http_env
         assert "HTTP_OTHER_HEADER" in http_env
 
+    def test_modify_inbound_inserts_abuse_headers(self, headers):
+        http_env = {"HTTP_OTHER_HEADER": "ok"}
+
+        http_env = headers.modify_inbound(http_env)
+
+        assert http_env == {
+            "HTTP_OTHER_HEADER": "ok",
+            "HTTP_X_ABUSE_POLICY": "https://web.hypothes.is/abuse-policy/",
+            "HTTP_X_COMPLAINTS_TO": "https://web.hypothes.is/report-abuse/",
+        }
+
     @pytest.mark.parametrize(
         "header_name", Headers.BLOCKED_OUTBOUND | {"X-Archive-Anything-At-All"}
     )
