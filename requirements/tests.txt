@@ -153,7 +153,7 @@ requests==2.24.0
     #   requests-file
     #   responses
     #   tldextract
-responses==0.13.2
+responses==0.13.3
     # via -r requirements/tests.in
 sentry-sdk==1.0.0
     # via -r requirements/requirements.txt
