@@ -90,7 +90,7 @@ ipdb==0.13.7
     # via -r requirements/dev.in
 ipython-genutils==0.2.0
     # via traitlets
-ipython==7.22.0
+ipython==7.23.0
     # via
     #   -r requirements/dev.in
     #   ipdb
@@ -109,6 +109,8 @@ markupsafe==1.1.1
     # via
     #   -r requirements/requirements.txt
     #   jinja2
+matplotlib-inline==0.1.2
+    # via ipython
 newrelic==6.2.0.156
     # via -r requirements/requirements.txt
 paramiko==2.7.2
@@ -216,7 +218,9 @@ tldextract==2.2.3
 toml==0.10.2
     # via ipdb
 traitlets==5.0.5
-    # via ipython
+    # via
+    #   ipython
+    #   matplotlib-inline
 urllib3==1.25.10
     # via
     #   -r requirements/requirements.txt
