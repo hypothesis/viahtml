@@ -3,6 +3,8 @@
 
 <!-- Inject Hypothesis -->
 <script type="application/javascript">
+    const proxiedURL = {{ cdx.url | tojson }};
+
     /**
       * Return `true` if this frame has no ancestors or its nearest ancestor was
       * not served through Via.
@@ -117,7 +119,11 @@
       let prevMetadata = {};
       const checkMetadata = () => {
         const currentMetadata = {
-          location: location.href,
+          // Report the URL of the document we are proxying to the Via3 parent
+          // frame. A limitation of this is that it doesn't reflect any URL
+          // changes made by the web application using the History API.
+          location: proxiedURL,
+
           title: document.title,
         }
         if (!shallowEqual(prevMetadata, currentMetadata)) {
