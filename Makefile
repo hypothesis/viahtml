@@ -16,8 +16,6 @@ help:
 	@echo '                       Usage: `make upgrade-package name=some-package`.'
 	@echo "make docker            Make the app's Docker image"
 	@echo "make run-docker        Run the app's Docker image locally."
-	@echo "make clean             Delete development artefacts (cached files, "
-	@echo "                       dependencies, etc)"
 
 .PHONY: dev
 dev: python
@@ -78,13 +76,6 @@ run-docker:
 	    -e "VIA_DEBUG=1"  \
 	    -p 9085:9085 \
 	    --name viahtml hypothesis/viahtml:$(DOCKER_TAG)
-
-
-.PHONY: clean
-clean:
-	@find . -type f -name "*.py[co]" -delete
-	@find . -type d -name "__pycache__" -delete
-	@find . -type f -name "*.gz" -delete
 
 .PHONY: nginx
 nginx: python
