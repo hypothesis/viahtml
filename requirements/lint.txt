@@ -90,7 +90,7 @@ h-vialib==1.0.15
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
-httpretty==1.0.5
+httpretty==1.1.1
     # via -r requirements/tests.txt
 idna==2.10
     # via
