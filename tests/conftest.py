@@ -16,7 +16,7 @@ def environment_variables():
         ),
         "VIA_DISABLE_AUTHENTICATION": "0",
         "VIA_DEBUG": "1",
-        "VIA_ROUTING_HOST": "http://example.com/via3",
+        "VIA_ROUTING_HOST": "http://example.com/via",
         "CHECKMATE_URL": "http://checkmate.example.com",
         "CHECKMATE_API_KEY": "dev_api_key",
         "CHECKMATE_IGNORE_REASONS": "",

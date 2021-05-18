@@ -106,7 +106,7 @@
     /**
      * Send metadata about the document (title, URL etc.) to the top frame.
      *
-     * Via 3 displays proxied HTML content inside an iframe using viahtml.
+     * Via displays proxied HTML content inside an iframe using viahtml.
      * It listens to these notifications to reflect the metadata of the
      * proxied document in the top frame (eg. to set the document title).
      */
@@ -119,7 +119,7 @@
       let prevMetadata = {};
       const checkMetadata = () => {
         const currentMetadata = {
-          // Report the URL of the document we are proxying to the Via3 parent
+          // Report the URL of the document we are proxying to the Via parent
           // frame. A limitation of this is that it doesn't reflect any URL
           // changes made by the web application using the History API.
           location: proxiedURL,
