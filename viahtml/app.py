@@ -11,8 +11,8 @@ from pywb.apps.frontendapp import FrontEndApp
 
 # isort: on
 
+import importlib_resources
 from checkmatelib import CheckmateClient
-from pkg_resources import resource_filename
 
 from viahtml.context import Context
 from viahtml.hooks import Hooks
@@ -96,7 +96,7 @@ class Application:
     @classmethod
     def _set_config_file(cls):
         # Move into the correct directory as template paths are relative
-        os.chdir(resource_filename("viahtml", "."))
+        os.chdir(importlib_resources.files("viahtml") / ".")
         config_file = os.environ["PYWB_CONFIG_FILE"] = "pywb_config.yaml"
 
         if not os.path.exists(config_file):

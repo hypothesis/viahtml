@@ -4,8 +4,8 @@ import logging
 import sys
 from time import sleep
 
+import importlib_resources
 import newrelic.agent
-from pkg_resources import resource_filename
 
 from viahtml.stats import UWSGINewRelicStatsGenerator
 
@@ -19,9 +19,10 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 def _report_stats():
     # Read metrics from the stats end-point of uWSGI
 
-    newrelic.agent.initialize(
-        config_file=resource_filename("viahtml", "../conf/newrelic.ini")
-    )
+    with importlib_resources.as_file(
+        importlib_resources.files("viahtml") / "../conf/newrelic.ini"
+    ) as config_file:
+        newrelic.agent.initialize(config_file=config_file)
     newrelic.agent.register_application(timeout=5)
     application = newrelic.agent.application()
 
