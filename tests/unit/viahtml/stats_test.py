@@ -1,8 +1,8 @@
 import json
 
+import importlib_resources
 import pytest
 from h_matchers import Any
-from pkg_resources import resource_filename
 from requests import RequestException
 
 from viahtml.stats import UWSGINewRelicStatsGenerator
@@ -136,8 +136,9 @@ class TestUWSGINewRelicStatsGenerator:
 
     @pytest.fixture
     def json_response(self):
-        with open(resource_filename("tests", "unit/viahtml/stats_test.json")) as handle:
-            return json.load(handle)
+        return json.loads(
+            importlib_resources.read_binary("tests.unit.viahtml", "stats_test.json")
+        )
 
     @pytest.fixture(autouse=True)
     def requests(self, patch, json_response):

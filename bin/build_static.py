@@ -3,7 +3,7 @@ import os
 import os.path
 from shutil import copyfile, rmtree
 
-from pkg_resources import resource_filename
+import importlib_resources
 
 # All the pywb resources we know we need
 MANIFEST = (
@@ -57,6 +57,6 @@ if __name__ == "__main__":
     root_dir = os.path.abspath(os.path.join(bin_dir, "../static/static/pywb"))
 
     _create_static(
-        source=resource_filename("pywb", "static"),
+        source=importlib_resources.files("pywb") / "static",
         target=root_dir,
     )
