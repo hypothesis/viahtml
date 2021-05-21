@@ -41,7 +41,9 @@ idna==2.10
     #   requests
     #   tldextract
 importlib-resources==5.1.4
-    # via h-checkmatelib
+    # via
+    #   -r requirements/requirements.in
+    #   h-checkmatelib
 jinja2==2.11.2
     # via pywb
 jsonschema==3.2.0
