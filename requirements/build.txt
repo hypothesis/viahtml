@@ -46,10 +46,6 @@ fakeredis==0.16.0
     # via
     #   -r requirements/requirements.txt
     #   pywb
-future==0.18.2
-    # via
-    #   -r requirements/requirements.txt
-    #   h-checkmatelib
 gevent==20.9.0
     # via
     #   -r requirements/requirements.txt
@@ -58,7 +54,7 @@ greenlet==1.0.0
     # via
     #   -r requirements/requirements.txt
     #   gevent
-h-checkmatelib==1.0.8
+h-checkmatelib==1.0.9
     # via -r requirements/requirements.txt
 h-vialib==1.0.15
     # via -r requirements/requirements.txt
@@ -67,6 +63,10 @@ idna==2.10
     #   -r requirements/requirements.txt
     #   requests
     #   tldextract
+importlib-resources==5.1.4
+    # via
+    #   -r requirements/requirements.txt
+    #   h-checkmatelib
 jinja2==2.11.2
     # via
     #   -r requirements/requirements.txt
@@ -189,6 +189,10 @@ wsgiprox==1.5.2
     # via
     #   -r requirements/requirements.txt
     #   pywb
+zipp==3.4.1
+    # via
+    #   -r requirements/requirements.txt
+    #   importlib-resources
 zope.event==4.5.0
     # via
     #   -r requirements/requirements.txt

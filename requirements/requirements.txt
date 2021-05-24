@@ -28,13 +28,11 @@ defusedxml==0.6.0
     # via py3amf
 fakeredis==0.16.0
     # via pywb
-future==0.18.2
-    # via h-checkmatelib
 gevent==20.9.0
     # via pywb
 greenlet==1.0.0
     # via gevent
-h-checkmatelib==1.0.8
+h-checkmatelib==1.0.9
     # via -r requirements/requirements.in
 h-vialib==1.0.15
     # via -r requirements/requirements.in
@@ -42,6 +40,8 @@ idna==2.10
     # via
     #   requests
     #   tldextract
+importlib-resources==5.1.4
+    # via h-checkmatelib
 jinja2==2.11.2
     # via pywb
 jsonschema==3.2.0
@@ -119,6 +119,8 @@ whitenoise==5.2.0
     # via -r requirements/requirements.in
 wsgiprox==1.5.2
     # via pywb
+zipp==3.4.1
+    # via importlib-resources
 zope.event==4.5.0
     # via gevent
 zope.interface==5.2.0
