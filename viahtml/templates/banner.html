@@ -158,9 +158,9 @@
         }
 
         // Inject the Hypothesis client.
-        window.hypothesisConfig = function () {
+        Object.defineProperty(window, 'hypothesisConfig', {value: function () {
             return {{ client_params(env) | tojson }};
-        }
+        }});
 
         var embed_script = document.createElement("script");
         embed_script.src = "{{ h_embed_url }}";
