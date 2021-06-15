@@ -4,6 +4,8 @@
 #
 #    pip-compile requirements/dev.in
 #
+appnope==0.1.2
+    # via ipython
 attrs==20.3.0
     # via
     #   -r requirements/requirements.txt
@@ -77,7 +79,7 @@ greenlet==1.0.0
     #   gevent
 h-checkmatelib==1.0.9
     # via -r requirements/requirements.txt
-h-vialib==1.0.15
+h-vialib==1.0.17
     # via -r requirements/requirements.txt
 idna==2.10
     # via
