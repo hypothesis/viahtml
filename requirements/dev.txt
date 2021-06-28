@@ -4,8 +4,6 @@
 #
 #    pip-compile requirements/dev.in
 #
-appnope==0.1.2
-    # via ipython
 attrs==20.3.0
     # via
     #   -r requirements/requirements.txt
@@ -57,10 +55,10 @@ defusedxml==0.6.0
     #   py3amf
 distro==1.5.0
     # via docker-compose
-docker-compose==1.29.2
-    # via -r requirements/dev.in
 docker[ssh]==5.0.0
     # via docker-compose
+docker-compose==1.29.2
+    # via -r requirements/dev.in
 dockerpty==0.4.1
     # via docker-compose
 docopt==0.6.2
@@ -92,12 +90,12 @@ importlib-resources==5.1.4
     #   h-checkmatelib
 ipdb==0.13.9
     # via -r requirements/dev.in
-ipython-genutils==0.2.0
-    # via traitlets
-ipython==7.24.1
+ipython==7.25.0
     # via
     #   -r requirements/dev.in
     #   ipdb
+ipython-genutils==0.2.0
+    # via traitlets
 jedi==0.18.0
     # via ipython
 jinja2==2.11.2
@@ -175,10 +173,6 @@ redis==2.10.6
     #   -r requirements/requirements.txt
     #   fakeredis
     #   pywb
-requests-file==1.5.1
-    # via
-    #   -r requirements/requirements.txt
-    #   tldextract
 requests==2.24.0
     # via
     #   -r requirements/requirements.txt
@@ -187,6 +181,10 @@ requests==2.24.0
     #   h-checkmatelib
     #   pywb
     #   requests-file
+    #   tldextract
+requests-file==1.5.1
+    # via
+    #   -r requirements/requirements.txt
     #   tldextract
 sentry-sdk==1.1.0
     # via -r requirements/requirements.txt
