@@ -46,10 +46,10 @@ onlyOnMaster {
 	    parallel(
 	        public: {
 		    sleep 2
-		    deployApp(image: img, app: "viahtml", env: "qa")
+		    deployApp(image: img, app: "viahtml", env: "qa", region: "us-west-1")
 		},
 		lms: {
-		    deployApp(image: img, app: "lms-viahtml", env: "qa")
+		    deployApp(image: img, app: "lms-viahtml", env: "qa", region: "us-west-1")
 		}
 	    )
 	}
@@ -66,10 +66,10 @@ onlyOnMaster {
 	    parallel(
 	        public: {
 		    sleep 2
-		    deployApp(image: img, app: "viahtml", env: "prod")
+		    deployApp(image: img, app: "viahtml", env: "prod", region: "us-west-1")
 		},
 		lms: {
-		    deployApp(image: img, app: "lms-viahtml", env: "prod")
+		    deployApp(image: img, app: "lms-viahtml", env: "prod", region: "us-west-1")
 		}
 	    )
 	}
