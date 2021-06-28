@@ -63,7 +63,7 @@ idna==2.10
     #   -r requirements/requirements.txt
     #   requests
     #   tldextract
-importlib-resources==5.1.4
+importlib-resources==5.2.0
     # via
     #   -r requirements/requirements.txt
     #   h-checkmatelib
@@ -120,16 +120,16 @@ redis==2.10.6
     #   -r requirements/requirements.txt
     #   fakeredis
     #   pywb
-requests-file==1.5.1
-    # via
-    #   -r requirements/requirements.txt
-    #   tldextract
 requests==2.24.0
     # via
     #   -r requirements/requirements.txt
     #   h-checkmatelib
     #   pywb
     #   requests-file
+    #   tldextract
+requests-file==1.5.1
+    # via
+    #   -r requirements/requirements.txt
     #   tldextract
 sentry-sdk==1.1.0
     # via -r requirements/requirements.txt
