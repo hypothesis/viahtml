@@ -90,7 +90,7 @@ markupsafe==1.1.1
     # via
     #   -r requirements/requirements.txt
     #   jinja2
-newrelic==6.4.1.158
+newrelic==6.4.3.160
     # via -r requirements/requirements.txt
 packaging==20.9
     # via pytest
@@ -100,12 +100,12 @@ portalocker==2.0.0
     # via
     #   -r requirements/requirements.txt
     #   pywb
+py==1.10.0
+    # via pytest
 py3amf==0.8.10
     # via
     #   -r requirements/requirements.txt
     #   pywb
-py==1.10.0
-    # via pytest
 pycparser==2.20
     # via
     #   -r requirements/requirements.txt
@@ -141,10 +141,6 @@ redis==2.10.6
     #   -r requirements/requirements.txt
     #   fakeredis
     #   pywb
-requests-file==1.5.1
-    # via
-    #   -r requirements/requirements.txt
-    #   tldextract
 requests==2.24.0
     # via
     #   -r requirements/requirements.txt
@@ -152,6 +148,10 @@ requests==2.24.0
     #   pywb
     #   requests-file
     #   responses
+    #   tldextract
+requests-file==1.5.1
+    # via
+    #   -r requirements/requirements.txt
     #   tldextract
 responses==0.13.3
     # via -r requirements/tests.in
