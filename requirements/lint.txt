@@ -123,7 +123,7 @@ markupsafe==1.1.1
     #   jinja2
 mccabe==0.6.1
     # via pylint
-newrelic==6.4.1.158
+newrelic==6.4.3.160
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
