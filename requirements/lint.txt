@@ -102,7 +102,7 @@ iniconfig==1.1.1
     # via
     #   -r requirements/tests.txt
     #   pytest
-isort==5.9.0
+isort==5.9.1
     # via pylint
 jinja2==2.11.2
     # via
@@ -140,15 +140,15 @@ portalocker==2.0.0
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   pywb
+py==1.10.0
+    # via
+    #   -r requirements/tests.txt
+    #   pytest
 py3amf==0.8.10
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   pywb
-py==1.10.0
-    # via
-    #   -r requirements/tests.txt
-    #   pytest
 pycparser==2.20
     # via
     #   -r requirements/requirements.txt
@@ -199,11 +199,6 @@ redis==2.10.6
     #   -r requirements/tests.txt
     #   fakeredis
     #   pywb
-requests-file==1.5.1
-    # via
-    #   -r requirements/requirements.txt
-    #   -r requirements/tests.txt
-    #   tldextract
 requests==2.24.0
     # via
     #   -r requirements/requirements.txt
@@ -212,6 +207,11 @@ requests==2.24.0
     #   pywb
     #   requests-file
     #   responses
+    #   tldextract
+requests-file==1.5.1
+    # via
+    #   -r requirements/requirements.txt
+    #   -r requirements/tests.txt
     #   tldextract
 responses==0.13.3
     # via -r requirements/tests.txt
