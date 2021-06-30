@@ -65,7 +65,6 @@ onlyOnMaster {
 	lock("prod deploy") {
 	    parallel(
 	        public: {
-		    sleep 2
 		    deployApp(image: img, app: "viahtml", env: "prod")
 		},
 		lms: {
