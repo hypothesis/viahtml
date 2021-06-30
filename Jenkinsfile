@@ -45,10 +45,11 @@ onlyOnMaster {
 	lock("qa deploy") {
 	    parallel(
 	        public: {
-		    sleep 2
 		    deployApp(image: img, app: "viahtml", env: "qa")
 		},
 		lms: {
+		    // Workaround to ensure all parallel builds happen. See https://hypothes-is.slack.com/archives/CR3E3S7K8/p1625041642057400 
+		    sleep 2
 		    deployApp(image: img, app: "lms-viahtml", env: "qa")
 		}
 	    )
@@ -68,6 +69,8 @@ onlyOnMaster {
 		    deployApp(image: img, app: "viahtml", env: "prod")
 		},
 		lms: {
+		    // Workaround to ensure all parallel builds happen. See https://hypothes-is.slack.com/archives/CR3E3S7K8/p1625041642057400 
+		    sleep 2
 		    deployApp(image: img, app: "lms-viahtml", env: "prod")
 		}
 	    )
