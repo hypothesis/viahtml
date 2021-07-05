@@ -57,7 +57,7 @@ def upstream_website():
      </html>
      """
 
-    with serve_content(
+    with serve_content(  # pylint: disable=not-context-manager
         minimal_valid_html,
         port=8080,
         extra_headers={"Cache-Control": "public, max-age=60"},
