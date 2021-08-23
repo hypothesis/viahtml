@@ -168,7 +168,6 @@ six==1.15.0
     #   responses
     #   surt
     #   warcio
-    #   webtest
     #   wsgiprox
 soupsieve==2.2
     # via beautifulsoup4
@@ -211,7 +210,7 @@ webob==1.8.6
     #   -r requirements/requirements.txt
     #   h-vialib
     #   webtest
-webtest==2.0.35
+webtest==3.0.0
     # via -r requirements/tests.in
 werkzeug==1.0.1
     # via
