@@ -86,7 +86,7 @@ markupsafe==1.1.1
     # via
     #   -r requirements/requirements.txt
     #   jinja2
-newrelic==6.8.0.163
+newrelic==6.8.1.164
     # via -r requirements/requirements.txt
 packaging==20.9
     # via pytest
