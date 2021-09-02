@@ -8,10 +8,6 @@ attrs==20.3.0
     # via
     #   -r requirements/requirements.txt
     #   jsonschema
-babel==2.8.0
-    # via
-    #   -r requirements/requirements.txt
-    #   pywb
 backcall==0.2.0
     # via ipython
 bcrypt==3.2.0
@@ -155,13 +151,13 @@ pyrsistent==0.17.3
     # via
     #   -r requirements/requirements.txt
     #   jsonschema
-python-dotenv==0.17.0
-    # via docker-compose
-pytz==2020.1
+python-dateutil==2.8.2
     # via
     #   -r requirements/requirements.txt
-    #   babel
-pywb==2.5.0
+    #   pywb
+python-dotenv==0.17.0
+    # via docker-compose
+pywb==2.6.0
     # via -r requirements/requirements.txt
 pyyaml==5.3.1
     # via
@@ -197,6 +193,7 @@ six==1.15.0
     #   jsonschema
     #   pynacl
     #   pyopenssl
+    #   python-dateutil
     #   pywb
     #   requests-file
     #   surt
