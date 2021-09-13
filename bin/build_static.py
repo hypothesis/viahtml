@@ -8,7 +8,6 @@ import importlib_resources
 # All the pywb resources we know we need
 MANIFEST = (
     "autoFetchWorker.js",
-    "autoFetchWorkerProxyMode.js",
     "default_banner.js",
     "flowplayer/toolbox.flashembed.js",
     "js/bootstrap.min.js",
@@ -23,7 +22,6 @@ MANIFEST = (
     "wombat.js",
     "wombatProxyMode.js",
     "wombatWorkers.js",
-    "ww_rw.js",
 )
 
 
