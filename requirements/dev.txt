@@ -109,7 +109,7 @@ markupsafe==1.1.1
     #   jinja2
 matplotlib-inline==0.1.2
     # via ipython
-newrelic==6.10.0.165
+newrelic==7.0.0.166
     # via -r requirements/requirements.txt
 paramiko==2.7.2
     # via docker
