@@ -182,7 +182,7 @@ requests-file==1.5.1
     # via
     #   -r requirements/requirements.txt
     #   tldextract
-sentry-sdk==1.4.1
+sentry-sdk==1.4.3
     # via -r requirements/requirements.txt
 six==1.15.0
     # via
