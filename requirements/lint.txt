@@ -43,7 +43,7 @@ chardet==3.0.4
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   requests
-coverage==5.5
+coverage==6.0
     # via -r requirements/tests.txt
 cryptography==3.3.2
     # via
