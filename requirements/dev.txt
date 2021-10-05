@@ -220,7 +220,7 @@ traitlets==5.0.5
     # via
     #   ipython
     #   matplotlib-inline
-urllib3==1.25.10
+urllib3==1.26.7
     # via
     #   -r requirements/requirements.txt
     #   requests
