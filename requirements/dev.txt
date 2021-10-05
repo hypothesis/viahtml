@@ -32,7 +32,7 @@ cffi==1.14.2
     #   brotlipy
     #   cryptography
     #   pynacl
-chardet==3.0.4
+charset-normalizer==2.0.6
     # via
     #   -r requirements/requirements.txt
     #   requests
@@ -169,7 +169,7 @@ redis==2.10.6
     #   -r requirements/requirements.txt
     #   fakeredis
     #   pywb
-requests==2.24.0
+requests==2.26.0
     # via
     #   -r requirements/requirements.txt
     #   docker
