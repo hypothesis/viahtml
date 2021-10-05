@@ -151,7 +151,7 @@ tldextract==2.2.3
     #   certauth
     #   pywb
     #   surt
-urllib3==1.25.10
+urllib3==1.26.7
     # via
     #   -r requirements/requirements.txt
     #   requests
