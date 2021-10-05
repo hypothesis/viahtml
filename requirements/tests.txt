@@ -74,7 +74,7 @@ importlib-resources==5.2.2
     #   h-checkmatelib
 iniconfig==1.1.1
     # via pytest
-jinja2==2.11.2
+jinja2==2.11.3
     # via
     #   -r requirements/requirements.txt
     #   pywb

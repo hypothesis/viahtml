@@ -42,7 +42,7 @@ importlib-resources==5.2.2
     # via
     #   -r requirements/requirements.in
     #   h-checkmatelib
-jinja2==2.11.2
+jinja2==2.11.3
     # via pywb
 jsonschema==3.2.0
     # via h-checkmatelib

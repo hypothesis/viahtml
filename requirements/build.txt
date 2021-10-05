@@ -63,7 +63,7 @@ importlib-resources==5.2.2
     # via
     #   -r requirements/requirements.txt
     #   h-checkmatelib
-jinja2==2.11.2
+jinja2==2.11.3
     # via
     #   -r requirements/requirements.txt
     #   pywb
