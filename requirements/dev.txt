@@ -94,7 +94,7 @@ ipython-genutils==0.2.0
     # via traitlets
 jedi==0.18.0
     # via ipython
-jinja2==2.11.2
+jinja2==2.11.3
     # via
     #   -r requirements/requirements.txt
     #   pywb
