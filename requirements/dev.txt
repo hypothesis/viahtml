@@ -225,7 +225,7 @@ urllib3==1.26.7
     #   -r requirements/requirements.txt
     #   requests
     #   sentry-sdk
-uwsgi==2.0.19.1
+uwsgi==2.0.20
     # via -r requirements/requirements.txt
 warcio==1.7.4
     # via
