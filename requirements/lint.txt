@@ -70,7 +70,7 @@ greenlet==1.0.0
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   gevent
-h-checkmatelib==1.0.9
+h-checkmatelib==1.0.10
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
