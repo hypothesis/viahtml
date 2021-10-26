@@ -137,7 +137,9 @@ class TestUWSGINewRelicStatsGenerator:
     @pytest.fixture
     def json_response(self):
         return json.loads(
-            importlib_resources.read_binary("tests.unit.viahtml", "stats_test.json")
+            (
+                importlib_resources.files("tests.unit.viahtml") / "stats_test.json"
+            ).read_bytes()
         )
 
     @pytest.fixture(autouse=True)
