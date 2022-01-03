@@ -200,7 +200,7 @@ six==1.15.0
     #   warcio
     #   websocket-client
     #   wsgiprox
-supervisor==4.2.2
+supervisor==4.2.4
     # via -r requirements/dev.in
 surt==0.3.1
     # via
