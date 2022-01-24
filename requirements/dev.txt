@@ -8,7 +8,7 @@ asttokens==2.0.5
     # via stack-data
 attrs==20.3.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   jsonschema
 backcall==0.2.0
     # via ipython
@@ -18,33 +18,33 @@ black==21.12b0
     # via ipython
 brotlipy==0.7.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 certauth==1.3.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   wsgiprox
 certifi==2020.6.20
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   requests
     #   sentry-sdk
 cffi==1.14.2
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   bcrypt
     #   brotlipy
     #   cryptography
     #   pynacl
 charset-normalizer==2.0.6
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   requests
 click==8.0.3
     # via black
 cryptography==3.3.2
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   paramiko
     #   pyopenssl
 decorator==5.0.7
@@ -53,14 +53,14 @@ decorator==5.0.7
     #   ipython
 defusedxml==0.6.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   py3amf
 distro==1.5.0
     # via docker-compose
 docker[ssh]==5.0.0
     # via docker-compose
 docker-compose==1.29.2
-    # via -r dev.in
+    # via -r requirements/dev.in
 dockerpty==0.4.1
     # via docker-compose
 docopt==0.6.2
@@ -69,34 +69,34 @@ executing==0.8.2
     # via stack-data
 fakeredis==0.16.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 gevent==20.9.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 greenlet==1.0.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   gevent
 h-checkmatelib==1.0.10
-    # via -r requirements.txt
+    # via -r requirements/requirements.txt
 h-vialib==1.0.18
-    # via -r requirements.txt
+    # via -r requirements/requirements.txt
 idna==2.10
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   requests
     #   tldextract
 importlib-resources==5.4.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   h-checkmatelib
 ipdb==0.13.9
-    # via -r dev.in
+    # via -r requirements/dev.in
 ipython==8.0.1
     # via
-    #   -r dev.in
+    #   -r requirements/dev.in
     #   ipdb
 ipython-genutils==0.2.0
     # via traitlets
@@ -104,23 +104,23 @@ jedi==0.18.0
     # via ipython
 jinja2==2.11.3
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 jsonschema==3.2.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   docker-compose
     #   h-checkmatelib
 markupsafe==1.1.1
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   jinja2
 matplotlib-inline==0.1.2
     # via ipython
 mypy-extensions==0.4.3
     # via black
 newrelic==7.2.4.171
-    # via -r requirements.txt
+    # via -r requirements/requirements.txt
 paramiko==2.7.2
     # via docker
 parso==0.8.2
@@ -135,7 +135,7 @@ platformdirs==2.4.1
     # via black
 portalocker==2.0.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 prompt-toolkit==3.0.18
     # via ipython
@@ -145,49 +145,49 @@ pure-eval==0.2.1
     # via stack-data
 py3amf==0.8.10
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 pycparser==2.20
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   cffi
 pygments==2.8.1
     # via ipython
 pyjwt==2.0.1
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   h-vialib
 pynacl==1.4.0
     # via paramiko
 pyopenssl==19.1.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   certauth
 pyrsistent==0.17.3
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   jsonschema
 python-dateutil==2.8.2
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 python-dotenv==0.17.0
     # via docker-compose
 pywb==2.6.2
-    # via -r requirements.txt
+    # via -r requirements/requirements.txt
 pyyaml==5.4
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   docker-compose
     #   pywb
 redis==2.10.6
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   fakeredis
     #   pywb
 requests==2.26.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   docker
     #   docker-compose
     #   h-checkmatelib
@@ -196,13 +196,13 @@ requests==2.26.0
     #   tldextract
 requests-file==1.5.1
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   tldextract
-sentry-sdk==1.5.2
-    # via -r requirements.txt
+sentry-sdk==1.5.3
+    # via -r requirements/requirements.txt
 six==1.15.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   asttokens
     #   bcrypt
     #   cryptography
@@ -220,16 +220,16 @@ six==1.15.0
 stack-data==0.1.4
     # via ipython
 supervisor==4.2.4
-    # via -r dev.in
+    # via -r requirements/dev.in
 surt==0.3.1
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 texttable==1.6.3
     # via docker-compose
 tldextract==2.2.3
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   certauth
     #   pywb
     #   surt
@@ -245,28 +245,28 @@ typing-extensions==4.0.1
     # via black
 urllib3==1.26.7
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   requests
     #   sentry-sdk
 uwsgi==2.0.20
-    # via -r requirements.txt
+    # via -r requirements/requirements.txt
 warcio==1.7.4
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 wcwidth==0.2.5
     # via prompt-toolkit
 webassets==0.12.1
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 webencodings==0.5.1
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 webob==1.8.6
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   h-vialib
 websocket-client==0.58.0
     # via
@@ -274,25 +274,25 @@ websocket-client==0.58.0
     #   docker-compose
 werkzeug==1.0.1
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 whitenoise==5.3.0
-    # via -r requirements.txt
+    # via -r requirements/requirements.txt
 wsgiprox==1.5.2
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   pywb
 zipp==3.4.1
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   importlib-resources
 zope.event==4.5.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   gevent
 zope.interface==5.2.0
     # via
-    #   -r requirements.txt
+    #   -r requirements/requirements.txt
     #   gevent
 
 # The following packages are considered to be unsafe in a requirements file:
