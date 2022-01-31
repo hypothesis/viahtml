@@ -143,5 +143,5 @@ class UWSGINewRelicStatsGenerator:
                 "max": max(values),
                 # Squash this to the nearest int for repeatability in the tests
                 # It'll be close enough for metrics purposes
-                "sum_of_squares": int(sum(value ** 2 for value in values)),
+                "sum_of_squares": int(sum(value**2 for value in values)),
             }
