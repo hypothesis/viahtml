@@ -33,7 +33,7 @@ charset-normalizer==2.0.6
     # via
     #   -r requirements/requirements.txt
     #   requests
-coverage==6.2
+coverage==6.3
     # via -r requirements/tests.in
 cryptography==3.3.2
     # via
