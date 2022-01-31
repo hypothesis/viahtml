@@ -14,7 +14,7 @@ backcall==0.2.0
     # via ipython
 bcrypt==3.2.0
     # via paramiko
-black==21.12b0
+black==22.1.0
     # via ipython
 brotlipy==0.7.0
     # via
