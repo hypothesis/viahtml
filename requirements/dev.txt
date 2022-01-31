@@ -173,7 +173,7 @@ python-dateutil==2.8.2
     #   pywb
 python-dotenv==0.17.0
     # via docker-compose
-pywb==2.6.3
+pywb==2.6.4
     # via -r requirements/requirements.txt
 pyyaml==5.4
     # via
