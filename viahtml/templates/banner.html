@@ -148,14 +148,14 @@
 
     (function () {
         if (!isTopViaFrame()) {
-            // Do not inject Hypothesis into iframes in documents proxied through Via.
-            // As well as slowing down the loading of the proxied page even more, this
-            // causes problems with the way that the client "discovers" annotate-able iframes.
-            //
-            // See https://github.com/hypothesis/client/issues/568,
-            // https://github.com/hypothesis/via/issues/119 and
-            // https://github.com/hypothesis/lms/issues/701.
-            return;
+          // Do not inject Hypothesis into iframes in documents proxied through Via.
+          //
+          // This would slow down the loading of the proxied page, especially
+          // for pages containing many iframes that are third-party ads or widgets.
+          // Additionally the client requires different configuration in an iframe
+          // eg. to operate in guest-only mode so that it doesn't create
+          // its own sidebar.
+          return;
         }
 
         // Inject the Hypothesis client.
