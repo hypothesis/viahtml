@@ -44,30 +44,40 @@
       }
     }
 
-    function stripFragment(url) {
-      return url.replace(/#.*$/, '');
+    function stripFragmentAndViaParams(url) {
+      const parsed = new URL(url);
+      parsed.hash = '';
+
+      // nb. Keys are copied to avoid incorrect result if params are modified
+      // during iteration.
+      for (let key of [...parsed.searchParams.keys()]) {
+        if (key.startsWith('via.')) {
+          parsed.searchParams.delete(key);
+        }
+      }
+
+      return parsed.toString();
     }
 
     /**
      * Test if a link will navigate to a new page as opposed to scrolling to a
      * different location within the current page.
      *
+     * The logic a browser uses to decide this is specified in
+     * https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigate (step 8).
+     *
      * @param {HTMLAnchorElement} linkEl
      */
     function isExternalLink(linkEl) {
-      // Create a link that is definitely internal and compare its absolute URL
-      // to the target link.
+      // `linkEl.href` is monkey-patched by pywb/Wombat to return the proxied
+      // URL so we need to compare that to the proxied URL of the current page,
+      // rather than `location.href`, which will return the proxy URL.
       //
-      // We do this rather than the more obvious comparison of `linkEl.href` to `location.href`
-      // because Via monkey-patches `HTMLAnchorElement.prototype.href` so that it
-      // returns the original (non-proxied) URL and therefore cannot be
-      // compared directly with the real (proxied) URL that `location.href` returns.
-      const internalLink = document.createElement('a');
-
-      // nb. `href` always returns an absolute URL when read.
-      internalLink.href = '#';
-
-      return stripFragment(internalLink.href) !== stripFragment(linkEl.href);
+      // `linkEl.href` may contain "via."-prefixed parameters, whereas `proxiedURL`
+      // does not, so we also need to ignore those.
+      const targetURL = stripFragmentAndViaParams(linkEl.href);
+      const currentURL = stripFragmentAndViaParams(proxiedURL);
+      return currentURL !== targetURL;
     }
 
     /**
