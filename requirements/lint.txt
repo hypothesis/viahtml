@@ -174,7 +174,7 @@ pyrsistent==0.17.3
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   jsonschema
-pytest==6.2.5
+pytest==7.0.0
     # via -r requirements/tests.txt
 python-dateutil==2.8.2
     # via
@@ -249,9 +249,10 @@ tldextract==2.2.3
     #   pywb
     #   surt
 toml==0.10.2
+    # via pylint
+tomli==2.0.0
     # via
     #   -r requirements/tests.txt
-    #   pylint
     #   pytest
 typing-extensions==3.10.0.2
     # via
