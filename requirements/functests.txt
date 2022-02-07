@@ -116,7 +116,7 @@ pyrsistent==0.17.3
     # via
     #   -r requirements/requirements.txt
     #   jsonschema
-pytest==6.2.5
+pytest==7.0.0
     # via -r requirements/functests.in
 python-dateutil==2.8.2
     # via
@@ -170,7 +170,7 @@ tldextract==2.2.3
     #   certauth
     #   pywb
     #   surt
-toml==0.10.2
+tomli==2.0.0
     # via pytest
 urllib3==1.26.7
     # via
