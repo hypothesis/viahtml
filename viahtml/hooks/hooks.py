@@ -100,7 +100,7 @@ class Hooks:
         # (not proxied by Via).
         if tag == "a":
             rewrites["href"] = lambda value: self.context.make_absolute(
-                value, proxy=False
+                value, proxy=False, rewrite_fragments=False
             )
             stop = True
 

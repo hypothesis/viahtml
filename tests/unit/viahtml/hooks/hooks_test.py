@@ -160,12 +160,22 @@ class TestHooks:
     def test_modify_tag_attrs_disables_rewriting(
         self, hooks, tag, attrs, expected_new_attrs, expected_stop
     ):  # pylint: disable=too-many-arguments
-        hooks.context.make_absolute.side_effect = lambda url, proxy=True: "ABS:" + url
+        hooks.context.make_absolute.side_effect = (
+            lambda url, proxy=True, rewrite_fragments=True: "ABS:" + url
+        )
 
         new_attrs, stop = hooks.modify_tag_attrs(tag, attrs)
 
         assert new_attrs == expected_new_attrs
         assert stop == expected_stop
+
+    def test_modify_tag_attrs_passes_expected_absolute_args(self, hooks):
+        # We're just confirming we call `make_absolute()` with the right stuff
+        hooks.modify_tag_attrs("a", [("href", "url")])
+
+        hooks.context.make_absolute.assert_called_once_with(
+            "url", proxy=False, rewrite_fragments=False
+        )
 
     @pytest.fixture
     def wb_response(self):
@@ -175,7 +185,9 @@ class TestHooks:
     def context(self):
         context = create_autospec(Context, spec_set=True, instance=True)
         context.host = "via"
-        context.make_absolute.side_effect = lambda url, proxy=True: url
+        context.make_absolute.side_effect = (
+            lambda url, proxy=True, rewrite_fragments=True: url
+        )
         return context
 
     @pytest.fixture
