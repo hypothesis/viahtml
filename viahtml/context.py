@@ -147,7 +147,7 @@ class Context:
         wsgi_name = "HTTP_" + name.upper().replace("-", "_")
         return self.http_environ.get(wsgi_name)
 
-    def make_absolute(self, url, proxy=True):
+    def make_absolute(self, url, proxy=True, rewrite_fragments=True):
         """Make a URL absolute.
 
         Any URL which is already absolute will be returned as is, regardless
@@ -156,6 +156,10 @@ class Context:
         :param url: URL to convert
         :param proxy: Make the path relative with regards to Via rather than
             the original site
+        :param rewrite_fragments: Enable making fragment only URLs absolute
         :return: An absolute URL to our service
         """
+        if not rewrite_fragments and url.startswith("#"):
+            return url
+
         return urljoin(self.url if proxy else self.proxied_url, url)

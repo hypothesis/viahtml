@@ -159,10 +159,12 @@ class TestContext:
                 True,
                 "http://via/proxy/http://example.com",
             ),
+            ("#fragment", True, "http://via/proxy/https://example.com/path/#fragment"),
             ("subpath", False, "https://example.com/path/subpath"),
             ("/path2", False, "https://example.com/path2"),
             ("//example.com", False, "https://example.com"),
             ("ftp://example.com", False, "ftp://example.com"),
+            ("#fragment", False, "https://example.com/path/#fragment"),
         ),
     )
     def test_make_absolute(
@@ -171,6 +173,18 @@ class TestContext:
         environ["PATH_INFO"] = "/proxy/https://example.com/path/"
 
         result = context.make_absolute(url, proxy)
+
+        assert result == expected
+
+    @pytest.mark.parametrize(
+        "url,expected", (("#fragment", "#fragment"), ("/path", "http://via/path"))
+    )
+    def test_make_absolute_with_rewrite_fragments_disabled(
+        self, context, url, expected, environ
+    ):
+        environ["PATH_INFO"] = "/proxy/https://example.com/path/"
+
+        result = context.make_absolute(url, rewrite_fragments=False)
 
         assert result == expected
 
