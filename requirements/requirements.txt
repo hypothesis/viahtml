@@ -80,7 +80,7 @@ requests==2.26.0
     #   tldextract
 requests-file==1.5.1
     # via tldextract
-sentry-sdk==1.5.4
+sentry-sdk==1.5.5
     # via -r requirements/requirements.in
 six==1.15.0
     # via
@@ -122,9 +122,9 @@ wsgiprox==1.5.2
     # via pywb
 zipp==3.4.1
     # via importlib-resources
-zope.event==4.5.0
+zope-event==4.5.0
     # via gevent
-zope.interface==5.2.0
+zope-interface==5.2.0
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
