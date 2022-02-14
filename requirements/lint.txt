@@ -300,7 +300,7 @@ werkzeug==1.0.1
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   pywb
-whitenoise==5.3.0
+whitenoise==6.0.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
@@ -316,12 +316,12 @@ zipp==3.4.1
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   importlib-resources
-zope.event==4.5.0
+zope-event==4.5.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   gevent
-zope.interface==5.2.0
+zope-interface==5.2.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
