@@ -14,8 +14,6 @@ backcall==0.2.0
     # via ipython
 bcrypt==3.2.0
     # via paramiko
-black==22.1.0
-    # via ipython
 brotlipy==0.7.0
     # via
     #   -r requirements/requirements.txt
@@ -40,8 +38,6 @@ charset-normalizer==2.0.6
     # via
     #   -r requirements/requirements.txt
     #   requests
-click==8.0.3
-    # via black
 cryptography==3.3.2
     # via
     #   -r requirements/requirements.txt
@@ -94,7 +90,7 @@ importlib-resources==5.4.0
     #   h-checkmatelib
 ipdb==0.13.9
     # via -r requirements/dev.in
-ipython==8.0.1
+ipython==8.1.0
     # via
     #   -r requirements/dev.in
     #   ipdb
@@ -117,22 +113,16 @@ markupsafe==1.1.1
     #   jinja2
 matplotlib-inline==0.1.2
     # via ipython
-mypy-extensions==0.4.3
-    # via black
 newrelic==7.4.0.172
     # via -r requirements/requirements.txt
 paramiko==2.7.2
     # via docker
 parso==0.8.2
     # via jedi
-pathspec==0.9.0
-    # via black
 pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
-platformdirs==2.4.1
-    # via black
 portalocker==2.0.0
     # via
     #   -r requirements/requirements.txt
@@ -235,14 +225,10 @@ tldextract==2.2.3
     #   surt
 toml==0.10.2
     # via ipdb
-tomli==1.2.3
-    # via black
 traitlets==5.0.5
     # via
     #   ipython
     #   matplotlib-inline
-typing-extensions==4.0.1
-    # via black
 urllib3==1.26.7
     # via
     #   -r requirements/requirements.txt
