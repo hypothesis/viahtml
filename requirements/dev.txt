@@ -111,6 +111,7 @@ markupsafe==1.1.1
     # via
     #   -r requirements/requirements.txt
     #   jinja2
+    #   pywb
 matplotlib-inline==0.1.2
     # via ipython
 newrelic==7.6.0.173
@@ -163,7 +164,7 @@ python-dateutil==2.8.2
     #   pywb
 python-dotenv==0.17.0
     # via docker-compose
-pywb==2.6.4
+pywb==2.6.5
     # via -r requirements/requirements.txt
 pyyaml==5.4
     # via
