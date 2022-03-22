@@ -1,6 +1,5 @@
 pytest
 httpretty
-responses
 webtest
 h-matchers>=1.2.10
 coverage
