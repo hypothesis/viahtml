@@ -203,15 +203,12 @@ requests==2.26.0
     #   h-checkmatelib
     #   pywb
     #   requests-file
-    #   responses
     #   tldextract
 requests-file==1.5.1
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   tldextract
-responses==0.20.0
-    # via -r requirements/tests.txt
 sentry-sdk==1.5.7
     # via
     #   -r requirements/requirements.txt
@@ -262,7 +259,6 @@ urllib3==1.26.7
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   requests
-    #   responses
     #   sentry-sdk
 uwsgi==2.0.20
     # via
