@@ -4,7 +4,7 @@
 #
 #    pip-compile requirements/lint.in
 #
-astroid==2.9.0
+astroid==2.11.2
     # via pylint
 attrs==20.3.0
     # via
@@ -55,6 +55,8 @@ defusedxml==0.6.0
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   py3amf
+dill==0.3.4
+    # via pylint
 fakeredis==0.16.0
     # via
     #   -r requirements/requirements.txt
@@ -159,7 +161,7 @@ pyjwt==2.0.1
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   h-vialib
-pylint==2.12.2
+pylint==2.13.2
     # via -r requirements/lint.in
 pyopenssl==19.1.0
     # via
@@ -245,11 +247,10 @@ tldextract==2.2.3
     #   certauth
     #   pywb
     #   surt
-toml==0.10.2
-    # via pylint
 tomli==2.0.0
     # via
     #   -r requirements/tests.txt
+    #   pylint
     #   pytest
 typing-extensions==3.10.0.2
     # via
