@@ -57,7 +57,7 @@ greenlet==1.0.0
     #   gevent
 h-checkmatelib==1.0.10
     # via -r requirements/requirements.txt
-h-matchers==1.2.12
+h-matchers==1.2.13
     # via -r requirements/tests.in
 h-vialib==1.0.18
     # via -r requirements/requirements.txt
