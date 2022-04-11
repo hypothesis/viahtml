@@ -114,7 +114,7 @@ markupsafe==1.1.1
     #   pywb
 matplotlib-inline==0.1.2
     # via ipython
-newrelic==7.8.0.174
+newrelic==7.10.0.175
     # via -r requirements/requirements.txt
 paramiko==2.10.1
     # via docker
