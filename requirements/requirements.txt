@@ -50,7 +50,7 @@ markupsafe==1.1.1
     # via
     #   jinja2
     #   pywb
-newrelic==7.8.0.174
+newrelic==7.10.0.175
     # via -r requirements/requirements.in
 portalocker==2.0.0
     # via pywb

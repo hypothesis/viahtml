@@ -76,7 +76,7 @@ markupsafe==1.1.1
     #   -r requirements/requirements.txt
     #   jinja2
     #   pywb
-newrelic==7.8.0.174
+newrelic==7.10.0.175
     # via -r requirements/requirements.txt
 portalocker==2.0.0
     # via
