@@ -127,7 +127,7 @@ python-dateutil==2.8.2
     # via
     #   -r requirements/requirements.txt
     #   pywb
-pywb==2.6.5
+pywb==2.6.6
     # via -r requirements/requirements.txt
 pyyaml==5.4
     # via
@@ -177,6 +177,10 @@ tldextract==2.2.3
     #   surt
 tomli==2.0.0
     # via pytest
+ua-parser==0.10.0
+    # via
+    #   -r requirements/requirements.txt
+    #   pywb
 urllib3==1.26.7
     # via
     #   -r requirements/requirements.txt
