@@ -38,7 +38,7 @@ idna==2.10
     # via
     #   requests
     #   tldextract
-importlib-resources==5.6.0
+importlib-resources==5.7.1
     # via
     #   -r requirements/requirements.in
     #   h-checkmatelib
