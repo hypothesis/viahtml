@@ -3,7 +3,7 @@ from http import HTTPStatus
 from unittest.mock import create_autospec, sentinel
 
 import pytest
-from checkmatelib import CheckmateClient, CheckmateException
+from checkmatelib import BadURL, CheckmateClient, CheckmateException
 from checkmatelib.client import BlockResponse
 from h_matchers import Any
 
@@ -226,6 +226,24 @@ def test_if_checkmate_crashes_it_allows_the_request(
     response = SecurityView(**view_kwargs)(context)
 
     assert response is None
+
+
+def test_if_checkmate_raises_BadURL_we_present_it(
+    check_url, context, request_headers, view_kwargs
+):
+    check_url.side_effect = BadURL
+    # Set Sec-Fetch-Site so that the code proceeds to the Checkmate check.
+    # This is necessary to get to the code that deals with Checkmate crashes.
+    request_headers["Sec-Fetch-Site"] = "same-origin"
+
+    response = SecurityView(**view_kwargs)(context)
+
+    context.make_response.assert_called_once_with(
+        HTTPStatus.BAD_REQUEST,
+        lines=Any.list.containing([Any.string.containing(context.proxied_url)]),
+        headers={"Content-Type": "text/html; charset=utf-8"},
+    )
+    assert response == context.make_response.return_value
 
 
 @pytest.fixture

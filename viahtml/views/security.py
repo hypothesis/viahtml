@@ -2,7 +2,7 @@ import logging
 from http import HTTPStatus
 from urllib.parse import urlparse
 
-from checkmatelib import CheckmateException
+from checkmatelib import BadURL, CheckmateException
 
 
 class SecurityView:
@@ -27,9 +27,18 @@ class SecurityView:
         if context.debug:
             context.headers.append(("X-Via-Authorized-Because", authorization_reason))
 
-        blocked = self._is_blocked(
-            context.proxied_url, context.query_params.get("via.blocked_for"), allow_all
-        )
+        try:
+            blocked = self._is_blocked(
+                context.proxied_url,
+                context.query_params.get("via.blocked_for"),
+                allow_all,
+            )
+        except BadURL as exc:
+            return context.make_response(
+                HTTPStatus.BAD_REQUEST,
+                lines=[self._error_template(f"Bad URL: {exc}: {context.proxied_url}")],
+                headers={"Content-Type": "text/html; charset=utf-8"},
+            )
 
         if blocked:
             return context.make_response(
@@ -119,9 +128,10 @@ class SecurityView:
     def _is_blocked(self, url, blocked_for, allow_all):
         """Return a BlockResponse if the requested URL is blocked by Checkmate.
 
-        Return False if the URL isn't blocked.
+        :rtype: checkmate.client.BlockResponse, or False if the URL isn't
+            blocked
 
-        :rtype: checkmate.client.BlockResponse or None
+        :raises BadURL: For malformed or private URLs
         """
         if not url:
             return False
@@ -130,6 +140,8 @@ class SecurityView:
             return self._check_url(
                 url=url, allow_all=allow_all, blocked_for=blocked_for
             )
+        except BadURL:
+            raise
         except CheckmateException:
             logging.exception("Failed to check URL against Checkmate")
             return False
