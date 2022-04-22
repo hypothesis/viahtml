@@ -24,7 +24,7 @@ def threaded_context(function):
 
 
 @threaded_context
-def serve_content(content, content_type="text/html", port=8080, extra_headers=None):
+def serve_content(content, content_type="text/html", port=8197, extra_headers=None):
     """Serve some given content forever with a simple HTTP server.
 
     :param content: Content to serve to GET requests

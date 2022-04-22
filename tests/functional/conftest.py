@@ -59,7 +59,7 @@ def upstream_website():
 
     with serve_content(  # pylint: disable=not-context-manager
         minimal_valid_html,
-        port=8080,
+        port=8197,
         extra_headers={"Cache-Control": "public, max-age=60"},
     ):
         yield
@@ -68,7 +68,7 @@ def upstream_website():
 @pytest.fixture
 def proxied_content(app):
     return app.get(
-        "/proxy/http://localhost:8080/?via.client.openSidebar=yup", expect_errors=True
+        "/proxy/http://localhost:8197/?via.client.openSidebar=yup", expect_errors=True
     )
 
 
