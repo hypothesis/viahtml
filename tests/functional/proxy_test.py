@@ -17,7 +17,7 @@ class TestProxy:
 
     def test_client_params_are_stripped_from_the_canonical_url(self, proxied_content):
         assert (
-            '<link rel="canonical" href="http://localhost:8080/"/>' in proxied_content
+            '<link rel="canonical" href="http://localhost:8197/"/>' in proxied_content
         )
 
     def test_ignore_prefixes_are_added_to_the_wombat_config(self, proxied_content):
@@ -43,7 +43,7 @@ class TestProxy:
         ),
     )
     def test_we_set_external_link_mode(self, app, link_mode, expected):
-        url = "/proxy/http://localhost:8080/"
+        url = "/proxy/http://localhost:8197/"
         if link_mode is not None:
             url += f"?via.external_link_mode={link_mode}"
 

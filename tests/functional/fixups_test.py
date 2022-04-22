@@ -5,12 +5,12 @@ class TestFixupsToPywb:
         # The '_id' here means a transparent rewrite, and no insertion of
         # wombat stuff
         assert (
-            '<link rel="manifest" href="/proxy/id_/http://localhost:8080/manifest.json"'
+            '<link rel="manifest" href="/proxy/id_/http://localhost:8197/manifest.json"'
             in proxied_content
         )
 
     def test_we_do_rewrite_other_rels(self, proxied_content):
         assert (
-            '<link rel="other" href="/proxy/oe_/http://localhost:8080/other.json"'
+            '<link rel="other" href="/proxy/oe_/http://localhost:8197/other.json"'
             in proxied_content
         )
