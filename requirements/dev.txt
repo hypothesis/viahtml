@@ -75,7 +75,7 @@ greenlet==1.0.0
     # via
     #   -r requirements/requirements.txt
     #   gevent
-h-checkmatelib==1.0.10
+h-checkmatelib==1.0.12
     # via -r requirements/requirements.txt
 h-vialib==1.0.18
     # via -r requirements/requirements.txt
@@ -114,6 +114,10 @@ markupsafe==1.1.1
     #   pywb
 matplotlib-inline==0.1.2
     # via ipython
+netaddr==0.8.0
+    # via
+    #   -r requirements/requirements.txt
+    #   h-checkmatelib
 newrelic==7.10.0.175
     # via -r requirements/requirements.txt
 paramiko==2.10.1
