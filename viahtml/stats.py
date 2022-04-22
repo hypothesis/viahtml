@@ -9,9 +9,6 @@ from requests import RequestException
 LOG = getLogger(__name__)
 
 
-# pylint: disable=missing-yield-doc,missing-yield-type-doc
-
-
 class UWSGINewRelicStatsGenerator:
     """A callable which returns stats from uWSGI stats for New Relic."""
 
