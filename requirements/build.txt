@@ -50,7 +50,7 @@ greenlet==1.0.0
     # via
     #   -r requirements/requirements.txt
     #   gevent
-h-checkmatelib==1.0.10
+h-checkmatelib==1.0.12
     # via -r requirements/requirements.txt
 h-vialib==1.0.18
     # via -r requirements/requirements.txt
@@ -76,6 +76,10 @@ markupsafe==1.1.1
     #   -r requirements/requirements.txt
     #   jinja2
     #   pywb
+netaddr==0.8.0
+    # via
+    #   -r requirements/requirements.txt
+    #   h-checkmatelib
 newrelic==7.10.0.175
     # via -r requirements/requirements.txt
 portalocker==2.0.0
