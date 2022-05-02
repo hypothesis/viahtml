@@ -47,11 +47,11 @@ fakeredis==0.16.0
     # via
     #   -r requirements/requirements.txt
     #   pywb
-gevent==20.9.0
+gevent==21.12.0
     # via
     #   -r requirements/requirements.txt
     #   pywb
-greenlet==1.0.0
+greenlet==1.1.2
     # via
     #   -r requirements/requirements.txt
     #   gevent
@@ -131,7 +131,7 @@ python-dateutil==2.8.2
     # via
     #   -r requirements/requirements.txt
     #   pywb
-pywb==2.6.6
+pywb==2.6.7
     # via -r requirements/requirements.txt
 pyyaml==5.4
     # via
