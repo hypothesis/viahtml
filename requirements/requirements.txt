@@ -26,9 +26,9 @@ defusedxml==0.6.0
     # via py3amf
 fakeredis==0.16.0
     # via pywb
-gevent==20.9.0
+gevent==21.12.0
     # via pywb
-greenlet==1.0.0
+greenlet==1.1.2
     # via gevent
 h-checkmatelib==1.0.14
     # via -r requirements/requirements.in
@@ -68,7 +68,7 @@ pyrsistent==0.17.3
     # via jsonschema
 python-dateutil==2.8.2
     # via pywb
-pywb==2.6.6
+pywb==2.6.7
     # via -r requirements/requirements.in
 pyyaml==5.4
     # via pywb
