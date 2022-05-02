@@ -30,7 +30,7 @@ gevent==20.9.0
     # via pywb
 greenlet==1.0.0
     # via gevent
-h-checkmatelib==1.0.13
+h-checkmatelib==1.0.14
     # via -r requirements/requirements.in
 h-vialib==1.0.18
     # via -r requirements/requirements.in
