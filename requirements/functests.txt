@@ -55,7 +55,7 @@ greenlet==1.1.2
     #   gevent
 h-checkmatelib==1.0.14
     # via -r requirements/requirements.txt
-h-vialib==1.0.18
+h-vialib==1.0.19
     # via -r requirements/requirements.txt
 httpretty==1.1.4
     # via -r requirements/functests.in
