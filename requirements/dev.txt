@@ -272,7 +272,7 @@ werkzeug==1.0.1
     # via
     #   -r requirements/requirements.txt
     #   pywb
-whitenoise==6.1.0
+whitenoise==6.2.0
     # via -r requirements/requirements.txt
 wsgiprox==1.5.2
     # via
