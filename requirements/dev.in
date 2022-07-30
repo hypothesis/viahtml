@@ -1,5 +1,6 @@
 -r requirements.txt
 
+pip-tools
 ipython
 ipdb
 docker-compose
