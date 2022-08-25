@@ -1,3 +1,4 @@
 pip-tools
+pip-sync-faster
 whitenoise
 -r requirements.txt
