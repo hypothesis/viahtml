@@ -20,6 +20,8 @@ cffi==1.14.2
     #   cryptography
 charset-normalizer==2.0.6
     # via requests
+checkmatelib==1.0.15
+    # via -r requirements/requirements.in
 cryptography==3.3.2
     # via pyopenssl
 defusedxml==0.6.0
@@ -30,8 +32,6 @@ gevent==21.12.0
     # via pywb
 greenlet==1.1.2
     # via gevent
-h-checkmatelib==1.0.14
-    # via -r requirements/requirements.in
 h-vialib==1.0.19
     # via -r requirements/requirements.in
 idna==2.10
@@ -41,17 +41,17 @@ idna==2.10
 importlib-resources==5.9.0
     # via
     #   -r requirements/requirements.in
-    #   h-checkmatelib
+    #   checkmatelib
 jinja2==2.11.3
     # via pywb
 jsonschema==3.2.0
-    # via h-checkmatelib
+    # via checkmatelib
 markupsafe==1.1.1
     # via
     #   jinja2
     #   pywb
 netaddr==0.8.0
-    # via h-checkmatelib
+    # via checkmatelib
 newrelic==8.0.0.179
     # via -r requirements/requirements.in
 portalocker==2.0.0
@@ -78,7 +78,7 @@ redis==2.10.6
     #   pywb
 requests==2.26.0
     # via
-    #   h-checkmatelib
+    #   checkmatelib
     #   pywb
     #   requests-file
     #   tldextract
