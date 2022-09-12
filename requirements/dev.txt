@@ -94,7 +94,7 @@ importlib-resources==5.9.0
     #   checkmatelib
 ipdb==0.13.9
     # via -r requirements/dev.in
-ipython==8.4.0
+ipython==8.5.0
     # via
     #   -r requirements/dev.in
     #   ipdb
@@ -321,7 +321,6 @@ setuptools==63.2.0
     #   -r requirements/requirements.txt
     #   gevent
     #   ipdb
-    #   ipython
     #   jsonschema
     #   pip-tools
     #   supervisor
