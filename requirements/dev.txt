@@ -44,7 +44,7 @@ checkmatelib==1.0.15
     # via -r requirements/requirements.txt
 click==8.1.3
     # via pip-tools
-cryptography==3.3.2
+cryptography==38.0.1
     # via
     #   -r requirements/requirements.txt
     #   paramiko
@@ -170,7 +170,7 @@ pyjwt==2.4.0
     #   h-vialib
 pynacl==1.4.0
     # via paramiko
-pyopenssl==19.1.0
+pyopenssl==22.1.0
     # via
     #   -r requirements/requirements.txt
     #   certauth
@@ -218,12 +218,10 @@ six==1.15.0
     #   -r requirements/requirements.txt
     #   asttokens
     #   bcrypt
-    #   cryptography
     #   dockerpty
     #   jsonschema
     #   paramiko
     #   pynacl
-    #   pyopenssl
     #   python-dateutil
     #   pywb
     #   requests-file

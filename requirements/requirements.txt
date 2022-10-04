@@ -22,7 +22,7 @@ charset-normalizer==2.0.6
     # via requests
 checkmatelib==1.0.15
     # via -r requirements/requirements.in
-cryptography==3.3.2
+cryptography==38.0.1
     # via pyopenssl
 defusedxml==0.6.0
     # via py3amf
@@ -62,7 +62,7 @@ pycparser==2.20
     # via cffi
 pyjwt==2.4.0
     # via h-vialib
-pyopenssl==19.1.0
+pyopenssl==22.1.0
     # via certauth
 pyrsistent==0.17.3
     # via jsonschema
@@ -88,9 +88,7 @@ sentry-sdk==1.9.0
     # via -r requirements/requirements.in
 six==1.15.0
     # via
-    #   cryptography
     #   jsonschema
-    #   pyopenssl
     #   python-dateutil
     #   pywb
     #   requests-file
