@@ -59,7 +59,7 @@ greenlet==1.1.2
     # via
     #   -r requirements/requirements.txt
     #   gevent
-h-vialib==1.0.19
+h-vialib==1.0.20
     # via -r requirements/requirements.txt
 httpretty==1.1.4
     # via -r requirements/functests.in

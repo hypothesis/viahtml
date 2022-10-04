@@ -63,7 +63,7 @@ greenlet==1.1.2
     #   gevent
 h-matchers==1.2.15
     # via -r requirements/tests.in
-h-vialib==1.0.19
+h-vialib==1.0.20
     # via -r requirements/requirements.txt
 httpretty==1.1.4
     # via -r requirements/tests.in
