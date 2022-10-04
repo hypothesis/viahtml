@@ -81,7 +81,7 @@ greenlet==1.1.2
     # via
     #   -r requirements/requirements.txt
     #   gevent
-h-vialib==1.0.19
+h-vialib==1.0.20
     # via -r requirements/requirements.txt
 idna==2.10
     # via
