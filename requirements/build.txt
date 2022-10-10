@@ -94,7 +94,7 @@ pep517==0.13.0
     # via build
 pip-sync-faster==0.0.3
     # via -r requirements/build.in
-pip-tools==6.8.0
+pip-tools==6.9.0
     # via
     #   -r requirements/build.in
     #   pip-sync-faster
@@ -114,7 +114,7 @@ pyjwt==2.4.0
     # via
     #   -r requirements/requirements.txt
     #   h-vialib
-pyopenssl==19.1.0
+pyopenssl==22.1.0
     # via
     #   -r requirements/requirements.txt
     #   certauth
@@ -156,7 +156,6 @@ six==1.15.0
     # via
     #   -r requirements/requirements.txt
     #   jsonschema
-    #   pyopenssl
     #   python-dateutil
     #   pywb
     #   requests-file
