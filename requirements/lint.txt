@@ -102,7 +102,7 @@ importlib-metadata==5.0.0
     # via
     #   -r requirements/tests.txt
     #   pip-sync-faster
-importlib-resources==5.9.0
+importlib-resources==5.10.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
