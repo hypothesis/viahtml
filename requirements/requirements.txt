@@ -108,7 +108,7 @@ urllib3==1.26.7
     # via
     #   requests
     #   sentry-sdk
-uwsgi==2.0.20
+uwsgi==2.0.21
     # via -r requirements/requirements.in
 warcio==1.7.4
     # via pywb
