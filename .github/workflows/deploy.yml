@@ -25,47 +25,55 @@ jobs:
   qa-viahtml:
     needs: create-image
     name: ${{ github.event.repository.name }}
-    uses: hypothesis/workflows/.github/workflows/eb-update.yml@main
+    uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
-      Application: ${{ github.event.repository.name }}
-      Environment: qa
-      Region: us-west-1
-      Operation: deploy
-      Version: ${{ needs.create-image.outputs.docker_tag }}
+      operation: deploy
+      github_environment_name: QA
+      github_environment_url: https://qa-via.hypothes.is/
+      aws_region: us-west-1
+      elasticbeanstalk_application: viahtml
+      elasticbeanstalk_environment: qa
+      docker_tag: ${{ needs.create-image.outputs.docker_tag }}
     secrets: inherit
 
   qa-lms-viahtml:
     needs: create-image
     name: lms-viahtml
-    uses: hypothesis/workflows/.github/workflows/eb-update.yml@main
+    uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
-      Application: lms-viahtml
-      Environment: qa
-      Region: us-west-1
-      Operation: deploy
-      Version: ${{ needs.create-image.outputs.docker_tag }}
+      operation: deploy
+      github_environment_name: QA (Edu)
+      github_environment_url: https://qa-lms-via.hypothes.is/
+      aws_region: us-west-1
+      elasticbeanstalk_application: lms-viahtml
+      elasticbeanstalk_environment: qa
+      docker_tag: ${{ needs.create-image.outputs.docker_tag }}
     secrets: inherit
 
   prod-viahtml:
     needs: [create-image, qa-viahtml]
     name: ${{ github.event.repository.name }}
-    uses: hypothesis/workflows/.github/workflows/eb-update.yml@main
+    uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
-      Application: ${{ github.event.repository.name }}
-      Environment: prod
-      Region: us-west-1
-      Operation: deploy
-      Version: ${{ needs.create-image.outputs.docker_tag }}
+      operation: deploy
+      github_environment_name: Production
+      github_environment_url: https://via.hypothes.is/
+      aws_region: us-west-1
+      elasticbeanstalk_application: viahtml
+      elasticbeanstalk_environment: prod
+      docker_tag: ${{ needs.create-image.outputs.docker_tag }}
     secrets: inherit
 
   prod-lms-viahtml:
     needs: [create-image, qa-lms-viahtml]
     name: lms-viahtml
-    uses: hypothesis/workflows/.github/workflows/eb-update.yml@main
+    uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
-      Application: lms-viahtml
-      Environment: prod
-      Region: us-west-1
-      Operation: deploy
-      Version: ${{ needs.create-image.outputs.docker_tag }}
+      operation: deploy
+      github_environment_name: Production (Edu)
+      github_environment_url: https://lms-via.hypothes.is/
+      aws_region: us-west-1
+      elasticbeanstalk_application: lms-viahtml
+      elasticbeanstalk_environment: prod
+      docker_tag: ${{ needs.create-image.outputs.docker_tag }}
     secrets: inherit
