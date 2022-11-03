@@ -51,7 +51,7 @@ jobs:
     secrets: inherit
 
   prod-viahtml:
-    needs: qa-viahtml
+    needs: [create-image, qa-viahtml]
     name: ${{ github.event.repository.name }}
     uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
@@ -65,7 +65,7 @@ jobs:
     secrets: inherit
 
   prod-lms-viahtml:
-    needs: qa-lms-viahtml
+    needs: [create-image, qa-lms-viahtml]
     name: lms-viahtml
     uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
