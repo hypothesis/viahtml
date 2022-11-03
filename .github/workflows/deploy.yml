@@ -22,9 +22,8 @@ jobs:
       Application: ${{ github.event.repository.name }}
     secrets: inherit
 
-  qa-viahtml:
+  QA:
     needs: create-image
-    name: ${{ github.event.repository.name }}
     uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
       operation: deploy
@@ -36,9 +35,9 @@ jobs:
       docker_tag: ${{ needs.create-image.outputs.docker_tag }}
     secrets: inherit
 
-  qa-lms-viahtml:
+  QA_Edu:
     needs: create-image
-    name: lms-viahtml
+    name: QA (Edu)
     uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
       operation: deploy
@@ -50,9 +49,8 @@ jobs:
       docker_tag: ${{ needs.create-image.outputs.docker_tag }}
     secrets: inherit
 
-  prod-viahtml:
-    needs: [create-image, qa-viahtml]
-    name: ${{ github.event.repository.name }}
+  Production:
+    needs: [create-image, QA]
     uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
       operation: deploy
@@ -64,9 +62,9 @@ jobs:
       docker_tag: ${{ needs.create-image.outputs.docker_tag }}
     secrets: inherit
 
-  prod-lms-viahtml:
-    needs: [create-image, qa-lms-viahtml]
-    name: lms-viahtml
+  Production_Edu:
+    needs: [create-image, QA_Edu]
+    name: Production (Edu)
     uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
       operation: deploy
