@@ -1,72 +1,68 @@
-name: Deploy
+name: Redeploy
 concurrency:
   group: deploy
   cancel-in-progress: true
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+    inputs:
+      qa:
+        type: boolean
+        description: Redeploy QA
+      qa_edu:
+        type: boolean
+        description: Redeploy QA (Edu)
+      production:
+        type: boolean
+        description: Redeploy Production
+      production_edu:
+        type: boolean
+        description: Redeploy Production (Edu)
 jobs:
-  ci:
-    name: CI
-    uses: ./.github/workflows/ci.yml
-  docker_hub:
-    name: Docker Hub
-    needs: [ci]
-    uses: hypothesis/workflows/.github/workflows/dockerhub.yml@main
-    with:
-      Application: ${{ github.event.repository.name }}
-    secrets: inherit
   qa:
     name: QA
-    needs: [docker_hub]
+    if: inputs.qa
     uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
-      operation: deploy
+      operation: redeploy
       github_environment_name: QA
       github_environment_url: https://qa-via.hypothes.is/https://en.wikipedia.org/wiki/Diplodocus
       aws_region: us-west-1
       elasticbeanstalk_application: viahtml
       elasticbeanstalk_environment: qa
-      docker_tag: ${{ needs.Docker_Hub.outputs.docker_tag }}
     secrets: inherit
   qa_edu:
     name: QA (Edu)
-    needs: [docker_hub]
+    if: inputs.qa_edu
     uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
-      operation: deploy
+      operation: redeploy
       github_environment_name: QA (Edu)
       github_environment_url: https://hypothesis.instructure.com/courses/125/assignments/877
       aws_region: us-west-1
       elasticbeanstalk_application: lms-viahtml
       elasticbeanstalk_environment: qa
-      docker_tag: ${{ needs.Docker_Hub.outputs.docker_tag }}
     secrets: inherit
   production:
     name: Production
-    needs: [docker_hub, qa]
+    if: inputs.production
     uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
-      operation: deploy
+      operation: redeploy
       github_environment_name: Production
       github_environment_url: https://via.hypothes.is/https://en.wikipedia.org/wiki/Diplodocus
       aws_region: us-west-1
       elasticbeanstalk_application: viahtml
       elasticbeanstalk_environment: prod
-      docker_tag: ${{ needs.Docker_Hub.outputs.docker_tag }}
     secrets: inherit
   production_edu:
     name: Production (Edu)
-    needs: [docker_hub, qa_edu]
+    if: inputs.production_edu
     uses: hypothesis/workflows/.github/workflows/deploy.yml@main
     with:
-      operation: deploy
+      operation: redeploy
       github_environment_name: Production (Edu)
       github_environment_url: https://hypothesis.instructure.com/courses/125/assignments/881
       aws_region: us-west-1
       elasticbeanstalk_application: lms-viahtml
       elasticbeanstalk_environment: prod
-      docker_tag: ${{ needs.Docker_Hub.outputs.docker_tag }}
     secrets: inherit

@@ -1,0 +1,32 @@
+{
+  "qa": {
+    "github_environment_name": "QA",
+    "github_environment_url": "https://qa-via.hypothes.is/https://en.wikipedia.org/wiki/Diplodocus",
+    "aws_region": "us-west-1",
+    "elasticbeanstalk_application": "viahtml",
+    "elasticbeanstalk_environment": "qa"
+  },
+  "qa_edu": {
+    "github_environment_name": "QA (Edu)",
+    "github_environment_url": "https://hypothesis.instructure.com/courses/125/assignments/877",
+    "aws_region": "us-west-1",
+    "elasticbeanstalk_application": "lms-viahtml",
+    "elasticbeanstalk_environment": "qa"
+  },
+  "production": {
+    "needs": ["qa"],
+    "github_environment_name": "Production",
+    "github_environment_url": "https://via.hypothes.is/https://en.wikipedia.org/wiki/Diplodocus",
+    "aws_region": "us-west-1",
+    "elasticbeanstalk_application": "viahtml",
+    "elasticbeanstalk_environment": "prod"
+  },
+  "production_edu": {
+    "needs": ["qa_edu"],
+    "github_environment_name": "Production (Edu)",
+    "github_environment_url": "https://hypothesis.instructure.com/courses/125/assignments/881",
+    "aws_region": "us-west-1",
+    "elasticbeanstalk_application": "lms-viahtml",
+    "elasticbeanstalk_environment": "prod"
+  }
+}
