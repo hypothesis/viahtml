@@ -104,6 +104,12 @@ class Hooks:
             )
             stop = True
 
+        # Prevent `pywb` rewriting canonical URLs, as the client + h use them
+        # for document equivalence. We want these to appear the same as they
+        # would if the client visited the URL directly.
+        if tag == "link" and ("rel", "canonical") in attrs:
+            stop = True
+
         attrs = [
             (key, rewrites[key](value) if key in rewrites else value)
             for key, value in attrs

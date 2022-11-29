@@ -155,6 +155,10 @@ class TestHooks:
                 [("referrerpolicy", "no-referrer-when-downgrade")],
                 False,
             ),
+            # Check we prevent rewriting of Canonical URLs
+            ("link", [("rel", "canonical")], [("rel", "canonical")], True),
+            # And we leave other types of link alone
+            ("link", [("rel", "style")], [("rel", "style")], False),
         ),
     )
     def test_modify_tag_attrs_disables_rewriting(
