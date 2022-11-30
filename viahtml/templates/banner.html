@@ -88,18 +88,21 @@
     function setupExternalLinkHandler(mode) {
       if (mode === "new-tab") {
         document.addEventListener("click", function (event) {
-          if (!event.target.closest) {
-            // Do nothing in browsers that don't support `element.closest` (IE 11).
-            return;
-          }
-
-          var linkEl = event.target.closest("a");
+          const linkEl = event.target.closest("a");
           if (linkEl) {
             if (isExternalLink(linkEl)) {
               // Make link open in a new tab.
               linkEl.target = "_blank";
+
+              // Prevent any event listeners on the link or its ancestors from
+              // running, in case they try to do a client-side navigation.
+              event.stopPropagation();
             }
           }
+        }, {
+          // Use a capture event so we can intercept clicks before event handlers
+          // from the page's own JS have run.
+          capture: true
         });
       }
     }
