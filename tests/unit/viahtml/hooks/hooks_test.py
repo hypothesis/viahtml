@@ -156,7 +156,7 @@ class TestHooks:
                 False,
             ),
             # Check we prevent rewriting of Canonical URLs
-            ("link", [("rel", "canonical")], [("rel", "canonical")], True),
+            ("link", [("rel", "canonical")], [], True),
             # And we leave other types of link alone
             ("link", [("rel", "style")], [("rel", "style")], False),
         ),

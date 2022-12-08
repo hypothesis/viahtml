@@ -109,6 +109,10 @@ class Hooks:
         # would if the client visited the URL directly.
         if tag == "link" and ("rel", "canonical") in attrs:
             stop = True
+            # This is a slight desperation measure, as even if the backend
+            # doesn't rewrite this, the front end does, causing trouble. By
+            # removing all attributes there is nothing to rewrite.
+            attrs = []
 
         attrs = [
             (key, rewrites[key](value) if key in rewrites else value)
