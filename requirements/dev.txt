@@ -94,7 +94,7 @@ importlib-resources==5.10.1
     # via
     #   -r requirements/requirements.txt
     #   checkmatelib
-ipdb==0.13.9
+ipdb==0.13.11
     # via -r requirements/dev.in
 ipython==8.7.0
     # via
@@ -245,11 +245,10 @@ tldextract==2.2.3
     #   certauth
     #   pywb
     #   surt
-toml==0.10.2
-    # via ipdb
 tomli==2.0.1
     # via
     #   build
+    #   ipdb
     #   pep517
 traitlets==5.0.5
     # via
@@ -321,7 +320,6 @@ setuptools==63.2.0
     # via
     #   -r requirements/requirements.txt
     #   gevent
-    #   ipdb
     #   jsonschema
     #   pip-tools
     #   supervisor
