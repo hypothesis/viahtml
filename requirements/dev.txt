@@ -231,7 +231,7 @@ six==1.15.0
     #   wsgiprox
 stack-data==0.1.4
     # via ipython
-supervisor==4.2.4
+supervisor==4.2.5
     # via -r requirements/dev.in
 surt==0.3.1
     # via
