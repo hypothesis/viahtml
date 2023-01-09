@@ -120,7 +120,7 @@ webob==1.8.6
     # via h-vialib
 werkzeug==1.0.1
     # via pywb
-whitenoise==6.2.0
+whitenoise==6.3.0
     # via -r requirements/requirements.in
 wsgiprox==1.5.2
     # via pywb
