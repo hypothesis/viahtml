@@ -103,6 +103,8 @@ packaging==20.9
     #   pytest
 pep517==0.13.0
     # via build
+pip==22.2.1
+    # via pip-tools
 pip-sync-faster==0.0.3
     # via -r requirements/functests.in
 pip-tools==6.12.1
@@ -137,7 +139,7 @@ pyrsistent==0.17.3
     # via
     #   -r requirements/requirements.txt
     #   jsonschema
-pytest==7.2.0
+pytest==7.2.1
     # via -r requirements/functests.in
 python-dateutil==2.8.2
     # via
@@ -167,6 +169,14 @@ requests-file==1.5.1
     #   tldextract
 sentry-sdk==1.9.0
     # via -r requirements/requirements.txt
+setuptools==65.5.1
+    # via
+    #   -r requirements/requirements.txt
+    #   gevent
+    #   jsonschema
+    #   pip-tools
+    #   zope-event
+    #   zope-interface
 six==1.15.0
     # via
     #   -r requirements/requirements.txt
@@ -251,15 +261,3 @@ zope-interface==5.2.0
     # via
     #   -r requirements/requirements.txt
     #   gevent
-
-# The following packages are considered to be unsafe in a requirements file:
-pip==22.2.1
-    # via pip-tools
-setuptools==65.5.1
-    # via
-    #   -r requirements/requirements.txt
-    #   gevent
-    #   jsonschema
-    #   pip-tools
-    #   zope-event
-    #   zope-interface
