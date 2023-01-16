@@ -49,6 +49,7 @@ cryptography==38.0.3
     #   -r requirements/requirements.txt
     #   paramiko
     #   pyopenssl
+    #   python-jose
 decorator==5.0.7
     # via
     #   ipdb
@@ -67,6 +68,10 @@ dockerpty==0.4.1
     # via docker-compose
 docopt==0.6.2
     # via docker-compose
+ecdsa==0.18.0
+    # via
+    #   -r requirements/requirements.txt
+    #   python-jose
 executing==0.8.2
     # via stack-data
 fakeredis==0.16.0
@@ -81,15 +86,18 @@ greenlet==1.1.2
     # via
     #   -r requirements/requirements.txt
     #   gevent
-h-vialib==1.0.20
+h-vialib==1.1.0
     # via -r requirements/requirements.txt
 idna==2.10
     # via
     #   -r requirements/requirements.txt
     #   requests
     #   tldextract
-importlib-metadata==5.0.0
-    # via pip-sync-faster
+importlib-metadata==6.0.0
+    # via
+    #   -r requirements/requirements.txt
+    #   h-vialib
+    #   pip-sync-faster
 importlib-resources==5.10.2
     # via
     #   -r requirements/requirements.txt
@@ -138,6 +146,8 @@ pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
+pip==22.2.1
+    # via pip-tools
 pip-sync-faster==0.0.3
     # via -r requirements/dev.in
 pip-tools==6.12.1
@@ -158,16 +168,17 @@ py3amf==0.8.10
     # via
     #   -r requirements/requirements.txt
     #   pywb
+pyasn1==0.4.8
+    # via
+    #   -r requirements/requirements.txt
+    #   python-jose
+    #   rsa
 pycparser==2.20
     # via
     #   -r requirements/requirements.txt
     #   cffi
 pygments==2.8.1
     # via ipython
-pyjwt==2.4.0
-    # via
-    #   -r requirements/requirements.txt
-    #   h-vialib
 pynacl==1.4.0
     # via paramiko
 pyopenssl==22.1.0
@@ -186,6 +197,10 @@ python-dateutil==2.8.2
     #   pywb
 python-dotenv==0.17.0
     # via docker-compose
+python-jose[cryptography]==3.3.0
+    # via
+    #   -r requirements/requirements.txt
+    #   h-vialib
 pywb==2.6.7
     # via -r requirements/requirements.txt
 pyyaml==5.4
@@ -211,14 +226,28 @@ requests-file==1.5.1
     # via
     #   -r requirements/requirements.txt
     #   tldextract
+rsa==4.9
+    # via
+    #   -r requirements/requirements.txt
+    #   python-jose
 sentry-sdk==1.9.0
     # via -r requirements/requirements.txt
+setuptools==65.5.1
+    # via
+    #   -r requirements/requirements.txt
+    #   gevent
+    #   jsonschema
+    #   pip-tools
+    #   supervisor
+    #   zope-event
+    #   zope-interface
 six==1.15.0
     # via
     #   -r requirements/requirements.txt
     #   asttokens
     #   bcrypt
     #   dockerpty
+    #   ecdsa
     #   jsonschema
     #   paramiko
     #   pynacl
@@ -312,16 +341,3 @@ zope-interface==5.2.0
     # via
     #   -r requirements/requirements.txt
     #   gevent
-
-# The following packages are considered to be unsafe in a requirements file:
-pip==22.2.1
-    # via pip-tools
-setuptools==65.5.1
-    # via
-    #   -r requirements/requirements.txt
-    #   gevent
-    #   jsonschema
-    #   pip-tools
-    #   supervisor
-    #   zope-event
-    #   zope-interface

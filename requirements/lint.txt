@@ -62,6 +62,7 @@ cryptography==38.0.3
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   pyopenssl
+    #   python-jose
 defusedxml==0.6.0
     # via
     #   -r requirements/requirements.txt
@@ -69,6 +70,11 @@ defusedxml==0.6.0
     #   py3amf
 dill==0.3.4
     # via pylint
+ecdsa==0.18.0
+    # via
+    #   -r requirements/requirements.txt
+    #   -r requirements/tests.txt
+    #   python-jose
 exceptiongroup==1.0.0
     # via
     #   -r requirements/tests.txt
@@ -90,7 +96,7 @@ greenlet==1.1.2
     #   gevent
 h-matchers==1.2.15
     # via -r requirements/tests.txt
-h-vialib==1.0.20
+h-vialib==1.1.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
@@ -102,9 +108,11 @@ idna==2.10
     #   -r requirements/tests.txt
     #   requests
     #   tldextract
-importlib-metadata==5.0.0
+importlib-metadata==6.0.0
     # via
+    #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
+    #   h-vialib
     #   pip-sync-faster
 importlib-resources==5.10.2
     # via
@@ -155,6 +163,10 @@ pep517==0.13.0
     # via
     #   -r requirements/tests.txt
     #   build
+pip==22.2.1
+    # via
+    #   -r requirements/tests.txt
+    #   pip-tools
 pip-sync-faster==0.0.3
     # via
     #   -r requirements/lint.in
@@ -180,6 +192,12 @@ py3amf==0.8.10
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   pywb
+pyasn1==0.4.8
+    # via
+    #   -r requirements/requirements.txt
+    #   -r requirements/tests.txt
+    #   python-jose
+    #   rsa
 pycparser==2.20
     # via
     #   -r requirements/requirements.txt
@@ -187,11 +205,6 @@ pycparser==2.20
     #   cffi
 pydocstyle==6.1.1
     # via -r requirements/lint.in
-pyjwt==2.4.0
-    # via
-    #   -r requirements/requirements.txt
-    #   -r requirements/tests.txt
-    #   h-vialib
 pylint==2.14.5
     # via -r requirements/lint.in
 pyopenssl==22.1.0
@@ -215,6 +228,11 @@ python-dateutil==2.8.2
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   pywb
+python-jose[cryptography]==3.3.0
+    # via
+    #   -r requirements/requirements.txt
+    #   -r requirements/tests.txt
+    #   h-vialib
 pywb==2.6.7
     # via
     #   -r requirements/requirements.txt
@@ -243,14 +261,30 @@ requests-file==1.5.1
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   tldextract
+rsa==4.9
+    # via
+    #   -r requirements/requirements.txt
+    #   -r requirements/tests.txt
+    #   python-jose
 sentry-sdk==1.9.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
+setuptools==65.5.1
+    # via
+    #   -r requirements/requirements.txt
+    #   -r requirements/tests.txt
+    #   astroid
+    #   gevent
+    #   jsonschema
+    #   pip-tools
+    #   zope-event
+    #   zope-interface
 six==1.15.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
+    #   ecdsa
     #   jsonschema
     #   python-dateutil
     #   pywb
@@ -367,19 +401,3 @@ zope-interface==5.2.0
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   gevent
-
-# The following packages are considered to be unsafe in a requirements file:
-pip==22.2.1
-    # via
-    #   -r requirements/tests.txt
-    #   pip-tools
-setuptools==65.5.1
-    # via
-    #   -r requirements/requirements.txt
-    #   -r requirements/tests.txt
-    #   astroid
-    #   gevent
-    #   jsonschema
-    #   pip-tools
-    #   zope-event
-    #   zope-interface

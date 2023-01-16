@@ -23,21 +23,27 @@ charset-normalizer==2.0.6
 checkmatelib==1.0.15
     # via -r requirements/requirements.in
 cryptography==38.0.3
-    # via pyopenssl
+    # via
+    #   pyopenssl
+    #   python-jose
 defusedxml==0.6.0
     # via py3amf
+ecdsa==0.18.0
+    # via python-jose
 fakeredis==0.16.0
     # via pywb
 gevent==21.12.0
     # via pywb
 greenlet==1.1.2
     # via gevent
-h-vialib==1.0.20
+h-vialib==1.1.0
     # via -r requirements/requirements.in
 idna==2.10
     # via
     #   requests
     #   tldextract
+importlib-metadata==6.0.0
+    # via h-vialib
 importlib-resources==5.10.2
     # via
     #   -r requirements/requirements.in
@@ -58,16 +64,20 @@ portalocker==2.0.0
     # via pywb
 py3amf==0.8.10
     # via pywb
+pyasn1==0.4.8
+    # via
+    #   python-jose
+    #   rsa
 pycparser==2.20
     # via cffi
-pyjwt==2.4.0
-    # via h-vialib
 pyopenssl==22.1.0
     # via certauth
 pyrsistent==0.17.3
     # via jsonschema
 python-dateutil==2.8.2
     # via pywb
+python-jose[cryptography]==3.3.0
+    # via h-vialib
 pywb==2.6.7
     # via -r requirements/requirements.in
 pyyaml==5.4
@@ -84,10 +94,19 @@ requests==2.26.0
     #   tldextract
 requests-file==1.5.1
     # via tldextract
+rsa==4.9
+    # via python-jose
 sentry-sdk==1.9.0
     # via -r requirements/requirements.in
+setuptools==65.5.1
+    # via
+    #   gevent
+    #   jsonschema
+    #   zope-event
+    #   zope-interface
 six==1.15.0
     # via
+    #   ecdsa
     #   jsonschema
     #   python-dateutil
     #   pywb
@@ -125,16 +144,10 @@ whitenoise==6.3.0
 wsgiprox==1.5.2
     # via pywb
 zipp==3.4.1
-    # via importlib-resources
+    # via
+    #   importlib-metadata
+    #   importlib-resources
 zope-event==4.5.0
     # via gevent
 zope-interface==5.2.0
     # via gevent
-
-# The following packages are considered to be unsafe in a requirements file:
-setuptools==65.5.1
-    # via
-    #   gevent
-    #   jsonschema
-    #   zope-event
-    #   zope-interface
