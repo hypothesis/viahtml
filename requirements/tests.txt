@@ -45,10 +45,15 @@ cryptography==38.0.3
     # via
     #   -r requirements/requirements.txt
     #   pyopenssl
+    #   python-jose
 defusedxml==0.6.0
     # via
     #   -r requirements/requirements.txt
     #   py3amf
+ecdsa==0.18.0
+    # via
+    #   -r requirements/requirements.txt
+    #   python-jose
 exceptiongroup==1.0.0
     # via pytest
 fakeredis==0.16.0
@@ -65,7 +70,7 @@ greenlet==1.1.2
     #   gevent
 h-matchers==1.2.15
     # via -r requirements/tests.in
-h-vialib==1.0.20
+h-vialib==1.1.0
     # via -r requirements/requirements.txt
 httpretty==1.1.4
     # via -r requirements/tests.in
@@ -74,8 +79,11 @@ idna==2.10
     #   -r requirements/requirements.txt
     #   requests
     #   tldextract
-importlib-metadata==5.0.0
-    # via pip-sync-faster
+importlib-metadata==6.0.0
+    # via
+    #   -r requirements/requirements.txt
+    #   h-vialib
+    #   pip-sync-faster
 importlib-resources==5.10.2
     # via
     #   -r requirements/requirements.txt
@@ -125,14 +133,15 @@ py3amf==0.8.10
     # via
     #   -r requirements/requirements.txt
     #   pywb
+pyasn1==0.4.8
+    # via
+    #   -r requirements/requirements.txt
+    #   python-jose
+    #   rsa
 pycparser==2.20
     # via
     #   -r requirements/requirements.txt
     #   cffi
-pyjwt==2.4.0
-    # via
-    #   -r requirements/requirements.txt
-    #   h-vialib
 pyopenssl==22.1.0
     # via
     #   -r requirements/requirements.txt
@@ -149,6 +158,10 @@ python-dateutil==2.8.2
     # via
     #   -r requirements/requirements.txt
     #   pywb
+python-jose[cryptography]==3.3.0
+    # via
+    #   -r requirements/requirements.txt
+    #   h-vialib
 pywb==2.6.7
     # via -r requirements/requirements.txt
 pyyaml==5.4
@@ -171,6 +184,10 @@ requests-file==1.5.1
     # via
     #   -r requirements/requirements.txt
     #   tldextract
+rsa==4.9
+    # via
+    #   -r requirements/requirements.txt
+    #   python-jose
 sentry-sdk==1.9.0
     # via -r requirements/requirements.txt
 setuptools==65.5.1
@@ -184,6 +201,7 @@ setuptools==65.5.1
 six==1.15.0
     # via
     #   -r requirements/requirements.txt
+    #   ecdsa
     #   jsonschema
     #   python-dateutil
     #   pywb
