@@ -33,6 +33,7 @@ class StatusView:
 
         # If any of the components checked above were down then report the
         # status check as a whole as being down.
+        # pylint:disable=redefined-variable-type
         if body.get("down"):
             http_status = HTTPStatus.INTERNAL_SERVER_ERROR
             body["status"] = "down"
