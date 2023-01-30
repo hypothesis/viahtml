@@ -203,7 +203,7 @@ pycparser==2.20
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   cffi
-pydocstyle==6.1.1
+pydocstyle==6.3.0
     # via -r requirements/lint.in
 pylint==2.14.5
     # via -r requirements/lint.in
@@ -292,7 +292,7 @@ six==1.15.0
     #   surt
     #   warcio
     #   wsgiprox
-snowballstemmer==2.1.0
+snowballstemmer==2.2.0
     # via pydocstyle
 soupsieve==2.2
     # via
