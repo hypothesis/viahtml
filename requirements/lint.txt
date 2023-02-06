@@ -163,15 +163,11 @@ pep517==0.13.0
     # via
     #   -r requirements/tests.txt
     #   build
-pip==22.2.1
-    # via
-    #   -r requirements/tests.txt
-    #   pip-tools
 pip-sync-faster==0.0.3
     # via
     #   -r requirements/lint.in
     #   -r requirements/tests.txt
-pip-tools==6.12.1
+pip-tools==6.12.2
     # via
     #   -r requirements/lint.in
     #   -r requirements/tests.txt
@@ -270,15 +266,6 @@ sentry-sdk==1.14.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
-setuptools==65.5.1
-    # via
-    #   -r requirements/requirements.txt
-    #   -r requirements/tests.txt
-    #   gevent
-    #   jsonschema
-    #   pip-tools
-    #   zope-event
-    #   zope-interface
 six==1.15.0
     # via
     #   -r requirements/requirements.txt

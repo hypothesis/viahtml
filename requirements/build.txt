@@ -100,11 +100,9 @@ packaging==21.3
     # via build
 pep517==0.13.0
     # via build
-pip==22.2.1
-    # via pip-tools
 pip-sync-faster==0.0.3
     # via -r requirements/build.in
-pip-tools==6.12.1
+pip-tools==6.12.2
     # via
     #   -r requirements/build.in
     #   pip-sync-faster
@@ -171,14 +169,6 @@ rsa==4.9
     #   python-jose
 sentry-sdk==1.14.0
     # via -r requirements/requirements.txt
-setuptools==65.5.1
-    # via
-    #   -r requirements/requirements.txt
-    #   gevent
-    #   jsonschema
-    #   pip-tools
-    #   zope-event
-    #   zope-interface
 six==1.15.0
     # via
     #   -r requirements/requirements.txt
