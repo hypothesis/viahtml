@@ -58,7 +58,7 @@ markupsafe==1.1.1
     #   pywb
 netaddr==0.8.0
     # via checkmatelib
-newrelic==8.5.0
+newrelic==8.6.0
     # via -r requirements/requirements.in
 portalocker==2.0.0
     # via pywb
@@ -98,12 +98,6 @@ rsa==4.9
     # via python-jose
 sentry-sdk==1.14.0
     # via -r requirements/requirements.in
-setuptools==65.5.1
-    # via
-    #   gevent
-    #   jsonschema
-    #   zope-event
-    #   zope-interface
 six==1.15.0
     # via
     #   ecdsa
