@@ -229,7 +229,7 @@ python-jose[cryptography]==3.3.0
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   h-vialib
-pywb==2.6.7
+pywb==2.7.3
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
@@ -333,7 +333,7 @@ warcio==1.7.4
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   pywb
-webassets==0.12.1
+webassets==2.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
