@@ -104,9 +104,12 @@ docker:
 run-docker:
 	@docker run \
 	    -it --rm \
+	    -e "CHECKMATE_API_KEY=dummy-key" \
+	    -e "CHECKMATE_URL=https://qa-checkmate.hypothes.is" \
 	    -e "NEW_RELIC_LICENSE_KEY=$(NEW_RELIC_LICENSE_KEY)" \
 	    -e "NEW_RELIC_ENVIRONMENT=dev" \
 	    -e "NEW_RELIC_APP_NAME=viahtml (dev)" \
+	    -e "VIA_ALLOWED_REFERRERS=localhost:9083" \
 	    -e "VIA_H_EMBED_URL=https://cdn.hypothes.is/hypothesis@qa" \
 	    -e "VIA_IGNORE_PREFIXES=https://qa.hypothes.is/,https://cdn.hypothes.is/" \
 	    -e "VIA_BLOCKLIST_URL=https://hypothesis-via.s3-us-west-1.amazonaws.com/via-blocklist.txt" \
