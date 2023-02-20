@@ -2,10 +2,10 @@ collections:
     "proxy":
         index: $live
         templates:
-            banner: templates/banner.rewriter
             error: templates/error.rewriter
             head_insert: templates/head_insert.rewriter
 
+            custom_banner: templates/custom_banner.html
             index: template/index.html
             search: template/search.html
             query: template/query.html
