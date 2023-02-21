@@ -159,6 +159,14 @@ class TestHooks:
             ("link", [("rel", "canonical")], [("rel", "canonical")], True),
             # And we leave other types of link alone
             ("link", [("rel", "style")], [("rel", "style")], False),
+            # Check for attributes that disable proxying of iframes
+            (
+                "iframe",
+                [("data-viahtml-no-proxy", None)],
+                [("data-viahtml-no-proxy", None)],
+                True,
+            ),
+            ("iframe", [], [], False),
         ),
     )
     def test_modify_tag_attrs_disables_rewriting(

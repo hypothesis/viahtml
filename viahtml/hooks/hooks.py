@@ -110,6 +110,10 @@ class Hooks:
         if tag == "link" and ("rel", "canonical") in attrs:
             stop = True
 
+        ## Allow iframes to hint to Via to not proxy
+        if tag == "iframe" and ("data-viahtml-no-proxy", None) in attrs:
+            stop = True
+
         attrs = [
             (key, rewrites[key](value) if key in rewrites else value)
             for key, value in attrs

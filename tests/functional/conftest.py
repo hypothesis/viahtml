@@ -53,6 +53,8 @@ def upstream_website():
        <body>
          <!-- upstream content -->
          <a href="http://example.com">link</a>
+         <iframe id="proxy-iframe" src="http://example.com"></iframe>
+         <iframe id="no-proxy-iframe" src="http://example.com" data-viahtml-no-proxy></iframe>
        </body>
      </html>
      """
