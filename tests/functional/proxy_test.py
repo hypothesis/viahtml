@@ -35,6 +35,17 @@ class TestProxy:
     def test_we_dont_rewrite_links_by_default(self, proxied_content):
         assert '<a href="http://example.com">link</a>' in proxied_content
 
+    def test_we_proxy_iframe_by_default(self, proxied_content):
+        assert '<iframe id="proxy-iframe" src="http://localhost' in proxied_content
+
+    def test_we_do_not_proxy_iframe_when_data_viahtml_no_proxy_is_set(
+        self, proxied_content
+    ):
+        assert (
+            '<iframe id="no-proxy-iframe" src="http://example.com" data-viahtml-no-proxy></iframe>'
+            in proxied_content
+        )
+
     @pytest.mark.parametrize(
         "link_mode,expected",
         (
