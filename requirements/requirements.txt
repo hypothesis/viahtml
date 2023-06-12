@@ -21,7 +21,7 @@ cffi==1.14.2
 charset-normalizer==2.0.6
     # via requests
 checkmatelib==1.0.15
-    # via -r requirements.in
+    # via -r requirements/requirements.in
 cryptography==38.0.3
     # via
     #   pyopenssl
@@ -36,8 +36,8 @@ gevent==21.12.0
     # via pywb
 greenlet==1.1.2
     # via gevent
-h-vialib==1.1.0
-    # via -r requirements.in
+h-vialib==1.2.0
+    # via -r requirements/requirements.in
 idna==2.10
     # via
     #   requests
@@ -46,7 +46,7 @@ importlib-metadata==6.0.0
     # via h-vialib
 importlib-resources==5.12.0
     # via
-    #   -r requirements.in
+    #   -r requirements/requirements.in
     #   checkmatelib
 jinja2==2.11.3
     # via pywb
@@ -59,7 +59,7 @@ markupsafe==1.1.1
 netaddr==0.8.0
     # via checkmatelib
 newrelic==8.8.0
-    # via -r requirements.in
+    # via -r requirements/requirements.in
 portalocker==2.0.0
     # via pywb
 py3amf==0.8.10
@@ -79,7 +79,7 @@ python-dateutil==2.8.2
 python-jose[cryptography]==3.3.0
     # via h-vialib
 pywb==2.7.3
-    # via -r requirements.in
+    # via -r requirements/requirements.in
 pyyaml==5.4
     # via pywb
 redis==2.10.6
@@ -97,7 +97,7 @@ requests-file==1.5.1
 rsa==4.9
     # via python-jose
 sentry-sdk==1.25.1
-    # via -r requirements.in
+    # via -r requirements/requirements.in
 six==1.15.0
     # via
     #   ecdsa
@@ -122,7 +122,7 @@ urllib3==1.26.14
     #   requests
     #   sentry-sdk
 uwsgi==2.0.21
-    # via -r requirements.in
+    # via -r requirements/requirements.in
 warcio==1.7.4
     # via pywb
 webassets==2.0
@@ -134,7 +134,7 @@ webob==1.8.6
 werkzeug==1.0.1
     # via pywb
 whitenoise==6.4.0
-    # via -r requirements.in
+    # via -r requirements/requirements.in
 wsgiprox==1.5.2
     # via pywb
 zipp==3.4.1
