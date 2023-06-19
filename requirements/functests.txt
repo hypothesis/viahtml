@@ -155,7 +155,7 @@ python-jose[cryptography]==3.3.0
     # via
     #   -r requirements/requirements.txt
     #   h-vialib
-pywb==2.7.3
+pywb==2.7.4
     # via -r requirements/requirements.txt
 pyyaml==5.4
     # via
