@@ -228,7 +228,7 @@ python-jose[cryptography]==3.3.0
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   h-vialib
-pywb==2.7.3
+pywb==2.7.4
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt

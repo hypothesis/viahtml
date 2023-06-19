@@ -78,7 +78,7 @@ python-dateutil==2.8.2
     # via pywb
 python-jose[cryptography]==3.3.0
     # via h-vialib
-pywb==2.7.3
+pywb==2.7.4
     # via -r requirements/requirements.in
 pyyaml==5.4
     # via pywb
