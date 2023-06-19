@@ -36,7 +36,7 @@ gevent==21.12.0
     # via pywb
 greenlet==1.1.2
     # via gevent
-h-vialib==1.2.0
+h-vialib==1.2.1
     # via -r requirements/requirements.in
 idna==2.10
     # via
