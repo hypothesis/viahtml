@@ -2,3 +2,5 @@ pip-tools
 pip-sync-faster
 whitenoise
 -r requirements.txt
+# https://github.com/yaml/pyyaml/issues/601
+pyyaml==6.0.1
