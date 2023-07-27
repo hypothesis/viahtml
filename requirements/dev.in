@@ -4,5 +4,4 @@ pip-tools
 pip-sync-faster
 ipython
 ipdb
-docker-compose
 supervisor

@@ -121,7 +121,7 @@ run-docker:
 
 .PHONY: nginx
 nginx: python
-	@tox -qe dev --run-command 'docker-compose run --rm --service-ports nginx-proxy'
+	@docker compose run --rm --service-ports nginx-proxy
 
 .PHONY: web
 web:
