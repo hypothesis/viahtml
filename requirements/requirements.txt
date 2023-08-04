@@ -80,7 +80,7 @@ python-jose[cryptography]==3.3.0
     # via h-vialib
 pywb==2.7.4
     # via -r requirements/requirements.in
-pyyaml==5.4
+pyyaml==6.0.1
     # via pywb
 redis==2.10.6
     # via
