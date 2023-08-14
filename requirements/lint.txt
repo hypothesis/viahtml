@@ -149,7 +149,7 @@ netaddr==0.8.0
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   checkmatelib
-newrelic==8.9.0
+newrelic==8.10.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
