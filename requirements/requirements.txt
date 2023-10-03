@@ -117,7 +117,7 @@ tldextract==2.2.3
     #   surt
 ua-parser==0.10.0
     # via pywb
-urllib3==1.26.14
+urllib3==1.26.17
     # via
     #   requests
     #   sentry-sdk
