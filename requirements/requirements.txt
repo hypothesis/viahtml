@@ -131,7 +131,7 @@ webencodings==0.5.1
     # via pywb
 webob==1.8.6
     # via h-vialib
-werkzeug==1.0.1
+werkzeug==2.1.2
     # via pywb
 whitenoise==6.5.0
     # via -r requirements/requirements.in

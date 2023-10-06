@@ -244,7 +244,7 @@ webob==1.8.6
     #   webtest
 webtest==3.0.0
     # via -r requirements/functests.in
-werkzeug==1.0.1
+werkzeug==2.1.2
     # via
     #   -r requirements/requirements.txt
     #   pywb
