@@ -198,7 +198,7 @@ pycparser==2.20
     #   cffi
 pydocstyle==6.3.0
     # via -r requirements/lint.in
-pylint==3.0.0
+pylint==3.0.1
     # via -r requirements/lint.in
 pyopenssl==23.2.0
     # via
