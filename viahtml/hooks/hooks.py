@@ -3,6 +3,19 @@ from h_vialib import Configuration
 
 from viahtml.hooks._headers import Headers
 
+# Prefixes of media player embeds (iframes) that we want to avoid proxying or
+# blocking.
+#
+# Proxying this content is resource intensive, but we don't want to block it
+# either. See https://github.com/hypothesis/support/issues/28.
+MEDIA_EMBED_PREFIXES = [
+    # Example: https://kaltura.github.io/EmbedCodeGenerator/demo/
+    "https://cdnapisec.kaltura.com/",
+    # See https://help.vimeo.com/hc/en-us/articles/12426259908881-How-do-I-embed-my-video-
+    "https://player.vimeo.com/",
+    "https://www.youtube.com/embed/",
+]
+
 
 class Hooks:
     """A collection of configuration points for `pywb`."""
@@ -38,7 +51,7 @@ class Hooks:
     def ignore_prefixes(self):
         """Get the list of URL prefixes to ignore (server and client side)."""
 
-        return self.config["ignore_prefixes"]
+        return self.config["ignore_prefixes"] + MEDIA_EMBED_PREFIXES
 
     @classmethod
     def get_config(cls, http_env):

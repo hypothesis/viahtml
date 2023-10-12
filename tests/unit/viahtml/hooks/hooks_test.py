@@ -7,6 +7,7 @@ from warcio.statusandheaders import StatusAndHeaders
 
 from viahtml.context import Context
 from viahtml.hooks import Hooks
+from viahtml.hooks.hooks import MEDIA_EMBED_PREFIXES
 
 
 class TestHooks:
@@ -46,8 +47,8 @@ class TestHooks:
 
         assert external_link_mode(http_env) == expected
 
-    def test_ignore_prefixes(self, hooks):
-        assert hooks.ignore_prefixes == sentinel.prefixes
+    def test_ignore_prefixes(self, hooks, ignore_prefixes):
+        assert hooks.ignore_prefixes == ignore_prefixes + MEDIA_EMBED_PREFIXES
 
     def test_get_config(self, Configuration, hooks):
         config = hooks.get_config(sentinel.http_env)
@@ -203,12 +204,12 @@ class TestHooks:
         return context
 
     @pytest.fixture
-    def hooks(self, context):
+    def hooks(self, context, ignore_prefixes):
         hooks = Hooks(
             {
                 "config_noise": "noise",
                 "h_embed_url": sentinel.h_embed_url,
-                "ignore_prefixes": sentinel.prefixes,
+                "ignore_prefixes": ignore_prefixes,
                 "rewrite": {"a_href": True},
             }
         )
@@ -216,6 +217,10 @@ class TestHooks:
         hooks.set_context(context)
 
         return hooks
+
+    @pytest.fixture
+    def ignore_prefixes(self):
+        return ["https://hypothes.is", "https://dontproxy.me"]
 
     @pytest.fixture
     def Configuration(self):
