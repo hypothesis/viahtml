@@ -199,7 +199,7 @@ ua-parser==0.10.0
     # via
     #   -r requirements/requirements.txt
     #   pywb
-urllib3==1.26.17
+urllib3==1.26.18
     # via
     #   -r requirements/requirements.txt
     #   requests
@@ -255,6 +255,7 @@ pip==23.3
     # via pip-tools
 setuptools==68.2.2
     # via
+    #   -r requirements/requirements.txt
     #   gevent
     #   jsonschema
     #   pip-tools
