@@ -297,3 +297,16 @@ zope-interface==5.2.0
     # via
     #   -r requirements/requirements.txt
     #   gevent
+
+# The following packages are considered to be unsafe in a requirements file:
+pip==23.3
+    # via pip-tools
+setuptools==68.2.2
+    # via
+    #   -r requirements/requirements.txt
+    #   gevent
+    #   jsonschema
+    #   pip-tools
+    #   supervisor
+    #   zope-event
+    #   zope-interface
