@@ -226,6 +226,7 @@ python-jose[cryptography]==3.3.0
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   h-vialib
+    #   python-jose
 pywb==2.7.4
     # via
     #   -r requirements/requirements.txt
@@ -318,7 +319,7 @@ urllib3==1.26.18
     #   -r requirements/tests.txt
     #   requests
     #   sentry-sdk
-uwsgi==2.0.22
+uwsgi==2.0.23
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
