@@ -22,7 +22,7 @@ charset-normalizer==2.0.6
     # via requests
 checkmatelib==1.0.15
     # via -r requirements/requirements.in
-cryptography==41.0.4
+cryptography==41.0.6
     # via
     #   pyopenssl
     #   python-jose
