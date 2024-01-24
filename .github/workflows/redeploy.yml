@@ -5,12 +5,6 @@ concurrency:
 on:
   workflow_dispatch:
     inputs:
-      qa:
-        type: boolean
-        description: Redeploy QA
-      qa_edu:
-        type: boolean
-        description: Redeploy QA (Edu)
       staging:
         type: boolean
         description: Redeploy Staging
@@ -24,30 +18,6 @@ on:
         type: boolean
         description: Redeploy Production (Edu)
 jobs:
-  qa:
-    name: QA
-    if: inputs.qa
-    uses: hypothesis/workflows/.github/workflows/deploy.yml@main
-    with:
-      operation: redeploy
-      github_environment_name: QA
-      github_environment_url: https://qa-via.hypothes.is/https://en.wikipedia.org/wiki/Diplodocus
-      aws_region: us-west-1
-      elasticbeanstalk_application: viahtml
-      elasticbeanstalk_environment: qa
-    secrets: inherit
-  qa_edu:
-    name: QA (Edu)
-    if: inputs.qa_edu
-    uses: hypothesis/workflows/.github/workflows/deploy.yml@main
-    with:
-      operation: redeploy
-      github_environment_name: QA (Edu)
-      github_environment_url: https://hypothesis.instructure.com/courses/125/assignments/877
-      aws_region: us-west-1
-      elasticbeanstalk_application: lms-viahtml
-      elasticbeanstalk_environment: qa
-    secrets: inherit
   staging:
     name: Staging
     if: inputs.staging
