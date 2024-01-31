@@ -1,4 +1,5 @@
 """Copy all required static content out of `pywb` so NGINX can serve it."""
+
 import os
 import os.path
 from shutil import copytree, rmtree

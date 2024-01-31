@@ -1,4 +1,5 @@
 """The status end-point for health checks."""
+
 from http import HTTPStatus
 
 from checkmatelib import CheckmateException
