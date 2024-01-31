@@ -1,4 +1,5 @@
 """The majority of configuration options."""
+
 from h_vialib import Configuration
 
 from viahtml.hooks._headers import Headers

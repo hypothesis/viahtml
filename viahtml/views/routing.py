@@ -1,4 +1,5 @@
 """Handle requests from the root for routing."""
+
 from http import HTTPStatus
 
 
