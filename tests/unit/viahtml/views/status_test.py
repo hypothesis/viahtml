@@ -51,6 +51,7 @@ class TestStatusView:
         checkmate_param,
         expected_body,
         expected_http_status,
+        capture_message,
     ):  # pylint:disable=too-many-arguments
         if checkmate_fails:
             checkmate.check_url.side_effect = CheckmateException
@@ -70,6 +71,16 @@ class TestStatusView:
             headers={"Cache-Control": "max-age=0, must-revalidate, no-cache, no-store"},
         )
         assert response == context.make_json_response.return_value
+        capture_message.assert_not_called()
+
+    def test_it_sends_test_messages_to_sentry(self, context, view, capture_message):
+        context.query_params = {"sentry": [""]}
+
+        view(context)
+
+        capture_message.assert_called_once_with(
+            "Test message from Via HTML's status view"
+        )
 
     @pytest.fixture
     def checkmate(self):
@@ -83,3 +94,8 @@ class TestStatusView:
     @pytest.fixture
     def view(self, checkmate):
         return StatusView(checkmate)
+
+
+@pytest.fixture(autouse=True)
+def capture_message(patch):
+    return patch("viahtml.views.status.capture_message")
