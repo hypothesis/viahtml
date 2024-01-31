@@ -1,13 +1,10 @@
-"""The status end-point for health checks."""
-
 from http import HTTPStatus
 
 from checkmatelib import CheckmateException
+from sentry_sdk import capture_message
 
 
 class StatusView:
-    """Status end-point."""
-
     def __init__(self, checkmate):
         self._checkmate = checkmate
 
@@ -38,6 +35,9 @@ class StatusView:
         if body.get("down"):
             http_status = HTTPStatus.INTERNAL_SERVER_ERROR
             body["status"] = "down"
+
+        if "sentry" in context.query_params:
+            capture_message("Test message from Via HTML's status view")
 
         return context.make_json_response(
             body,
