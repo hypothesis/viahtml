@@ -2,6 +2,7 @@
 
 from h_vialib import Configuration
 
+from viahtml.context import Context
 from viahtml.hooks._headers import Headers
 
 # Prefixes of media player embeds (iframes) that we want to avoid proxying or
@@ -27,14 +28,21 @@ class Hooks:
         self.config = config
         self.context = None
 
-    def set_context(self, context):
-        """Set the request context for access in hook points."""
+    def set_context(self, context: Context):
+        """Set the current request context.
+
+        This must be called before the `modify_*` hooks are invoked.
+        """
 
         self.context = context
 
     @property
     def template_vars(self):
-        """Get variables to make available in the global Jinja2 environment."""
+        """Get variables to make available in the global Jinja2 environment.
+
+        This is called when the Jinja2 environment is configured, and thus
+        the request context (`self.context`) is not expected to be available.
+        """
 
         def external_link_mode(http_env):
             via_config, _ = self.get_config(http_env)
@@ -68,6 +76,9 @@ class Hooks:
         :param response: WbResponse object returned from pywb
         :returns: Either the same or a modified response object
         """
+
+        assert self.context
+
         # `status_headers` is an instance of
         # `warcio.statusandheaders.StatusAndHeaders`
         status_code = response.status_headers.get_statuscode()
@@ -98,6 +109,9 @@ class Hooks:
         :return: Tuple of (attrs, stop) where stop disables default `pywb`
             rewriting
         """
+
+        assert self.context
+
         stop = False
 
         # Replace any referrerpolicy attr values with "no-referrer-when-downgrade".
@@ -113,7 +127,8 @@ class Hooks:
         # we want clicking a link to take users to the target site directly
         # (not proxied by Via).
         if tag == "a":
-            rewrites["href"] = lambda value: self.context.make_absolute(
+            context = self.context
+            rewrites["href"] = lambda value: context.make_absolute(
                 value, proxy=False, rewrite_fragments=False
             )
             stop = True
