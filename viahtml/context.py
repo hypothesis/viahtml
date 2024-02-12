@@ -91,6 +91,13 @@ class Context:
 
         return url if url else None
 
+    @property
+    @lru_cache(1)
+    def via_config(self):
+        """Return the parsed configuration from `via.*` query params."""
+        via_config, _ = Configuration.extract_from_wsgi_environment(self.http_environ)
+        return via_config
+
     def make_response(self, http_status=HTTPStatus.OK, headers=None, lines=None):
         """Create a WSGI response.
 

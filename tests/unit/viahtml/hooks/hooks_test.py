@@ -190,6 +190,22 @@ class TestHooks:
             "url", proxy=False, rewrite_fragments=False
         )
 
+    @pytest.mark.parametrize(
+        "via_config,expected_stop",
+        [
+            ({}, False),
+            ({"proxy_frames": "0"}, True),
+            ({"proxy_frames": "1"}, False),
+            ({"proxy_frames": "meh"}, True),
+        ],
+    )
+    def test_modify_tag_attrs_disables_iframe_proxying(
+        self, hooks, via_config, expected_stop
+    ):
+        hooks.context.via_config = via_config
+        _, stop = hooks.modify_tag_attrs("iframe", [])
+        assert stop == expected_stop
+
     @pytest.fixture
     def wb_response(self):
         return WbResponse(status_headers=StatusAndHeaders("200 OK", headers=[]))
@@ -201,6 +217,7 @@ class TestHooks:
         context.make_absolute.side_effect = (
             lambda url, proxy=True, rewrite_fragments=True: url
         )
+        context.via_config = {}
         return context
 
     @pytest.fixture

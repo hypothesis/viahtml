@@ -19,6 +19,14 @@ MEDIA_EMBED_PREFIXES = [
 ]
 
 
+def query_param_as_bool(value: str) -> bool:
+    """Parse a boolean query param value. Any non-zero number is considered true."""
+    try:
+        return bool(int(value))
+    except ValueError:
+        return False
+
+
 class Hooks:
     """A collection of configuration points for `pywb`."""
 
@@ -139,9 +147,19 @@ class Hooks:
         if tag == "link" and ("rel", "canonical") in attrs:
             stop = True
 
-        ## Allow iframes to hint to Via to not proxy
-        if tag == "iframe" and ("data-viahtml-no-proxy", None) in attrs:
-            stop = True
+        if tag == "iframe":
+            # Allow individual iframes to disable proxying via an attribute.
+            if ("data-viahtml-no-proxy", None) in attrs:
+                stop = True
+
+            # Disable proxying for all frames if `via.proxy_frames` query param was set.
+            #
+            # Iframe proxying defaults to true for backwards compatibility.
+            proxy_frames = query_param_as_bool(
+                self.context.via_config.get("proxy_frames", True)
+            )
+            if not proxy_frames:
+                stop = True
 
         attrs = [
             (key, rewrites[key](value) if key in rewrites else value)
