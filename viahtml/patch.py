@@ -1,24 +1,28 @@
 """Tools to apply the hooks to a running `pywb` app."""
 
+from typing import Optional
+
 from pywb.apps.rewriterapp import RewriterApp
 from pywb.rewrite.default_rewriter import DefaultRewriter
 from pywb.rewrite.html_rewriter import HTMLRewriter
 from pywb.rewrite.url_rewriter import UrlRewriter
 
+from viahtml.hooks import Hooks
 
-def apply_post_app_hooks(rewriter_app, hooks):
+
+def apply_post_app_hooks(rewriter_app, hooks: Hooks):
     """Apply hooks after the app has been instantiated."""
     _PatchedRewriterApp.patch(rewriter_app, hooks)
 
 
-def apply_pre_app_hooks(hooks):
+def apply_pre_app_hooks(hooks: Hooks):
     """Apply hooks before the app has been instantiated."""
 
     _patch_url_rewriter(hooks)
     _PatchedHTMLRewriter.patch(hooks)
 
 
-def _patch_url_rewriter(hooks):
+def _patch_url_rewriter(hooks: Hooks):
     # Modify the list of prefixes that prevent a URL from being rewritten
     prefixes = list(UrlRewriter.NO_REWRITE_URI_PREFIX)
     prefixes.extend(hooks.ignore_prefixes)
@@ -26,10 +30,10 @@ def _patch_url_rewriter(hooks):
 
 
 class _PatchedHTMLRewriter(HTMLRewriter):  # pylint: disable=abstract-method
-    hooks = None
+    hooks: Optional[Hooks] = None
 
     @classmethod
-    def patch(cls, hooks):
+    def patch(cls, hooks: Hooks):
         """Patch the parent object."""
 
         cls.hooks = hooks
@@ -74,10 +78,10 @@ class _PatchedHTMLRewriter(HTMLRewriter):  # pylint: disable=abstract-method
 
 
 class _PatchedRewriterApp(RewriterApp):
-    hooks = None
+    hooks: Optional[Hooks] = None
 
     @classmethod
-    def patch(cls, rewriter, hooks):
+    def patch(cls, rewriter, hooks: Hooks):
         """Patch the rewriter object."""
 
         # Change the class of the rewriter to be this class, forcibly casting
