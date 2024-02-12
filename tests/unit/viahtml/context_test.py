@@ -188,6 +188,18 @@ class TestContext:
 
         assert result == expected
 
+    @pytest.mark.parametrize(
+        "query,expected",
+        [
+            ("via.proxy_frames=0", {"proxy_frames": "0"}),
+            ("via.foo.bar=baz", {"foo": {"bar": "baz"}}),
+        ],
+    )
+    def test_via_config(self, context, environ, query, expected):
+        environ["QUERY_STRING"] = query
+        result = context.via_config
+        assert result == expected
+
     @pytest.fixture
     def environ(self):
         return {
