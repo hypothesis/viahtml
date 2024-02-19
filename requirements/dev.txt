@@ -138,7 +138,7 @@ pickleshare==0.7.5
     # via ipython
 pip-sync-faster==0.0.3
     # via -r requirements/dev.in
-pip-tools==7.3.0
+pip-tools==7.4.0
     # via
     #   -r requirements/dev.in
     #   pip-sync-faster
@@ -176,7 +176,9 @@ pyopenssl==23.3.0
     #   -r requirements/requirements.txt
     #   certauth
 pyproject-hooks==1.0.0
-    # via build
+    # via
+    #   build
+    #   pip-tools
 python-dateutil==2.8.2
     # via
     #   -r requirements/requirements.txt

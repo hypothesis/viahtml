@@ -174,7 +174,7 @@ pip-sync-faster==0.0.3
     # via
     #   -r requirements/lint.in
     #   -r requirements/tests.txt
-pip-tools==7.3.0
+pip-tools==7.4.0
     # via
     #   -r requirements/lint.in
     #   -r requirements/tests.txt
@@ -224,6 +224,7 @@ pyproject-hooks==1.0.0
     # via
     #   -r requirements/tests.txt
     #   build
+    #   pip-tools
 pytest==8.0.0
     # via -r requirements/tests.txt
 python-dateutil==2.8.2
