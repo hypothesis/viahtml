@@ -120,7 +120,7 @@ importlib-metadata==7.0.1
     #   build
     #   h-vialib
     #   pip-sync-faster
-importlib-resources==6.1.1
+importlib-resources==6.1.2
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt

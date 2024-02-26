@@ -48,7 +48,7 @@ idna==3.6
     #   tldextract
 importlib-metadata==7.0.1
     # via h-vialib
-importlib-resources==6.1.1
+importlib-resources==6.1.2
     # via
     #   -r requirements/requirements.in
     #   checkmatelib
