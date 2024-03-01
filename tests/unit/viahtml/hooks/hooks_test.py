@@ -206,6 +206,22 @@ class TestHooks:
         _, stop = hooks.modify_tag_attrs("iframe", [])
         assert stop == expected_stop
 
+    @pytest.mark.parametrize(
+        "via_config,expected_stop",
+        [
+            ({}, False),
+            ({"proxy_images": "0"}, True),
+            ({"proxy_images": "1"}, False),
+            ({"proxy_images": "meh"}, True),
+        ],
+    )
+    def test_modify_tag_attrs_disables_image_proxying(
+        self, hooks, via_config, expected_stop
+    ):
+        hooks.context.via_config = via_config
+        _, stop = hooks.modify_tag_attrs("img", [])
+        assert stop == expected_stop
+
     @pytest.fixture
     def wb_response(self):
         return WbResponse(status_headers=StatusAndHeaders("200 OK", headers=[]))
