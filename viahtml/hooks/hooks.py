@@ -155,10 +155,15 @@ class Hooks:
             # Disable proxying for all frames if `via.proxy_frames` query param was set.
             #
             # Iframe proxying defaults to true for backwards compatibility.
-            proxy_frames = query_param_as_bool(
+            if not query_param_as_bool(
                 self.context.via_config.get("proxy_frames", True)
-            )
-            if not proxy_frames:
+            ):
+                stop = True
+
+        if tag == "img":
+            if not query_param_as_bool(
+                self.context.via_config.get("proxy_images", True)
+            ):
                 stop = True
 
         attrs = [
