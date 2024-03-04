@@ -184,7 +184,7 @@ pkgutil-resolve-name==1.3.10
     #   jsonschema
 platformdirs==4.1.0
     # via pylint
-pluggy==1.3.0
+pluggy==1.4.0
     # via
     #   -r requirements/tests.txt
     #   pytest
@@ -223,7 +223,7 @@ pyproject-hooks==1.0.0
     #   -r requirements/tests.txt
     #   build
     #   pip-tools
-pytest==8.0.2
+pytest==8.1.0
     # via -r requirements/tests.txt
 python-dateutil==2.8.2
     # via
