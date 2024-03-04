@@ -40,14 +40,12 @@ gevent==21.12.0
     # via pywb
 greenlet==1.1.3.post0
     # via gevent
-h-vialib==1.2.1
+h-vialib==1.2.2
     # via -r requirements/requirements.in
 idna==3.6
     # via
     #   requests
     #   tldextract
-importlib-metadata==7.0.1
-    # via h-vialib
 importlib-resources==6.1.2
     # via
     #   -r requirements/requirements.in
@@ -153,9 +151,7 @@ whitenoise==6.6.0
 wsgiprox==1.5.2
     # via pywb
 zipp==3.17.0
-    # via
-    #   importlib-metadata
-    #   importlib-resources
+    # via importlib-resources
 zope-event==5.0
     # via gevent
 zope-interface==6.1
