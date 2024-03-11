@@ -124,7 +124,7 @@ packaging==23.2
     #   pytest
 pip-sync-faster==0.0.3
     # via -r requirements/tests.in
-pip-tools==7.4.0
+pip-tools==7.4.1
     # via
     #   -r requirements/tests.in
     #   pip-sync-faster
