@@ -112,7 +112,7 @@ netaddr==0.10.1
     # via
     #   -r requirements/requirements.txt
     #   checkmatelib
-newrelic==9.7.0
+newrelic==9.7.1
     # via -r requirements/requirements.txt
 packaging==23.2
     # via
@@ -165,7 +165,6 @@ python-jose[cryptography]==3.3.0
     # via
     #   -r requirements/requirements.txt
     #   h-vialib
-    #   python-jose
 pywb==2.7.4
     # via -r requirements/requirements.txt
 pyyaml==6.0.1
