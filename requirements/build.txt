@@ -77,7 +77,7 @@ importlib-metadata==7.0.1
     # via
     #   build
     #   pip-sync-faster
-importlib-resources==6.3.1
+importlib-resources==6.4.0
     # via
     #   -r requirements/requirements.txt
     #   checkmatelib
