@@ -116,7 +116,7 @@ netaddr==0.10.1
     # via
     #   -r requirements/requirements.txt
     #   checkmatelib
-newrelic==9.7.1
+newrelic==9.8.0
     # via -r requirements/requirements.txt
 packaging==23.2
     # via
