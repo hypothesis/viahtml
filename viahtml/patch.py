@@ -29,7 +29,7 @@ def _patch_url_rewriter(hooks: Hooks):
     UrlRewriter.NO_REWRITE_URI_PREFIX = tuple(prefixes)
 
 
-class _PatchedHTMLRewriter(HTMLRewriter):  # pylint: disable=abstract-method
+class _PatchedHTMLRewriter(HTMLRewriter):
     hooks: Optional[Hooks] = None
 
     @classmethod

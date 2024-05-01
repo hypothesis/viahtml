@@ -1,4 +1,4 @@
-FROM python:3.8.12-alpine3.13
+FROM python:3.11.8-alpine3.19
 LABEL maintainer="Hypothes.is Project and contributors"
 
 # Install nginx & supervisor
