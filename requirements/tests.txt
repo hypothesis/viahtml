@@ -67,7 +67,7 @@ greenlet==2.0.2
     #   -r requirements/requirements.txt
     #   gevent
     #   pywb
-h-matchers==1.2.15
+h-matchers==1.2.16
     # via -r requirements/tests.in
 h-vialib==1.3.0
     # via -r requirements/requirements.txt
