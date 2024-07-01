@@ -35,7 +35,7 @@ charset-normalizer==3.3.2
     # via
     #   -r requirements/requirements.txt
     #   requests
-checkmatelib==1.0.15
+checkmatelib==1.0.17
     # via -r requirements/requirements.txt
 click==8.1.7
     # via pip-tools
@@ -108,7 +108,7 @@ markupsafe==2.1.5
     #   jinja2
     #   pywb
     #   werkzeug
-netaddr==0.10.1
+netaddr==1.3.0
     # via
     #   -r requirements/requirements.txt
     #   checkmatelib
