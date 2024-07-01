@@ -39,7 +39,7 @@ checkmatelib==1.0.15
     # via -r requirements/requirements.txt
 click==8.1.7
     # via pip-tools
-coverage==7.5.3
+coverage==7.5.4
     # via -r requirements/tests.in
 cryptography==41.0.7
     # via
