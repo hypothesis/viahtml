@@ -348,7 +348,7 @@ wsgiprox==1.5.2
     #   -r requirements.txt
     #   -r tests.txt
     #   pywb
-zipp==3.17.0
+zipp==3.19.1
     # via
     #   -r tests.txt
     #   importlib-metadata

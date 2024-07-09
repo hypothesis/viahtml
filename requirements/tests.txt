@@ -251,7 +251,7 @@ wsgiprox==1.5.2
     # via
     #   -r requirements.txt
     #   pywb
-zipp==3.17.0
+zipp==3.19.1
     # via importlib-metadata
 zope-event==5.0
     # via
