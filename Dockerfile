@@ -20,6 +20,12 @@ RUN apk add --no-cache --virtual build-deps \
   && pip install --no-cache-dir -r requirements.txt \
   && apk del build-deps
 
+# Temporarily install the latest gevent and greenlet releases. This version is
+# incompatible with pywb's stated requirements, but it nevertheless runs.
+#
+# The newer gevent release includes bugfixes for Python >= 3.11.8.
+RUN pip install --no-cache-dir gevent==24.2.1 greenlet==3.1.0
+
 COPY ./conf/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/nginx/viahtml /etc/nginx/viahtml
 COPY . .
