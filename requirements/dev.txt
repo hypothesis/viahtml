@@ -234,7 +234,7 @@ ua-parser==0.18.0
     # via
     #   -r requirements/requirements.txt
     #   pywb
-urllib3==1.26.19
+urllib3==1.26.15
     # via
     #   -r requirements/requirements.txt
     #   requests
