@@ -6,3 +6,10 @@ pywb
 sentry-sdk
 uwsgi
 whitenoise
+
+# Pin urllib3 to a version <1.26.16 to investigate if it resolves issues with
+# gevent.
+#
+# See https://github.com/gevent/gevent/issues/1957 and
+# https://github.com/urllib3/urllib3/issues/3289.
+urllib3==1.26.15
