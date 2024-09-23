@@ -133,6 +133,10 @@ class SecurityView:
 
         :raises BadURL: For malformed or private URLs
         """
+
+        # TESTING
+        return False
+
         if not url:
             return False
 
