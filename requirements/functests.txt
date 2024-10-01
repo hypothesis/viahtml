@@ -76,7 +76,7 @@ idna==3.7
     #   tldextract
 importlib-metadata==7.0.1
     # via pip-sync-faster
-importlib-resources==6.4.4
+importlib-resources==6.4.5
     # via
     #   -r requirements/requirements.txt
     #   checkmatelib
