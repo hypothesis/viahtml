@@ -25,6 +25,8 @@ disable=invalid-name,
         no-value-for-parameter,
         redefined-outer-name,
         too-few-public-methods,
+        too-many-positional-arguments,
+
 
 [REPORTS]
 output-format=colorized
