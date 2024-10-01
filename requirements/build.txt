@@ -102,7 +102,7 @@ netaddr==1.3.0
     # via
     #   -r requirements/requirements.txt
     #   checkmatelib
-newrelic==9.13.0
+newrelic==10.0.0
     # via -r requirements/requirements.txt
 packaging==23.2
     # via build
@@ -193,7 +193,7 @@ ua-parser==0.18.0
     # via
     #   -r requirements/requirements.txt
     #   pywb
-urllib3==1.26.19
+urllib3==1.26.15
     # via
     #   -r requirements/requirements.txt
     #   requests
