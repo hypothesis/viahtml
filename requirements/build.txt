@@ -168,7 +168,7 @@ rpds-py==0.16.2
     #   -r requirements/requirements.txt
     #   jsonschema
     #   referencing
-sentry-sdk==2.13.0
+sentry-sdk==2.14.0
     # via -r requirements/requirements.txt
 six==1.16.0
     # via
@@ -193,7 +193,7 @@ ua-parser==0.18.0
     # via
     #   -r requirements/requirements.txt
     #   pywb
-urllib3==1.26.19
+urllib3==1.26.15
     # via
     #   -r requirements/requirements.txt
     #   requests
