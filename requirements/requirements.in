@@ -7,9 +7,11 @@ sentry-sdk
 uwsgi
 whitenoise
 
-# Pin urllib3 to a version <1.26.16 to investigate if it resolves issues with
-# gevent.
+# Pin urllib3 to avoid a problem, starting with v1.26.16, that resulted in
+# deadlocks in gevent.
 #
-# See https://github.com/gevent/gevent/issues/1957 and
-# https://github.com/urllib3/urllib3/issues/3289.
+# See:
+# - https://github.com/hypothesis/viahtml/pull/716
+# - https://github.com/gevent/gevent/issues/1957
+# - https://github.com/urllib3/urllib3/issues/3289
 urllib3==1.26.15
