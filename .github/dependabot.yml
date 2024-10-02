@@ -6,6 +6,10 @@ updates:
   schedule:
     interval: monthly
   open-pull-requests-limit: 10
+  ignore:
+    # Prevent updates to urllib3 >= v1.26.16 which can trigger deadlocks in
+    # gevent. See notes in requirements/requirements.in.
+    - dependency-name: "urllib3"
 
 - package-ecosystem: docker
   directory: "/"
