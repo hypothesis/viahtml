@@ -12,4 +12,4 @@ whitenoise
 #
 # See https://github.com/gevent/gevent/issues/1957 and
 # https://github.com/urllib3/urllib3/issues/3289.
-urllib3==1.26.15
+urllib3==2.2.3
