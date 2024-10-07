@@ -14,4 +14,4 @@ whitenoise
 # - https://github.com/hypothesis/viahtml/pull/716
 # - https://github.com/gevent/gevent/issues/1957
 # - https://github.com/urllib3/urllib3/issues/3289
-urllib3==1.26.15
+urllib3==1.26.19
