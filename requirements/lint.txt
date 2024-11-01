@@ -299,7 +299,7 @@ urllib3==1.26.15
     #   -r requirements/tests.txt
     #   requests
     #   sentry-sdk
-uwsgi==2.0.27
+uwsgi==2.0.28
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
