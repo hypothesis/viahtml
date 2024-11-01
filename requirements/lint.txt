@@ -339,7 +339,7 @@ wheel==0.42.0
     # via
     #   -r requirements/tests.txt
     #   pip-tools
-whitenoise==6.7.0
+whitenoise==6.8.2
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
