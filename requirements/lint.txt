@@ -303,7 +303,7 @@ uwsgi==2.0.28
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
-waitress==3.0.1
+waitress==3.0.2
     # via
     #   -r requirements/tests.txt
     #   webtest
@@ -328,7 +328,7 @@ webob==1.8.8
     #   -r requirements/tests.txt
     #   h-vialib
     #   webtest
-webtest==3.0.1
+webtest==3.0.2
     # via -r requirements/tests.txt
 werkzeug==2.2.3
     # via
