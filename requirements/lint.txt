@@ -55,7 +55,7 @@ click==8.1.7
     # via
     #   -r requirements/tests.txt
     #   pip-tools
-coverage==7.6.8
+coverage==7.6.10
     # via -r requirements/tests.txt
 cryptography==41.0.7
     # via
