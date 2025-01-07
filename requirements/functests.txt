@@ -142,7 +142,7 @@ pyproject-hooks==1.0.0
     # via
     #   build
     #   pip-tools
-pytest==8.3.4
+pytest==8.3.3
     # via -r requirements/functests.in
 python-dateutil==2.8.2
     # via
@@ -214,7 +214,7 @@ urllib3==1.26.15
     #   sentry-sdk
 uwsgi==2.0.28
     # via -r requirements/requirements.txt
-waitress==3.0.2
+waitress==3.0.1
     # via webtest
 warcio==1.7.4
     # via
@@ -233,7 +233,7 @@ webob==1.8.8
     #   -r requirements/requirements.txt
     #   h-vialib
     #   webtest
-webtest==3.0.2
+webtest==3.0.1
     # via -r requirements/functests.in
 werkzeug==2.2.3
     # via
