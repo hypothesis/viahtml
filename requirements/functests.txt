@@ -114,7 +114,7 @@ packaging==23.2
     # via
     #   build
     #   pytest
-pip-sync-faster==0.0.4
+pip-sync-faster==0.0.5
     # via -r requirements/functests.in
 pip-tools==7.4.1
     # via

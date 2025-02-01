@@ -163,7 +163,7 @@ packaging==23.2
     #   -r requirements/tests.txt
     #   build
     #   pytest
-pip-sync-faster==0.0.4
+pip-sync-faster==0.0.5
     # via
     #   -r requirements/lint.in
     #   -r requirements/tests.txt
