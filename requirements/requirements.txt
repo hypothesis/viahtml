@@ -46,7 +46,7 @@ idna==3.7
     # via
     #   requests
     #   tldextract
-importlib-resources==6.4.5
+importlib-resources==6.5.2
     # via
     #   -r requirements/requirements.in
     #   checkmatelib
