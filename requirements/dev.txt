@@ -86,7 +86,7 @@ importlib-resources==6.5.2
     #   checkmatelib
 ipdb==0.13.13
     # via -r requirements/dev.in
-ipython==8.32.0
+ipython==8.33.0
     # via
     #   -r requirements/dev.in
     #   ipdb
