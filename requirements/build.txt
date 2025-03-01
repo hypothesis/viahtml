@@ -222,7 +222,7 @@ werkzeug==2.2.3
     #   pywb
 wheel==0.42.0
     # via pip-tools
-whitenoise==6.8.2
+whitenoise==6.9.0
     # via
     #   -r requirements/build.in
     #   -r requirements/requirements.txt
