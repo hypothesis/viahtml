@@ -120,7 +120,7 @@ iniconfig==2.0.0
     #   pytest
 isort==6.0.1
     # via pylint
-jinja2==3.1.5
+jinja2==3.1.6
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
