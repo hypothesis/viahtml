@@ -86,10 +86,12 @@ importlib-resources==6.5.2
     #   checkmatelib
 ipdb==0.13.13
     # via -r requirements/dev.in
-ipython==8.33.0
+ipython==9.0.2
     # via
     #   -r requirements/dev.in
     #   ipdb
+ipython-pygments-lexers==1.1.1
+    # via ipython
 jedi==0.19.1
     # via ipython
 jinja2==3.1.6
@@ -153,7 +155,9 @@ pycparser==2.21
     #   -r requirements/requirements.txt
     #   cffi
 pygments==2.17.2
-    # via ipython
+    # via
+    #   ipython
+    #   ipython-pygments-lexers
 pyopenssl==23.3.0
     # via
     #   -r requirements/requirements.txt
