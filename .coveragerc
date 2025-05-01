@@ -5,6 +5,8 @@ concurrency = gevent
 source =
     viahtml
     tests/unit
+omit =
+    viahtml/_version.py
 
 [report]
 show_missing = True
