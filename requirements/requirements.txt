@@ -65,7 +65,7 @@ markupsafe==2.1.5
     #   werkzeug
 netaddr==1.3.0
     # via checkmatelib
-newrelic==10.8.1
+newrelic==10.10.0
     # via -r requirements/requirements.in
 portalocker==2.8.2
     # via pywb
