@@ -3,8 +3,7 @@
 import os
 import signal
 
-# Our job here is to leave this `application` attribute laying around as
-# it's what uWSGI expects to find.
+from viahtml._version import get_version
 from viahtml.app import Application
 
 
@@ -26,7 +25,12 @@ if os.environ.get("SENTRY_DSN"):  # pragma: no cover
     from sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
 
     # pylint: disable=redefined-variable-type
-    sentry_sdk.init(dsn=os.environ["SENTRY_DSN"])
+    sentry_sdk.init(
+        dsn=os.environ["SENTRY_DSN"],
+        # Enable Sentry's "Releases" feature, see:
+        # https://docs.sentry.io/platforms/python/configuration/options/#release
+        release=get_version(),
+    )
     application = SentryWsgiMiddleware(application)
 
 # Add a way to dump stacks so we can see what a uWSGI worker is doing if it
