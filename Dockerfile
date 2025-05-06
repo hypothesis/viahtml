@@ -2,7 +2,7 @@ FROM python:3.11.11-alpine3.19
 LABEL maintainer="Hypothes.is Project and contributors"
 
 # Install nginx & supervisor
-RUN apk add --no-cache nginx supervisor build-base libffi-dev openssl-dev
+RUN apk add --no-cache nginx supervisor build-base libffi-dev openssl-dev git
 
 # Create the hypothesis user, group, home directory and package directory.
 RUN addgroup -S hypothesis && adduser -S -G hypothesis -h /var/lib/hypothesis hypothesis
