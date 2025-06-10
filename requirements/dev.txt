@@ -186,7 +186,7 @@ referencing==0.32.1
     #   -r requirements/requirements.txt
     #   jsonschema
     #   jsonschema-specifications
-requests==2.32.0
+requests==2.32.4
     # via
     #   -r requirements/requirements.txt
     #   checkmatelib
