@@ -195,6 +195,10 @@ pycparser==2.21
     #   cffi
 pydocstyle==6.3.0
     # via -r requirements/lint.in
+pygments==2.19.2
+    # via
+    #   -r requirements/tests.txt
+    #   pytest
 pylint==3.3.7
     # via -r requirements/lint.in
 pyopenssl==23.3.0
@@ -207,7 +211,7 @@ pyproject-hooks==1.0.0
     #   -r requirements/tests.txt
     #   build
     #   pip-tools
-pytest==8.3.5
+pytest==8.4.1
     # via -r requirements/tests.txt
 python-dateutil==2.8.2
     # via
