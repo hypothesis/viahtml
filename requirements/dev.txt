@@ -170,7 +170,7 @@ python-dateutil==2.8.2
     # via
     #   -r requirements/requirements.txt
     #   pywb
-pywb==2.8.4
+pywb==2.9.0
     # via -r requirements/requirements.txt
 pyyaml==6.0.1
     # via
