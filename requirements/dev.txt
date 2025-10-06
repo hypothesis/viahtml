@@ -269,7 +269,7 @@ werkzeug==2.2.3
     #   pywb
 wheel==0.42.0
     # via pip-tools
-whitenoise==6.9.0
+whitenoise==6.11.0
     # via -r requirements/requirements.txt
 wsgiprox==1.5.2
     # via
