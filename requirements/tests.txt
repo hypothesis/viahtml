@@ -239,7 +239,7 @@ webob==1.8.8
     #   -r requirements/requirements.txt
     #   h-vialib
     #   webtest
-webtest==3.0.6
+webtest==3.0.7
     # via -r requirements/tests.in
 werkzeug==2.2.3
     # via
