@@ -176,15 +176,15 @@ class TestStatusView:
     def view(self, checkmate):
         return StatusView(checkmate)
 
-    @pytest.fixture
+    @pytest.fixture(autouse=True)
     def sentry_start_span(self, patch):
         return patch("viahtml.views.status.sentry_sdk.start_span")
 
-    @pytest.fixture
+    @pytest.fixture(autouse=True)
     def sentry_capture_exception(self, patch):
         return patch("viahtml.views.status.sentry_sdk.capture_exception")
 
-    @pytest.fixture
+    @pytest.fixture(autouse=True)
     def sentry_add_breadcrumb(self, patch):
         return patch("viahtml.views.status.sentry_sdk.add_breadcrumb")
 
