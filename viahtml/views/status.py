@@ -50,8 +50,8 @@ class StatusView:
             op="checkmate.status_check",
             name="Check Checkmate health via check_url",
         ) as span:
+            LOG.info("Checking checkmate status via check_url")
             try:
-                LOG.info("Checking checkmate status via check_url")
                 self._checkmate.check_url("https://example.com/")
             except CheckmateException as exc:
                 LOG.error(

@@ -1,5 +1,5 @@
 import logging
-from unittest.mock import MagicMock, create_autospec
+from unittest.mock import create_autospec
 
 import pytest
 from checkmatelib import CheckmateClient, CheckmateException
@@ -83,9 +83,7 @@ class TestStatusView:
             "Test message from Via HTML's status view"
         )
 
-    def test_it_logs_checkmate_failure_details(
-        self, context, view, checkmate, caplog
-    ):
+    def test_it_logs_checkmate_failure_details(self, context, view, checkmate, caplog):
         exc = CheckmateException("Connection timed out")
         checkmate.check_url.side_effect = exc
         context.query_params = {"include-checkmate": [""]}
@@ -112,7 +110,7 @@ class TestStatusView:
 
     def test_it_creates_sentry_span_on_checkmate_failure(
         self, context, view, checkmate, sentry_start_span, sentry_capture_exception
-    ):
+    ):  # pylint:disable=too-many-arguments
         exc = CheckmateException("Connection timed out")
         checkmate.check_url.side_effect = exc
         context.query_params = {"include-checkmate": [""]}
