@@ -1,4 +1,5 @@
-from unittest.mock import create_autospec
+import logging
+from unittest.mock import MagicMock, create_autospec
 
 import pytest
 from checkmatelib import CheckmateClient, CheckmateException
@@ -82,6 +83,86 @@ class TestStatusView:
             "Test message from Via HTML's status view"
         )
 
+    def test_it_logs_checkmate_failure_details(
+        self, context, view, checkmate, caplog
+    ):
+        exc = CheckmateException("Connection timed out")
+        checkmate.check_url.side_effect = exc
+        context.query_params = {"include-checkmate": [""]}
+
+        with caplog.at_level(logging.ERROR, logger="viahtml.views.status"):
+            view(context)
+
+        assert any(
+            "Checkmate status check failed" in record.message
+            and "Connection timed out" in record.message
+            for record in caplog.records
+        ), f"Expected checkmate failure log, got: {[r.message for r in caplog.records]}"
+
+    def test_it_logs_checkmate_success(self, context, view, caplog):
+        context.query_params = {"include-checkmate": [""]}
+
+        with caplog.at_level(logging.INFO, logger="viahtml.views.status"):
+            view(context)
+
+        assert any(
+            "Checkmate status check succeeded" in record.message
+            for record in caplog.records
+        ), f"Expected checkmate success log, got: {[r.message for r in caplog.records]}"
+
+    def test_it_creates_sentry_span_on_checkmate_failure(
+        self, context, view, checkmate, sentry_start_span, sentry_capture_exception
+    ):
+        exc = CheckmateException("Connection timed out")
+        checkmate.check_url.side_effect = exc
+        context.query_params = {"include-checkmate": [""]}
+
+        view(context)
+
+        sentry_start_span.assert_called_once_with(
+            op="checkmate.status_check",
+            name="Check Checkmate health via check_url",
+        )
+        span = sentry_start_span.return_value.__enter__.return_value
+        span.set_status.assert_called_once_with("internal_error")
+        span.set_data.assert_any_call("error.type", "CheckmateException")
+        span.set_data.assert_any_call("error.message", "Connection timed out")
+        sentry_capture_exception.assert_called_once_with(exc)
+
+    def test_it_creates_sentry_span_on_checkmate_success(
+        self, context, view, sentry_start_span, sentry_capture_exception
+    ):
+        context.query_params = {"include-checkmate": [""]}
+
+        view(context)
+
+        sentry_start_span.assert_called_once_with(
+            op="checkmate.status_check",
+            name="Check Checkmate health via check_url",
+        )
+        span = sentry_start_span.return_value.__enter__.return_value
+        span.set_status.assert_called_once_with("ok")
+        sentry_capture_exception.assert_not_called()
+
+    def test_it_adds_sentry_breadcrumb_on_checkmate_failure(
+        self, context, view, checkmate, sentry_add_breadcrumb
+    ):
+        exc = CheckmateException("Connection timed out")
+        checkmate.check_url.side_effect = exc
+        context.query_params = {"include-checkmate": [""]}
+
+        view(context)
+
+        sentry_add_breadcrumb.assert_called_once_with(
+            category="checkmate",
+            message="Checkmate status check failed: Connection timed out",
+            level="error",
+            data={
+                "exception_type": "CheckmateException",
+                "exception_message": "Connection timed out",
+            },
+        )
+
     @pytest.fixture
     def checkmate(self):
         return create_autospec(CheckmateClient, instance=True, spec_set=True)
@@ -94,6 +175,18 @@ class TestStatusView:
     @pytest.fixture
     def view(self, checkmate):
         return StatusView(checkmate)
+
+    @pytest.fixture
+    def sentry_start_span(self, patch):
+        return patch("viahtml.views.status.sentry_sdk.start_span")
+
+    @pytest.fixture
+    def sentry_capture_exception(self, patch):
+        return patch("viahtml.views.status.sentry_sdk.capture_exception")
+
+    @pytest.fixture
+    def sentry_add_breadcrumb(self, patch):
+        return patch("viahtml.views.status.sentry_sdk.add_breadcrumb")
 
 
 @pytest.fixture(autouse=True)

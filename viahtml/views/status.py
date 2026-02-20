@@ -1,7 +1,12 @@
+import logging
+import traceback
 from http import HTTPStatus
 
+import sentry_sdk
 from checkmatelib import CheckmateException
 from sentry_sdk import capture_message
+
+LOG = logging.getLogger(__name__)
 
 
 class StatusView:
@@ -22,12 +27,7 @@ class StatusView:
         http_status = HTTPStatus.OK
 
         if "include-checkmate" in context.query_params:
-            try:
-                self._checkmate.check_url("https://example.com/")
-            except CheckmateException:
-                body["down"] = ["checkmate"]
-            else:
-                body["okay"] = ["checkmate"]
+            self._check_checkmate(body)
 
         # If any of the components checked above were down then report the
         # status check as a whole as being down.
@@ -44,3 +44,37 @@ class StatusView:
             http_status=http_status,
             headers={"Cache-Control": "max-age=0, must-revalidate, no-cache, no-store"},
         )
+
+    def _check_checkmate(self, body):
+        with sentry_sdk.start_span(
+            op="checkmate.status_check",
+            name="Check Checkmate health via check_url",
+        ) as span:
+            try:
+                LOG.info("Checking checkmate status via check_url")
+                self._checkmate.check_url("https://example.com/")
+            except CheckmateException as exc:
+                LOG.error(
+                    "Checkmate status check failed: %s: %s\n%s",
+                    type(exc).__name__,
+                    exc,
+                    traceback.format_exc(),
+                )
+                span.set_status("internal_error")
+                span.set_data("error.type", type(exc).__name__)
+                span.set_data("error.message", str(exc))
+                sentry_sdk.add_breadcrumb(
+                    category="checkmate",
+                    message=f"Checkmate status check failed: {exc}",
+                    level="error",
+                    data={
+                        "exception_type": type(exc).__name__,
+                        "exception_message": str(exc),
+                    },
+                )
+                sentry_sdk.capture_exception(exc)
+                body["down"] = ["checkmate"]
+            else:
+                LOG.info("Checkmate status check succeeded")
+                span.set_status("ok")
+                body["okay"] = ["checkmate"]
