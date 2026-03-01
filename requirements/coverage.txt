@@ -12,8 +12,10 @@ coverage==7.11.3
     # via -r coverage.in
 importlib-metadata==7.0.1
     # via pip-sync-faster
-packaging==23.2
-    # via build
+packaging==26.0
+    # via
+    #   build
+    #   wheel
 pip-sync-faster==0.0.5
     # via -r coverage.in
 pip-tools==7.5.2
@@ -24,7 +26,7 @@ pyproject-hooks==1.0.0
     # via
     #   build
     #   pip-tools
-wheel==0.42.0
+wheel==0.46.2
     # via pip-tools
 zipp==3.19.1
     # via importlib-metadata
