@@ -23,7 +23,7 @@ cffi==1.16.0
 charset-normalizer==3.3.2
     # via requests
 checkmatelib==1.0.18
-    # via -r requirements/requirements.in
+    # via -r requirements.in
 cryptography==41.0.7
     # via
     #   joserfc
@@ -32,7 +32,7 @@ defusedxml==0.7.1
     # via py3amf
 fakeredis==0.16.0
     # via pywb
-filelock==3.13.1
+filelock==3.20.3
     # via tldextract
 gevent==23.9.0.post1
     # via pywb
@@ -41,14 +41,14 @@ greenlet==2.0.2
     #   gevent
     #   pywb
 h-vialib==1.3.2
-    # via -r requirements/requirements.in
+    # via -r requirements.in
 idna==3.7
     # via
     #   requests
     #   tldextract
 importlib-resources==6.5.2
     # via
-    #   -r requirements/requirements.in
+    #   -r requirements.in
     #   checkmatelib
 jinja2==3.1.6
     # via pywb
@@ -66,7 +66,7 @@ markupsafe==2.1.5
 netaddr==1.3.0
     # via checkmatelib
 newrelic==11.0.1
-    # via -r requirements/requirements.in
+    # via -r requirements.in
 portalocker==2.8.2
     # via pywb
 py3amf==0.8.11
@@ -78,7 +78,7 @@ pyopenssl==23.3.0
 python-dateutil==2.8.2
     # via pywb
 pywb==2.9.1
-    # via -r requirements/requirements.in
+    # via -r requirements.in
 pyyaml==6.0.1
     # via pywb
 redis==2.10.6
@@ -102,7 +102,7 @@ rpds-py==0.16.2
     #   jsonschema
     #   referencing
 sentry-sdk==2.44.0
-    # via -r requirements/requirements.in
+    # via -r requirements.in
 six==1.16.0
     # via
     #   python-dateutil
@@ -122,11 +122,11 @@ ua-parser==0.18.0
     # via pywb
 urllib3==1.26.15
     # via
-    #   -r requirements/requirements.in
+    #   -r requirements.in
     #   requests
     #   sentry-sdk
 uwsgi==2.0.31
-    # via -r requirements/requirements.in
+    # via -r requirements.in
 warcio==1.7.4
     # via pywb
 webassets==2.0
@@ -138,7 +138,7 @@ webob==1.8.8
 werkzeug==2.2.3
     # via pywb
 whitenoise==6.11.0
-    # via -r requirements/requirements.in
+    # via -r requirements.in
 wsgiprox==1.5.2
     # via pywb
 zope-event==5.0
