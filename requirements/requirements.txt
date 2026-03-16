@@ -24,7 +24,7 @@ charset-normalizer==3.3.2
     # via requests
 checkmatelib==1.0.18
     # via -r requirements/requirements.in
-cryptography==41.0.7
+cryptography==46.0.0
     # via
     #   joserfc
     #   pyopenssl
@@ -73,7 +73,7 @@ py3amf==0.8.11
     # via pywb
 pycparser==2.21
     # via cffi
-pyopenssl==23.3.0
+pyopenssl==26.0.0
     # via certauth
 python-dateutil==2.8.2
     # via pywb
@@ -118,6 +118,8 @@ tldextract==5.1.1
     #   certauth
     #   pywb
     #   surt
+typing-extensions==4.15.0
+    # via pyopenssl
 ua-parser==0.18.0
     # via pywb
 urllib3==1.26.15

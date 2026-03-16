@@ -57,7 +57,7 @@ click==8.1.7
     #   pip-tools
 coverage==7.11.3
     # via -r requirements/tests.txt
-cryptography==41.0.7
+cryptography==46.0.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
@@ -201,7 +201,7 @@ pygments==2.19.2
     #   pytest
 pylint==4.0.4
     # via -r requirements/lint.in
-pyopenssl==23.3.0
+pyopenssl==26.0.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
@@ -292,6 +292,11 @@ tldextract==5.1.1
     #   surt
 tomlkit==0.12.3
     # via pylint
+typing-extensions==4.15.0
+    # via
+    #   -r requirements/requirements.txt
+    #   -r requirements/tests.txt
+    #   pyopenssl
 ua-parser==0.18.0
     # via
     #   -r requirements/requirements.txt

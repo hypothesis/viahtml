@@ -39,7 +39,7 @@ checkmatelib==1.0.18
     # via -r requirements/requirements.txt
 click==8.1.7
     # via pip-tools
-cryptography==41.0.7
+cryptography==46.0.0
     # via
     #   -r requirements/requirements.txt
     #   joserfc
@@ -158,7 +158,7 @@ pygments==2.17.2
     # via
     #   ipython
     #   ipython-pygments-lexers
-pyopenssl==23.3.0
+pyopenssl==26.0.0
     # via
     #   -r requirements/requirements.txt
     #   certauth
@@ -232,8 +232,11 @@ traitlets==5.14.1
     # via
     #   ipython
     #   matplotlib-inline
-typing-extensions==4.12.0
-    # via ipython
+typing-extensions==4.15.0
+    # via
+    #   -r requirements/requirements.txt
+    #   ipython
+    #   pyopenssl
 ua-parser==0.18.0
     # via
     #   -r requirements/requirements.txt
