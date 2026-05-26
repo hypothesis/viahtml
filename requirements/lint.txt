@@ -105,10 +105,6 @@ idna==3.7
     #   -r requirements/tests.txt
     #   requests
     #   tldextract
-importlib-metadata==7.0.1
-    # via
-    #   -r requirements/tests.txt
-    #   pip-sync-faster
 importlib-resources==6.5.2
     # via
     #   -r requirements/requirements.txt
@@ -348,7 +344,7 @@ wheel==0.42.0
     # via
     #   -r requirements/tests.txt
     #   pip-tools
-whitenoise==6.11.0
+whitenoise==6.12.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
@@ -357,10 +353,6 @@ wsgiprox==1.5.2
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   pywb
-zipp==3.19.1
-    # via
-    #   -r requirements/tests.txt
-    #   importlib-metadata
 zope-event==5.0
     # via
     #   -r requirements/requirements.txt
