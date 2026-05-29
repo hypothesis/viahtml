@@ -366,7 +366,7 @@ zope-interface==6.1
     #   gevent
 
 # The following packages are considered to be unsafe in a requirements file:
-pip==25.3
+pip==26.1
     # via
     #   -r tests.txt
     #   pip-tools
