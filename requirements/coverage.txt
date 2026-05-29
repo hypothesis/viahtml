@@ -9,20 +9,22 @@ build==1.0.3
 click==8.1.7
     # via pip-tools
 coverage==7.14.0
-    # via -r requirements/coverage.in
-packaging==23.2
-    # via build
+    # via -r coverage.in
+packaging==26.2
+    # via
+    #   build
+    #   wheel
 pip-sync-faster==0.0.5
-    # via -r requirements/coverage.in
+    # via -r coverage.in
 pip-tools==7.5.3
     # via
-    #   -r requirements/coverage.in
+    #   -r coverage.in
     #   pip-sync-faster
 pyproject-hooks==1.0.0
     # via
     #   build
     #   pip-tools
-wheel==0.42.0
+wheel==0.46.2
     # via pip-tools
 
 # The following packages are considered to be unsafe in a requirements file:
