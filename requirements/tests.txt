@@ -237,7 +237,7 @@ webencodings==0.5.1
     # via
     #   -r requirements.txt
     #   pywb
-webob==1.8.8
+webob==1.8.10
     # via
     #   -r requirements.txt
     #   h-vialib
