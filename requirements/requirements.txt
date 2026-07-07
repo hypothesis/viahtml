@@ -52,7 +52,7 @@ importlib-resources==6.5.2
     #   checkmatelib
 jinja2==3.1.6
     # via pywb
-joserfc==0.9.0
+joserfc==1.6.8
     # via h-vialib
 jsonschema==4.20.0
     # via checkmatelib
