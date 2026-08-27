@@ -135,7 +135,7 @@ webassets==2.0
     # via pywb
 webencodings==0.5.1
     # via pywb
-webob==1.8.8
+webob==1.8.11
     # via h-vialib
 werkzeug==2.2.3
     # via pywb
