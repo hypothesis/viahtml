@@ -73,7 +73,9 @@ class Context:
 
         return Configuration.strip_from_url(url)
 
-    _PROXY_PATTERN = re.compile(r"^proxy/(?:[a-z]{2}_/)?")
+    # pywb's modifiers are 2-4 letters: the worker ones (`wkr_`, `wkrf_`) are
+    # the only ones longer than two.
+    _PROXY_PATTERN = re.compile(r"^proxy/(?:[a-z]{2,4}_/)?")
 
     @property
     @lru_cache(1)

@@ -4,6 +4,27 @@ import pytest
 
 from viahtml.context import Context
 
+# Every rewrite modifier pywb can emit. Workers use the long ones: `wkr_` for
+# the worker script, `wkrf_` for the fetches the worker then makes.
+PYWB_MODIFIERS = (
+    "bn_",
+    "cs_",
+    "fr_",
+    "id_",
+    "if_",
+    "im_",
+    "ir_",
+    "js_",
+    "mp_",
+    "oe_",
+    "sw_",
+    "tf_",
+    "uo_",
+    "vi_",
+    "wkr_",
+    "wkrf_",
+)
+
 
 class TestContext:
     @pytest.mark.parametrize(
@@ -35,7 +56,12 @@ class TestContext:
             ("/", None),
             ("/http://example.com", "http://example.com"),
             ("/proxy/http://example.com", "http://example.com"),
-            ("/proxy/oe_/http://example.com", "http://example.com"),
+            *(
+                (f"/proxy/{modifier}/http://example.com", "http://example.com")
+                for modifier in PYWB_MODIFIERS
+            ),
+            # Not a modifier, so leave it alone and let Checkmate reject it.
+            ("/proxy/abcde_/http://example.com", "abcde_/http://example.com"),
         ),
     )
     @pytest.mark.parametrize("query_string", ("", "via.config=1"))
