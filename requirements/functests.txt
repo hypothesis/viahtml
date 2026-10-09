@@ -26,7 +26,7 @@ certifi==2024.7.4
     #   -r requirements.txt
     #   requests
     #   sentry-sdk
-cffi==1.16.0
+cffi==2.0.0
     # via
     #   -r requirements.txt
     #   brotlipy
@@ -39,7 +39,7 @@ checkmatelib==1.0.18
     # via -r requirements.txt
 click==8.1.7
     # via pip-tools
-cryptography==46.0.0
+cryptography==46.0.7
     # via
     #   -r requirements.txt
     #   joserfc

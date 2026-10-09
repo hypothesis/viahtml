@@ -16,7 +16,7 @@ certifi==2024.7.4
     # via
     #   requests
     #   sentry-sdk
-cffi==1.16.0
+cffi==2.0.0
     # via
     #   brotlipy
     #   cryptography
@@ -24,7 +24,7 @@ charset-normalizer==3.3.2
     # via requests
 checkmatelib==1.0.18
     # via -r requirements.in
-cryptography==46.0.0
+cryptography==46.0.7
     # via
     #   joserfc
     #   pyopenssl
