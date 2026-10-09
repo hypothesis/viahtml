@@ -208,7 +208,7 @@ pyproject-hooks==1.0.0
     #   -r tests.txt
     #   build
     #   pip-tools
-pytest==8.4.2
+pytest==9.0.3
     # via -r tests.txt
 python-dateutil==2.8.2
     # via
