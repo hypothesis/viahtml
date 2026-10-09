@@ -133,7 +133,7 @@ pycparser==2.21
     # via
     #   -r requirements.txt
     #   cffi
-pygments==2.19.2
+pygments==2.20.0
     # via pytest
 pyopenssl==26.0.0
     # via
