@@ -328,7 +328,7 @@ webencodings==0.5.1
     #   -r requirements.txt
     #   -r tests.txt
     #   pywb
-webob==1.8.8
+webob==1.8.11
     # via
     #   -r requirements.txt
     #   -r tests.txt
