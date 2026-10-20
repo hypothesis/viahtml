@@ -17,6 +17,7 @@ class TestHooks:
             "external_link_mode": Any.function(),
             "h_embed_url": sentinel.h_embed_url,
             "ignore_prefixes": hooks.ignore_prefixes,
+            "proxy_frames": Any.function(),
         }
 
     def test_client_params_in_template_vars(self, hooks):
@@ -46,6 +47,24 @@ class TestHooks:
         external_link_mode = hooks.template_vars["external_link_mode"]
 
         assert external_link_mode(http_env) == expected
+
+    @pytest.mark.parametrize(
+        "proxy_frames_param,expected",
+        (
+            (None, True),
+            ("1", True),
+            ("0", False),
+            ("meh", False),
+        ),
+    )
+    def test_proxy_frames_in_template_vars(self, hooks, proxy_frames_param, expected):
+        http_env = {}
+        if proxy_frames_param is not None:
+            http_env["QUERY_STRING"] = f"via.proxy_frames={proxy_frames_param}"
+
+        proxy_frames = hooks.template_vars["proxy_frames"]
+
+        assert proxy_frames(http_env) == expected
 
     def test_ignore_prefixes(self, hooks, ignore_prefixes):
         assert hooks.ignore_prefixes == ignore_prefixes + MEDIA_EMBED_PREFIXES

@@ -56,12 +56,17 @@ class Hooks:
             via_config, _ = self.get_config(http_env)
             return via_config.get("external_link_mode", "same-tab").lower()
 
+        def proxy_frames(http_env):
+            via_config, _ = self.get_config(http_env)
+            return query_param_as_bool(via_config.get("proxy_frames", True))
+
         return {
             # It would be much nicer to calculate this once somehow
             "client_params": lambda http_env: self.get_config(http_env)[1],
             "external_link_mode": external_link_mode,
             "ignore_prefixes": self.ignore_prefixes,
             "h_embed_url": self.config["h_embed_url"],
+            "proxy_frames": proxy_frames,
         }
 
     @property
