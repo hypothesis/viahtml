@@ -64,7 +64,7 @@ https://github.com/webrecorder/wombat/blob/3f04dcdcb071042d498c4912599454a15c11f
   // `via.proxy_frames=0` disables iframe proxying server-side (see
   // `modify_tag_attrs` in hooks.py). Make wombat leave iframes alone too, so
   // that frames which page scripts (re)insert aren't proxied either.
-  if (window._WBWombat) {
+  if (window._WBWombat && typeof window._WBWombat.prototype.rewriteUrl === "function") {
     var rewriteUrl = window._WBWombat.prototype.rewriteUrl;
     window._WBWombat.prototype.rewriteUrl = function (url, useRel, mod, doc) {
       if (mod === "if_" || mod === "fr_") {
