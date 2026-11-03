@@ -67,6 +67,13 @@ class TestProxy:
             "window._WBWombat.prototype.rewriteUrl = function" in proxied_content
         ) == expected
 
+    def test_the_override_resolves_relative_frame_urls(self, app):
+        # Left as-is, a relative frame URL would resolve against Via's own
+        # address instead of the original site's.
+        proxied_content = app.get("/proxy/http://localhost:8197/?via.proxy_frames=0")
+
+        assert "new URL(url, this.wb_info.url).href" in proxied_content
+
     @pytest.mark.parametrize(
         "link_mode,expected",
         (

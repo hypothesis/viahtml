@@ -70,7 +70,16 @@ https://github.com/webrecorder/wombat/blob/3f04dcdcb071042d498c4912599454a15c11f
       var rewriteUrl = window._WBWombat.prototype.rewriteUrl;
       window._WBWombat.prototype.rewriteUrl = function (url, useRel, mod, doc) {
         if (mod === "if_" || mod === "fr_") {
-          return url;
+          if (typeof url !== "string") {
+            return url;
+          }
+          // Still resolved against the original page: the document's real
+          // address is Via's, so the browser would resolve it wrongly.
+          try {
+            return new URL(url, this.wb_info.url).href;
+          } catch (e) {
+            return url;
+          }
         }
         return rewriteUrl.apply(this, arguments);
       };
