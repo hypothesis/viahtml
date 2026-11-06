@@ -253,6 +253,9 @@ class TestHooks:
             lambda url, proxy=True, rewrite_fragments=True: url
         )
         context.via_config = {}
+        # A real (empty) WSGI environ. Since Python 3.11.9 urllib.parse rejects the
+        # MagicMock that create_autospec() would otherwise put here.
+        context.http_environ = {}
         return context
 
     @pytest.fixture
