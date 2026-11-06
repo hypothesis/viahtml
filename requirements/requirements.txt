@@ -8,23 +8,23 @@ attrs==23.2.0
     # via
     #   jsonschema
     #   referencing
-brotlipy==0.7.0
+brotlicffi==1.2.1.0
     # via pywb
 certauth==1.3.0
     # via wsgiprox
-certifi==2024.7.4
+certifi==2026.10.23
     # via
     #   requests
     #   sentry-sdk
-cffi==1.16.0
+cffi==2.1.1
     # via
-    #   brotlipy
+    #   brotlicffi
     #   cryptography
 charset-normalizer==3.3.2
     # via requests
 checkmatelib==1.0.18
-    # via -r requirements.in
-cryptography==46.0.0
+    # via -r requirements/requirements.in
+cryptography==46.0.7
     # via
     #   joserfc
     #   pyopenssl
@@ -32,27 +32,25 @@ defusedxml==0.7.1
     # via py3amf
 fakeredis==0.16.0
     # via pywb
-filelock==3.20.3
+filelock==4.2.9
     # via tldextract
-gevent==23.9.0.post1
+gevent==24.2.1
     # via pywb
-greenlet==2.0.2
-    # via
-    #   gevent
-    #   pywb
+greenlet==3.1.0
+    # via gevent
 h-vialib==1.3.2
-    # via -r requirements.in
-idna==3.7
+    # via -r requirements/requirements.in
+idna==3.20
     # via
     #   requests
     #   tldextract
 importlib-resources==6.5.2
     # via
-    #   -r requirements.in
+    #   -r requirements/requirements.in
     #   checkmatelib
 jinja2==3.1.6
     # via pywb
-joserfc==0.9.0
+joserfc==1.8.0
     # via h-vialib
 jsonschema==4.20.0
     # via checkmatelib
@@ -66,7 +64,7 @@ markupsafe==2.1.5
 netaddr==1.3.0
     # via checkmatelib
 newrelic==11.0.1
-    # via -r requirements.in
+    # via -r requirements/requirements.in
 portalocker==2.8.2
     # via pywb
 py3amf==0.8.11
@@ -74,11 +72,13 @@ py3amf==0.8.11
 pycparser==2.21
     # via cffi
 pyopenssl==26.0.0
-    # via certauth
+    # via
+    #   certauth
+    #   pywb
 python-dateutil==2.8.2
     # via pywb
-pywb==2.9.1
-    # via -r requirements.in
+pywb==2.10.1
+    # via -r requirements/requirements.in
 pyyaml==6.0.1
     # via pywb
 redis==2.10.6
@@ -89,7 +89,7 @@ referencing==0.32.1
     # via
     #   jsonschema
     #   jsonschema-specifications
-requests==2.32.4
+requests==2.34.2
     # via
     #   checkmatelib
     #   pywb
@@ -102,7 +102,7 @@ rpds-py==0.16.2
     #   jsonschema
     #   referencing
 sentry-sdk==2.53.0
-    # via -r requirements.in
+    # via -r requirements/requirements.in
 six==1.16.0
     # via
     #   python-dateutil
@@ -124,32 +124,30 @@ ua-parser==0.18.0
     # via pywb
 urllib3==1.26.15
     # via
-    #   -r requirements.in
+    #   -r requirements/requirements.in
     #   requests
     #   sentry-sdk
 uwsgi==2.0.31
-    # via -r requirements.in
-warcio==1.7.4
+    # via -r requirements/requirements.in
+warcio==1.8.2
     # via pywb
 webassets==2.0
     # via pywb
 webencodings==0.5.1
     # via pywb
-webob==1.8.8
+webob==1.8.11
     # via h-vialib
-werkzeug==2.2.3
+werkzeug==3.1.7
     # via pywb
 whitenoise==6.12.0
-    # via -r requirements.in
+    # via -r requirements/requirements.in
 wsgiprox==1.5.2
     # via pywb
-zope-event==5.0
+zope-event==6.2
     # via gevent
-zope-interface==6.1
+zope-interface==8.7
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==78.1.1
-    # via
-    #   zope-event
-    #   zope-interface
+setuptools==84.2.1
+    # via -r requirements/requirements.in

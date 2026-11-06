@@ -4,6 +4,10 @@ importlib-resources
 newrelic
 pywb
 sentry-sdk
+# Nothing imports setuptools at runtime any more, but the python base image
+# ships an old setuptools. Listing it here keeps the copy in the Docker image
+# up to date.
+setuptools
 uwsgi
 whitenoise
 
