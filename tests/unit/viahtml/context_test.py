@@ -231,8 +231,8 @@ class TestContext:
         return {
             "wsgi.url_scheme": "http",
             "SERVER_NAME": "via",
-            "SERVER_PORT": "9999",
-            "SCRIPT_NAME": "script",
+            "SERVER_PORT": "80",
+            "SCRIPT_NAME": "",
             "PATH_INFO": "/",
         }
 
