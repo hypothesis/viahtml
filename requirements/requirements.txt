@@ -34,9 +34,11 @@ fakeredis==0.16.0
     # via pywb
 filelock==4.2.9
     # via tldextract
-gevent==24.2.1
-    # via pywb
-greenlet==3.1.0
+gevent==26.9.0
+    # via
+    #   -r requirements/requirements.in
+    #   pywb
+greenlet==3.5.6
     # via gevent
 h-vialib==1.3.2
     # via -r requirements/requirements.in
@@ -122,7 +124,7 @@ typing-extensions==4.15.0
     # via pyopenssl
 ua-parser==0.18.0
     # via pywb
-urllib3==1.26.15
+urllib3==2.8.0
     # via
     #   -r requirements/requirements.in
     #   requests
