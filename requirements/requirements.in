@@ -11,11 +11,21 @@ setuptools
 uwsgi
 whitenoise
 
-# Pin urllib3 to avoid a problem, starting with v1.26.16, that resulted in
-# deadlocks in gevent.
+# urllib3 >= 1.26.16 caused deadlocks in uWSGI workers under gevent in
+# production, so urllib3 was pinned to 1.26.15
+# (https://github.com/hypothesis/viahtml/pull/716). Upstream traced it to
+# urllib3's connection pools using a standard library queue, which gevent did
+# not monkey-patch, instead of a gevent one. Both projects have since fixed
+# that, and these minimum versions make sure we keep both fixes:
 #
-# See:
-# - https://github.com/hypothesis/viahtml/pull/716
-# - https://github.com/gevent/gevent/issues/1957
-# - https://github.com/urllib3/urllib3/issues/3289
-urllib3==1.26.15
+# - gevent 25.4.1 monkey-patches queue.LifoQueue (and Queue, PriorityQueue)
+#   with gevent's cooperative versions:
+#   https://github.com/gevent/gevent/issues/1957
+# - urllib3 2.8.0 looks up queue.LifoQueue when each connection pool is
+#   created, so the patched class is used even if urllib3 was imported before
+#   monkey-patching: https://github.com/urllib3/urllib3/issues/3289
+#
+# gevent 25.9.1 is the first release after 25.4.1 that also has the follow-up
+# fixes to the new patched queue classes.
+gevent>=25.9.1
+urllib3>=2.8.0
