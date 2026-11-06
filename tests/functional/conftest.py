@@ -84,6 +84,11 @@ def httpretty():
     """
     httpretty_.enable(allow_net_connect=False)
 
+    # urllib3 2.x calls `sock.shutdown()` (if the socket has one) when it
+    # closes a connection, and httpretty's fake socket raises for it. This is
+    # the same workaround as hypothesis/via's tests/conftest.py.
+    httpretty_.core.fakesock.socket.shutdown = None
+
     yield
 
     httpretty_.disable()

@@ -58,11 +58,11 @@ filelock==4.2.9
     # via
     #   -r requirements/requirements.txt
     #   tldextract
-gevent==24.2.1
+gevent==26.9.0
     # via
     #   -r requirements/requirements.txt
     #   pywb
-greenlet==3.1.0
+greenlet==3.5.6
     # via
     #   -r requirements/requirements.txt
     #   gevent
@@ -216,7 +216,7 @@ ua-parser==0.18.0
     # via
     #   -r requirements/requirements.txt
     #   pywb
-urllib3==1.26.15
+urllib3==2.8.0
     # via
     #   -r requirements/requirements.txt
     #   requests
