@@ -1,6 +1,6 @@
 pip-tools
 pip-sync-faster
-pylint<4.1
+pylint<4.2
 pydocstyle
 -r tests.txt
 -r requirements.txt

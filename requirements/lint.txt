@@ -4,7 +4,7 @@
 #
 #    pip-compile --allow-unsafe requirements/lint.in
 #
-astroid==4.0.2
+astroid==4.3.4
     # via pylint
 attrs==23.2.0
     # via
@@ -195,7 +195,7 @@ pygments==2.21.0
     # via
     #   -r requirements/tests.txt
     #   pytest
-pylint==4.0.10
+pylint==4.1.3
     # via -r requirements/lint.in
 pyopenssl==26.0.0
     # via
