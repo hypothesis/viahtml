@@ -215,7 +215,7 @@ python-dateutil==2.8.2
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   pywb
-pywb==2.10.1
+pywb==2.11.0
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
@@ -264,7 +264,6 @@ six==1.16.0
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
     #   python-dateutil
-    #   pywb
     #   requests-file
     #   surt
     #   warcio
@@ -336,7 +335,7 @@ webob==1.8.11
     #   webtest
 webtest==3.0.7
     # via -r requirements/tests.txt
-werkzeug==3.1.7
+werkzeug==3.1.9
     # via
     #   -r requirements/requirements.txt
     #   -r requirements/tests.txt
