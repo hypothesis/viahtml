@@ -12,10 +12,12 @@ click==8.1.7
     # via
     #   black
     #   pip-tools
-isort==6.1.0
+isort==9.0.2
     # via -r requirements/checkformatting.in
-mypy-extensions==1.0.0
-    # via black
+mypy-extensions==1.2.0
+    # via
+    #   black
+    #   isort
 packaging==26.2
     # via
     #   black
