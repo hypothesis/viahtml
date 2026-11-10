@@ -170,7 +170,7 @@ pip-tools==7.6.2
     #   pip-sync-faster
 platformdirs==4.1.0
     # via pylint
-pluggy==1.5.0
+pluggy==1.7.0
     # via
     #   -r requirements/tests.txt
     #   pytest
@@ -208,7 +208,7 @@ pyproject-hooks==1.0.0
     #   -r requirements/tests.txt
     #   build
     #   pip-tools
-pytest==9.1.1
+pytest==9.2.0
     # via -r requirements/tests.txt
 python-dateutil==2.8.2
     # via
