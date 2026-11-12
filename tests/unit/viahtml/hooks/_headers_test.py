@@ -50,21 +50,28 @@ class TestHeaders:
         assert blocked_header not in modified_headers
         assert expected_header in modified_headers
 
-    def test_modify_outbound_removes_cross_origin_opener_policy(
-        self, headers, string_case
+    @pytest.mark.parametrize(
+        "header,value",
+        (
+            ("Cross-Origin-Opener-Policy", "same-origin"),
+            ("Cross-Origin-Embedder-Policy", "require-corp"),
+        ),
+    )
+    def test_modify_outbound_removes_the_cross_origin_policies(
+        self, headers, string_case, header, value
     ):
         # The test above only covers the headers that are in BLOCKED_OUTBOUND,
-        # so it would still pass if this header was taken out of the list.
-        # This test names the header so that it would fail instead.
+        # so it would still pass if one of these was taken out of the list.
+        # This test names the headers so that it would fail instead.
         original_headers = [
-            (string_case("Cross-Origin-Opener-Policy"), "same-origin"),
+            (string_case(header), value),
             ("Other-Header", "ok"),
         ]
 
         modified_headers = headers.modify_outbound(original_headers)
 
         header_names = [name.lower() for name, _value in modified_headers]
-        assert "cross-origin-opener-policy" not in header_names
+        assert header.lower() not in header_names
         assert "other-header" in header_names
 
     def test_cache_control_header_is_set_to_no_store(self, headers):

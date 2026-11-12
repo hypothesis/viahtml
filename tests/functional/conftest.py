@@ -64,9 +64,10 @@ def upstream_website():
         port=8197,
         extra_headers={
             "Cache-Control": "public, max-age=60",
-            # A header that Via HTML has to remove, so the tests can check
-            # that it does not reach the browser.
+            # Headers that Via HTML has to remove, so the tests can check
+            # that they do not reach the browser.
             "Cross-Origin-Opener-Policy": "same-origin",
+            "Cross-Origin-Embedder-Policy": "require-corp",
         },
     ):
         yield

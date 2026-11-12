@@ -38,6 +38,17 @@ class Headers:
         # approving. We block Cross-Origin-Opener-Policy headers to prevent
         # that.
         "Cross-Origin-Opener-Policy",
+        # Sites can use the Cross-Origin-Embedder-Policy header to tell the
+        # browser to refuse anything from another site that has not opted in
+        # (for example: Cross-Origin-Embedder-Policy: require-corp). The
+        # Hypothesis client's script and the frame its sidebar lives in both
+        # come from another site and do not opt in, so the browser blocks them
+        # and the page shows without Hypothesis.
+        #
+        # The two headers only do their job together, so with
+        # Cross-Origin-Opener-Policy removed above this one protects nothing
+        # and only blocks the client.
+        "Cross-Origin-Embedder-Policy",
         # Various headers added by `pywb` relating to archival
         "Memento-Datetime",
         "Link",
