@@ -96,10 +96,14 @@ def _resolve_text_type(self, text_type):
     module is left to the original.
     """
 
-    if self.url_rewriter.wburl.mod == ESM_MOD:
+    text_type = _PYWB_RESOLVE_TEXT_TYPE(self, text_type)
+
+    # Only JS gets the module wrapper: assets a module resolves relative to
+    # `import.meta.url` (CSS, images) arrive under the module modifier too.
+    if text_type == "js" and self.url_rewriter.wburl.mod == ESM_MOD:
         return ESM_TEXT_TYPE
 
-    return _PYWB_RESOLVE_TEXT_TYPE(self, text_type)
+    return text_type
 
 
 def _patch_esm_rewriting():

@@ -211,6 +211,14 @@ class TestResolveTextType:
 
         assert _resolve_text_type(response, "js") == ESM_TEXT_TYPE
 
+    @pytest.mark.parametrize("text_type", ["css", "html", None])
+    def test_it_leaves_non_js_under_the_module_modifier_to_pywb(self, text_type):
+        # A module resolves assets relative to `import.meta.url`, which carries
+        # the module modifier, so CSS and images arrive under it too.
+        response = self.response_for(f"{ESM_MOD}/https://example.com/style.css")
+
+        assert _resolve_text_type(response, text_type) == text_type
+
     def test_it_leaves_everything_else_to_pywb(self):
         response = self.response_for("js_/https://example.com/app.js")
 
