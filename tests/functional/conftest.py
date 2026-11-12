@@ -62,7 +62,13 @@ def upstream_website():
     with serve_content(  # pylint: disable=not-context-manager
         minimal_valid_html,
         port=8197,
-        extra_headers={"Cache-Control": "public, max-age=60"},
+        extra_headers={
+            "Cache-Control": "public, max-age=60",
+            # Headers that Via HTML has to remove, so the tests can check
+            # that they do not reach the browser.
+            "Cross-Origin-Opener-Policy": "same-origin",
+            "Cross-Origin-Embedder-Policy": "require-corp",
+        },
     ):
         yield
 
