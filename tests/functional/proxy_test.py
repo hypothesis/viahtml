@@ -32,6 +32,12 @@ class TestProxy:
 
         assert policy == "*MISSING*"
 
+    def test_we_do_not_have_a_coop_header(self, proxied_content):
+        # The upstream site sends this header, see `upstream_website()`.
+        policy = proxied_content.headers.get("Cross-Origin-Opener-Policy", "*MISSING*")
+
+        assert policy == "*MISSING*"
+
     def test_we_dont_rewrite_links_by_default(self, proxied_content):
         assert '<a href="http://example.com">link</a>' in proxied_content
 

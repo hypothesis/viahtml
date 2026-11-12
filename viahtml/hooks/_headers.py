@@ -26,6 +26,18 @@ class Headers:
     BLOCKED_OUTBOUND = {
         # Disable the Content-Security-Policy which blocks our embed
         "Content-Security-Policy",
+        # The Hypothesis client logs people in through a popup window. The
+        # page that h shows in the popup sends the result of the login back to
+        # the client with `window.opener.postMessage()`.
+        #
+        # Sites can use the Cross-Origin-Opener-Policy header to tell the
+        # browser to cut the link between a page and the popups it opens (for
+        # example: Cross-Origin-Opener-Policy: same-origin). The popup's
+        # `window.opener` is then null, the result never reaches the client,
+        # and the person stays logged out after pressing "Log in" and
+        # approving. We block Cross-Origin-Opener-Policy headers to prevent
+        # that.
+        "Cross-Origin-Opener-Policy",
         # Various headers added by `pywb` relating to archival
         "Memento-Datetime",
         "Link",
